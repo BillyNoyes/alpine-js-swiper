@@ -1,0 +1,17 @@
+{
+  "name": "alpine-swiper",
+  "version": "1.0.0",
+  "description": "An Alpine.js Plugin for the Swiper Carousel Library",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+
+  ],
+  "author": "Billy Noyes <developedbybillynoyes@gmail.com>",
+  "license": "MIT",
+  "dependencies": {
+    "swiper": "^11.2.5"
+  }
+}
