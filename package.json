@@ -1,17 +1,46 @@
 {
   "name": "alpine-swiper",
   "version": "1.0.0",
-  "description": "An Alpine.js Plugin for the Swiper Carousel Library",
-  "main": "index.js",
-  "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
-  },
-  "keywords": [
-
+  "description": "A seamless integration of Swiper with Alpine.js, providing reactive slider functionality",
+  "main": "dist/alpine-swiper.cjs.js",
+  "module": "dist/alpine-swiper.esm.js",
+  "browser": "dist/alpine-swiper.min.js",
+  "unpkg": "dist/alpine-swiper.min.js",
+  "files": [
+    "dist",
+    "LICENSE"
   ],
-  "author": "Billy Noyes <developedbybillynoyes@gmail.com>",
+  "keywords": [
+    "alpine",
+    "alpinejs",
+    "swiper",
+    "slider",
+    "carousel"
+  ],
+  "scripts": {
+    "build": "rollup -c",
+    "dev": "rollup -c -w",
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "prepublishOnly": "npm run build"
+  },
+  "peerDependencies": {
+    "alpinejs": "^3.0.0",
+    "swiper": "^10.0.0"
+  },
+  "devDependencies": {
+    "@rollup/plugin-commonjs": "^25.0.0",
+    "@rollup/plugin-node-resolve": "^15.0.0",
+    "@rollup/plugin-terser": "^0.4.0",
+    "rollup": "^3.20.0",
+    "rollup-plugin-filesize": "^10.0.0"
+  },
+  "author": "",
   "license": "MIT",
-  "dependencies": {
-    "swiper": "^11.2.5"
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/yourusername/alpine-swiper.git"
+  },
+  "bugs": {
+    "url": "https://github.com/yourusername/alpine-swiper/issues"
   }
 }
