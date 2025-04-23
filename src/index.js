@@ -1,9 +1,6 @@
-import Swiper from 'swiper';
-import { Navigation, Pagination, Autoplay } from 'swiper/modules';
+import Swiper from 'swiper/bundle';
 
-import 'swiper/css';
-import 'swiper/css/navigation';
-import 'swiper/css/pagination';
+import 'swiper/css/bundle';
 
 export default function (Alpine) {
   // Create an Alpine store to track Swiper instances and their state
@@ -39,9 +36,7 @@ export default function (Alpine) {
   // Swiper directive: Initializes Swiper and stores the instance on the element
   Alpine.directive('swiper', (el, { expression }, { evaluate, cleanup }) => {
     let swiper;
-    let swiperOptions = {
-      modules: [Navigation, Pagination, Autoplay]
-    };
+    let swiperOptions = {};
 
     // Generate a unique ID for this Swiper instance
     const swiperId = `swiper-${Date.now()}-${Math.floor(Math.random() * 1000)}`;
