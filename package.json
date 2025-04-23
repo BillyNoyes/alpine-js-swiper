@@ -1,6 +1,6 @@
 {
   "name": "alpine-js-swiper",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "A seamless integration of Swiper with Alpine.js, providing reactive slider functionality",
   "type": "module",
   "main": "dist/alpine-js-swiper.cjs.js",
