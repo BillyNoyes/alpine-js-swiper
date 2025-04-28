@@ -1,3 +1,29 @@
+# Dependencies
 node_modules/
-local/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+.pnpm-debug.log*
+
+# IDE and editor files
 .idea/
+.vscode/
+*.swp
+*.swo
+.DS_Store
+
+# Environment variables
+.env
+.env.local
+.env.*.local
+
+# npm package files
+*.tgz
+.npmrc
+
+# Test coverage
+coverage/
+
+# Logs
+logs/
+*.log
