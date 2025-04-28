@@ -68,7 +68,7 @@ Include the following script tags in your HTML file (order is important):
   autoplay: { delay: 3000 }, 
   pagination: { clickable: true },
   effect: 'fade'
-} }">
+}}">
   <div x-swiper="options" class="swiper">
     <div class="swiper-wrapper">
       <div class="swiper-slide">Slide 1</div>
