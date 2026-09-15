@@ -21,8 +21,10 @@ yarn-error.log*
 *.tgz
 .npmrc
 
-# Test coverage
+# Test artifacts
 coverage/
+test-results/
+playwright-report/
 
 # Logs
 logs/

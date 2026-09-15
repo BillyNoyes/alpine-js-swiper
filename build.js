@@ -1,68 +1,58 @@
 import * as esbuild from 'esbuild';
-import { fileURLToPath } from 'url';
-import { dirname, resolve } from 'path';
+import { readFile, rm } from 'node:fs/promises';
 
-const __filename = fileURLToPath(import.meta.url);
-const __dirname = dirname(__filename);
+const packageJson = JSON.parse(await readFile(new URL('./package.json', import.meta.url), 'utf8'));
+const banner = `/*! Alpine.js Swiper v${packageJson.version} | MIT License */`;
 
-async function build(entryPoint, opts) {
-  const name = `alpine-js-swiper${opts.suffix}.js`;
-  console.log(`Building ${name}`);
+await rm(new URL('./dist', import.meta.url), { recursive: true, force: true });
 
-  return esbuild.build({
-    entryPoints: [entryPoint],
-    bundle: true,
-    outfile: resolve(__dirname, 'dist', name),
-    format: opts.format || 'esm',
-    minify: opts.minify ?? true,
-    target: ['es2019'],
-    external: ['alpinejs'],
-    globalName: opts.format === 'iife' ? 'AlpineSwiper' : undefined,
-    banner: opts.format === 'iife' ? {
-      js: '/* Alpine Swiper v1.0.0 | MIT License */',
-    } : undefined,
-    define: {
-      'process.env.NODE_ENV': '"production"'
-    }
-  });
-}
+const shared = {
+  bundle: true,
+  target: ['es2020'],
+  legalComments: 'none',
+  define: {
+    'process.env.NODE_ENV': '"production"',
+  },
+};
 
-// Ensure the dist directory exists and build all formats
-await esbuild.build({
-  entryPoints: [],
-  outdir: 'dist',
-  write: false,
-}).then(() => {
-  return Promise.all([
-    // ESM build
-    build('src/index.js', {
-      format: 'esm',
-      suffix: '.esm',
-      minify: true
-    }),
-    
-    // CJS build
-    build('src/index.js', {
-      format: 'cjs',
-      suffix: '.cjs',
-      minify: false
-    }),
-    
-    // IIFE/Browser build (minified)
-    build('src/cdn.js', {
-      format: 'iife',
-      suffix: '.min',
-      minify: true
-    }),
-    
-    // IIFE/Browser build (unminified, for development)
-    build('src/cdn.js', {
-      format: 'iife',
-      suffix: '',
-      minify: false
-    })
-  ]);
-}).catch(e => {
-  console.error(e);
-  process.exit(1);
-}); 
+await Promise.all([
+  esbuild.build({
+    ...shared,
+    entryPoints: ['src/index.js'],
+    outfile: 'dist/index.js',
+    format: 'esm',
+    minify: true,
+    banner: { js: banner },
+  }),
+  esbuild.build({
+    ...shared,
+    entryPoints: ['src/index.js'],
+    outfile: 'dist/index.cjs',
+    format: 'cjs',
+    minify: true,
+    banner: { js: banner },
+  }),
+  esbuild.build({
+    ...shared,
+    entryPoints: ['src/cdn.js'],
+    outfile: 'dist/alpine-js-swiper.js',
+    format: 'iife',
+    minify: false,
+    banner: { js: banner },
+  }),
+  esbuild.build({
+    ...shared,
+    entryPoints: ['src/cdn.js'],
+    outfile: 'dist/alpine-js-swiper.min.js',
+    format: 'iife',
+    minify: true,
+    banner: { js: banner },
+  }),
+  esbuild.build({
+    ...shared,
+    entryPoints: ['src/style.css'],
+    outfile: 'dist/style.css',
+    minify: true,
+    banner: { css: banner },
+  }),
+]);
