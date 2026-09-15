@@ -1,0 +1,29 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="../dist/style.css">
+    <style>
+      .swiper { width: 600px; height: 200px; }
+      .swiper-slide { display: grid; place-items: center; }
+    </style>
+    <script src="../dist/alpine-js-swiper.min.js"></script>
+    <script defer src="../node_modules/alpinejs/dist/cdn.min.js"></script>
+  </head>
+  <body>
+    <div
+      x-data="{ changes: 0 }"
+      x-swiper="{ speed: 0 }"
+      x-swiper-event:slide-change="changes++"
+      data-swiper-id="browser-test"
+      class="swiper"
+    >
+      <div class="swiper-wrapper">
+        <div class="swiper-slide">First</div>
+        <div class="swiper-slide">Second</div>
+      </div>
+      <output data-changes x-text="changes"></output>
+    </div>
+  </body>
+</html>

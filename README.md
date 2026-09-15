@@ -1,189 +1,335 @@
-# Alpine Swiper
+# Alpine.js Swiper
 
-A seamless integration of [Swiper](https://swiperjs.com/) with [Alpine.js](https://alpinejs.dev/), providing reactive slider functionality through Alpine's directive and magic property system.
+[![npm version](https://img.shields.io/npm/v/alpine-js-swiper.svg)](https://www.npmjs.com/package/alpine-js-swiper)
+[![CI](https://github.com/BillyNoyes/alpine-js-swiper/actions/workflows/ci.yml/badge.svg)](https://github.com/BillyNoyes/alpine-js-swiper/actions/workflows/ci.yml)
+[![license](https://img.shields.io/npm/l/alpine-js-swiper.svg)](LICENSE)
 
-Inspired by [Alpine Splide](https://github.com/Accudio/alpine-splide) - a similar integration for the Splide slider.
+Use [Swiper](https://swiperjs.com/) carousels through Alpine.js directives, expressions, magic properties, and reactive state.
 
-## Features
+```html
+<div x-data x-swiper="{ loop: true }" class="swiper">
+  <div class="swiper-wrapper">
+    <div class="swiper-slide">First slide</div>
+    <div class="swiper-slide">Second slide</div>
+    <div class="swiper-slide">Third slide</div>
+  </div>
 
-- **`x-swiper`** directive: Initialize and configure Swiper instances with Alpine.js reactivity
-- **`x-swiper-event`** directive: Bind Swiper events directly to Alpine methods
-- **`$swiper`** magic property: Access Swiper instance methods and state from anywhere in your Alpine components
-- **Alpine store**: Track and manage all Swiper instances with reactive state updates
-- **Full Swiper support**: Includes all Swiper modules and features out of the box
+  <button type="button" @click="$swiper.slidePrev()">Previous</button>
+  <button type="button" @click="$swiper.slideNext()">Next</button>
+</div>
+```
+
+## Why use it?
+
+- Configure Swiper with ordinary Alpine expressions.
+- React to Swiper events without writing setup or teardown code.
+- Call Swiper methods through the `$swiper` magic property.
+- Read synchronized slide state from Alpine templates.
+- Access named instances through `$store.swipers`.
+- Use the full Swiper module bundle from npm or a browser-ready CDN build.
+- Ship with ESM, CommonJS, CSS, and TypeScript declaration entry points.
+
+## Requirements
+
+- Alpine.js 3
+- A modern browser supported by Alpine.js and Swiper 12
+- Node.js 20 or newer for package development
 
 ## Installation
 
-### Method 1: NPM
+### npm
 
 ```bash
-# Make sure you have Alpine.js installed first
 npm install alpine-js-swiper
 ```
 
-Then import and register the plugin in your JavaScript:
+Import the plugin and its stylesheet before starting Alpine:
 
 ```js
 import Alpine from 'alpinejs';
 import AlpineSwiper from 'alpine-js-swiper';
+import 'alpine-js-swiper/style.css';
 
-// Register the plugin
 Alpine.plugin(AlpineSwiper);
 Alpine.start();
 ```
 
-### Method 2: CDN
+Swiper is bundled with the plugin, so it does not need to be installed or registered separately.
 
-Include the following script tags in your HTML file (order is important):
+### CDN
+
+Load the stylesheet and Alpine.js Swiper before Alpine.js itself:
 
 ```html
-<!-- Alpine Swiper (includes Swiper bundle) -->
-<script defer src="https://unpkg.com/alpine-js-swiper@1.x.x/dist/alpine-js-swiper.min.js"></script>
+<link
+  rel="stylesheet"
+  href="https://cdn.jsdelivr.net/gh/BillyNoyes/alpine-js-swiper@main/dist/style.css"
+>
+<script
+  defer
+  src="https://cdn.jsdelivr.net/gh/BillyNoyes/alpine-js-swiper@main/dist/alpine-js-swiper.min.js"
+></script>
+<script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"></script>
+```
 
-<!-- Alpine Core (must be after Alpine Swiper) -->
-<script defer src="https://unpkg.com/alpinejs@3.x.x/dist/cdn.min.js"></script>
+The `@main` URLs track the latest build. For a production site, pin both URLs to the same release tag, such as `@v1.1.0`, once that release is available.
+
+### Complete CDN example
+
+```html
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Alpine.js Swiper</title>
+
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/gh/BillyNoyes/alpine-js-swiper@main/dist/style.css"
+    >
+    <script
+      defer
+      src="https://cdn.jsdelivr.net/gh/BillyNoyes/alpine-js-swiper@main/dist/alpine-js-swiper.min.js"
+    ></script>
+    <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"></script>
+
+    <style>
+      .swiper { width: min(100%, 48rem); height: 20rem; }
+      .swiper-slide { display: grid; place-items: center; }
+    </style>
+  </head>
+  <body>
+    <div
+      x-data
+      x-swiper="{ loop: true, pagination: { el: '.swiper-pagination' } }"
+      class="swiper"
+    >
+      <div class="swiper-wrapper">
+        <div class="swiper-slide">First slide</div>
+        <div class="swiper-slide">Second slide</div>
+        <div class="swiper-slide">Third slide</div>
+      </div>
+
+      <div class="swiper-pagination"></div>
+      <button type="button" @click="$swiper.slidePrev()">Previous</button>
+      <button type="button" @click="$swiper.slideNext()">Next</button>
+    </div>
+  </body>
+</html>
 ```
 
 ## Usage
 
-### Basic Example
+### Configure a slider
+
+The `x-swiper` expression accepts any [Swiper parameters](https://swiperjs.com/swiper-api#parameters):
 
 ```html
-<div x-data>
-  <div x-swiper class="swiper">
-    <div class="swiper-wrapper">
-      <div class="swiper-slide">Slide 1</div>
-      <div class="swiper-slide">Slide 2</div>
-      <div class="swiper-slide">Slide 3</div>
-    </div>
+<div
+  x-data="{
+    options: {
+      slidesPerView: 1,
+      spaceBetween: 24,
+      breakpoints: {
+        768: { slidesPerView: 2 },
+        1024: { slidesPerView: 3 }
+      }
+    }
+  }"
+  x-swiper="options"
+  class="swiper"
+>
+  <div class="swiper-wrapper">
+    <div class="swiper-slide">One</div>
+    <div class="swiper-slide">Two</div>
+    <div class="swiper-slide">Three</div>
   </div>
 </div>
 ```
 
-### With Custom Options
+Options are evaluated when the directive initializes. For manual initialization, pass `init: false` and call `$swiper.init()` when ready.
+
+### Use methods and reactive state
+
+`$swiper` is available on the Swiper element and its descendants:
 
 ```html
-<div x-data="{ options: { 
-  loop: true, 
-  autoplay: { delay: 3000 }, 
-  pagination: { clickable: true },
-  effect: 'fade'
-}}">
-  <div x-swiper="options" class="swiper">
-    <div class="swiper-wrapper">
-      <div class="swiper-slide">Slide 1</div>
-      <div class="swiper-slide">Slide 2</div>
-      <div class="swiper-slide">Slide 3</div>
-    </div>
-    
-    <div class="swiper-pagination"></div>
+<div x-data x-swiper class="swiper">
+  <div class="swiper-wrapper">
+    <div class="swiper-slide">One</div>
+    <div class="swiper-slide">Two</div>
+    <div class="swiper-slide">Three</div>
+  </div>
+
+  <div>
+    <button type="button" @click="$swiper.slidePrev()" :disabled="$swiper.isBeginning">
+      Previous
+    </button>
+    <button type="button" @click="$swiper.slideNext()" :disabled="$swiper.isEnd">
+      Next
+    </button>
+    <span>
+      Slide <span x-text="$swiper.realIndex + 1"></span>
+      of <span x-text="$swiper.slides"></span>
+    </span>
   </div>
 </div>
 ```
 
-### Using Swiper Methods and Properties
+Use `realIndex` for the visible slide index when loop mode is enabled. `activeIndex` exposes Swiper's internal index.
+
+### Handle Swiper events
+
+Prefix a kebab-case Swiper event with `x-swiper-event:`:
 
 ```html
-<div x-data>
-  <div x-swiper class="swiper">
-    <div class="swiper-wrapper">
-      <div class="swiper-slide">Slide 1</div>
-      <div class="swiper-slide">Slide 2</div>
-      <div class="swiper-slide">Slide 3</div>
-    </div>
-
-    <!-- Control buttons using $swiper magic -->
-    <div class="controls">
-      <button @click="$swiper.slidePrev()">Previous</button>
-      <button @click="$swiper.slideNext()">Next</button>
-      <button @click="$swiper.slideTo(0)">First Slide</button>
-      
-      <!-- Accessing reactive state -->
-      <p>Current slide: <span x-text="$swiper.activeIndex + 1"></span> / <span x-text="$swiper.slides"></span></p>
-      <p x-show="$swiper.isBeginning">You're at the beginning!</p>
-      <p x-show="$swiper.isEnd">You've reached the end!</p>
-    </div>
+<div
+  x-data="{ message: 'Waiting…' }"
+  x-swiper
+  x-swiper-event:init="message = 'Ready'"
+  x-swiper-event:slide-change="message = `Showing slide ${$swiper.realIndex + 1}`"
+  x-swiper-event:reach-end="message = 'Reached the final slide'"
+  class="swiper"
+>
+  <div class="swiper-wrapper">
+    <div class="swiper-slide">One</div>
+    <div class="swiper-slide">Two</div>
   </div>
-</div>
-```
 
-### Working with Events
-
-```html
-<div x-data="{ message: '' }">
-  <div 
-    x-swiper 
-    x-swiper-event:slide-change="message = 'Slide changed to ' + ($swiper.activeIndex + 1)"
-    x-swiper-event:reach-end="message = 'Reached the end!'"
-    class="swiper"
-  >
-    <div class="swiper-wrapper">
-      <div class="swiper-slide">Slide 1</div>
-      <div class="swiper-slide">Slide 2</div>
-      <div class="swiper-slide">Slide 3</div>
-    </div>
-  </div>
-  
   <p x-text="message"></p>
 </div>
 ```
 
-## API Reference
+The plugin converts kebab case to Swiper's camel case, such as `slide-change` to `slideChange`. Event expressions receive:
 
-### `x-swiper` Directive
+- `$event`: the first argument emitted by Swiper
+- `$swiperEvent`: an array containing every emitted argument
 
-Initializes a new Swiper instance on the element. Accepts all [Swiper parameters](https://swiperjs.com/swiper-api#parameters).
+Event listeners are removed automatically when Alpine cleans up the element.
+
+### Access a named instance
+
+Give a slider a stable `data-swiper-id` when controls live outside its DOM subtree:
+
+```html
+<div x-data>
+  <div data-swiper-id="product-gallery" x-swiper class="swiper">
+    <div class="swiper-wrapper">
+      <div class="swiper-slide">Front</div>
+      <div class="swiper-slide">Back</div>
+    </div>
+  </div>
+
+  <button
+    type="button"
+    @click="$store.swipers.getSwiper('product-gallery')?.slideTo(0)"
+  >
+    Show front image
+  </button>
+</div>
+```
+
+When no ID is supplied, the plugin generates one. If an ID is already registered, the later slider receives a generated fallback instead of overwriting the first instance.
+
+## API reference
+
+### `x-swiper`
 
 ```html
 <div x-swiper="options"></div>
 ```
 
-### `x-swiper-event` Directive
+Creates a Swiper on the element. The expression is optional and accepts the standard Swiper configuration object.
 
-Binds Swiper events to Alpine expressions. Event names should be in kebab-case (e.g., `slide-change` instead of `slideChange`).
-
-```html
-<div x-swiper-event:event-name="expression"></div>
-```
-
-Common events:
-- `slide-change`
-- `reach-beginning`
-- `reach-end`
-- `progress`
-- `resize`
-- `init`
-
-### `$swiper` Magic Property
-
-Provides access to the Swiper instance methods and reactive state.
-
-Available reactive properties:
-- `activeIndex`: Current active slide index
-- `isBeginning`: Whether the slider is at the beginning
-- `isEnd`: Whether the slider is at the end
-- `slides`: Total number of slides
-- `progress`: Current progress value (0-1)
-
-You can also access any [Swiper methods and properties](https://swiperjs.com/swiper-api#methods--properties) through the `$swiper` magic.
-
-### Alpine Store: `$store.swipers`
-
-The plugin creates an Alpine store to track all Swiper instances:
+### `x-swiper-event:event-name`
 
 ```html
-<div x-data>
-  <!-- Access a specific swiper by ID -->
-  <button @click="$store.swipers.getSwiper('my-swiper-id')?.slideTo(0)">
-    Reset all sliders
-  </button>
-</div>
+<div x-swiper-event:slide-change="handleSlideChange($event)"></div>
 ```
 
-## Browser Support
+Evaluates an Alpine expression whenever the named Swiper event fires.
 
-Alpine Swiper supports all browsers that are compatible with Alpine.js and Swiper.
+### `$swiper`
+
+Exposes the nearest Swiper instance's methods and properties, plus synchronized Alpine state:
+
+| Property | Description |
+| --- | --- |
+| `activeIndex` | Swiper's current internal slide index |
+| `realIndex` | Current content index, excluding loop duplicates |
+| `isBeginning` | Whether the slider is at its first edge |
+| `isEnd` | Whether the slider is at its final edge |
+| `slides` | Current number of slide elements |
+| `progress` | Current progress from `0` to `1` |
+
+All other properties and methods are forwarded to the underlying [Swiper instance](https://swiperjs.com/swiper-api#methods--properties).
+
+### `$store.swipers`
+
+| Member | Description |
+| --- | --- |
+| `getSwiper(id)` | Returns the raw Swiper instance for an ID |
+| `getSwiperState(id)` | Returns the synchronized reactive state for an ID |
+| `instances` | Contains every currently registered state record |
+
+Instances are unregistered automatically during Alpine cleanup.
+
+## Troubleshooting
+
+### The slides are stacked or unstyled
+
+Load `alpine-js-swiper/style.css` from npm or `dist/style.css` from the CDN. The JavaScript bundle cannot apply Swiper's required stylesheet automatically.
+
+### `$swiper` is undefined
+
+`$swiper` resolves the nearest slider ancestor. Use it on the element containing `x-swiper` or one of that element's descendants. For sibling or external controls, assign `data-swiper-id` and use `$store.swipers.getSwiper(id)`.
+
+### The CDN build does not initialize
+
+Keep the scripts in this order: Alpine.js Swiper first, Alpine.js second. Both may use `defer`. Also verify that the JavaScript and CSS URLs use the same branch, commit, or release tag.
+
+## Package entry points
+
+| Import | Contents |
+| --- | --- |
+| `alpine-js-swiper` | ESM or CommonJS plugin entry |
+| `alpine-js-swiper/style.css` | Required Swiper stylesheet |
+| `alpine-js-swiper/cdn` | Minified browser bundle |
+
+The CDN build also exposes `window.AlpineSwiper` for manual registration when needed.
+
+## Development
+
+```bash
+npm ci
+npx playwright install chromium
+npm test
+npm pack --dry-run
+```
+
+`npm test`:
+
+1. Rebuilds all distribution artifacts.
+2. Runs directive, lifecycle, ID, and release unit tests.
+3. Verifies ESM, CommonJS, CDN, and CSS package entry points.
+4. Loads the generated CDN bundle with real Alpine.js and Swiper in Chromium.
+
+## Releasing
+
+Publishing a GitHub Release whose tag matches `package.json` triggers npm publishing through GitHub OIDC. For example, package version `1.1.0` must use tag `v1.1.0`.
+
+- Stable GitHub Releases publish to the npm `latest` tag.
+- GitHub prereleases publish to the npm `next` tag.
+- The release version must be newer than the package currently assigned to that npm tag.
+
+Before the first automated release, configure:
+
+1. An npm trusted publisher for repository `BillyNoyes/alpine-js-swiper`, workflow `publish.yml`, and environment `npm`.
+2. A GitHub environment named `npm`, preferably restricted to protected release tags.
+
+The workflow does not require an `NPM_TOKEN`.
 
 ## License
 
-MIT
+[MIT](LICENSE)

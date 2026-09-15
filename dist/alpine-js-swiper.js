@@ -1,44 +1,13 @@
-/* Alpine Swiper v1.0.0 | MIT License */
-var AlpineSwiper = (() => {
-  var __defProp = Object.defineProperty;
-  var __getOwnPropDesc = Object.getOwnPropertyDescriptor;
-  var __getOwnPropNames = Object.getOwnPropertyNames;
-  var __hasOwnProp = Object.prototype.hasOwnProperty;
-  var __export = (target, all) => {
-    for (var name in all)
-      __defProp(target, name, { get: all[name], enumerable: true });
-  };
-  var __copyProps = (to, from, except, desc) => {
-    if (from && typeof from === "object" || typeof from === "function") {
-      for (let key of __getOwnPropNames(from))
-        if (!__hasOwnProp.call(to, key) && key !== except)
-          __defProp(to, key, { get: () => from[key], enumerable: !(desc = __getOwnPropDesc(from, key)) || desc.enumerable });
-    }
-    return to;
-  };
-  var __toCommonJS = (mod) => __copyProps(__defProp({}, "__esModule", { value: true }), mod);
-
-  // src/cdn.js
-  var cdn_exports = {};
-  __export(cdn_exports, {
-    AlpineSwiper: () => src_default
-  });
-
+/*! Alpine.js Swiper v1.1.0 | MIT License */
+(() => {
   // node_modules/swiper/shared/ssr-window.esm.mjs
   function isObject(obj) {
     return obj !== null && typeof obj === "object" && "constructor" in obj && obj.constructor === Object;
   }
-  function extend(target, src) {
-    if (target === void 0) {
-      target = {};
-    }
-    if (src === void 0) {
-      src = {};
-    }
+  function extend(target = {}, src = {}) {
     const noExtend = ["__proto__", "constructor", "prototype"];
     Object.keys(src).filter((key) => noExtend.indexOf(key) < 0).forEach((key) => {
-      if (typeof target[key] === "undefined")
-        target[key] = src[key];
+      if (typeof target[key] === "undefined") target[key] = src[key];
       else if (isObject(src[key]) && isObject(target[key]) && Object.keys(src[key]).length > 0) {
         extend(target[key], src[key]);
       }
@@ -176,10 +145,7 @@ var AlpineSwiper = (() => {
   }
 
   // node_modules/swiper/shared/utils.mjs
-  function classesToTokens(classes2) {
-    if (classes2 === void 0) {
-      classes2 = "";
-    }
+  function classesToTokens(classes2 = "") {
     return classes2.trim().split(" ").filter((c) => !!c.trim());
   }
   function deleteProps(obj) {
@@ -195,10 +161,7 @@ var AlpineSwiper = (() => {
       }
     });
   }
-  function nextTick(callback, delay) {
-    if (delay === void 0) {
-      delay = 0;
-    }
+  function nextTick(callback, delay = 0) {
     return setTimeout(callback, delay);
   }
   function now() {
@@ -218,10 +181,7 @@ var AlpineSwiper = (() => {
     }
     return style;
   }
-  function getTranslate(el, axis) {
-    if (axis === void 0) {
-      axis = "x";
-    }
+  function getTranslate(el, axis = "x") {
     const window2 = getWindow();
     let matrix;
     let curTransform;
@@ -238,20 +198,14 @@ var AlpineSwiper = (() => {
       matrix = transformMatrix.toString().split(",");
     }
     if (axis === "x") {
-      if (window2.WebKitCSSMatrix)
-        curTransform = transformMatrix.m41;
-      else if (matrix.length === 16)
-        curTransform = parseFloat(matrix[12]);
-      else
-        curTransform = parseFloat(matrix[4]);
+      if (window2.WebKitCSSMatrix) curTransform = transformMatrix.m41;
+      else if (matrix.length === 16) curTransform = parseFloat(matrix[12]);
+      else curTransform = parseFloat(matrix[4]);
     }
     if (axis === "y") {
-      if (window2.WebKitCSSMatrix)
-        curTransform = transformMatrix.m42;
-      else if (matrix.length === 16)
-        curTransform = parseFloat(matrix[13]);
-      else
-        curTransform = parseFloat(matrix[5]);
+      if (window2.WebKitCSSMatrix) curTransform = transformMatrix.m42;
+      else if (matrix.length === 16) curTransform = parseFloat(matrix[13]);
+      else curTransform = parseFloat(matrix[5]);
     }
     return curTransform || 0;
   }
@@ -264,13 +218,12 @@ var AlpineSwiper = (() => {
     }
     return node && (node.nodeType === 1 || node.nodeType === 11);
   }
-  function extend2() {
-    const to = Object(arguments.length <= 0 ? void 0 : arguments[0]);
-    const noExtend = ["__proto__", "constructor", "prototype"];
-    for (let i = 1; i < arguments.length; i += 1) {
-      const nextSource = i < 0 || arguments.length <= i ? void 0 : arguments[i];
+  function extend2(...args) {
+    const to = Object(args[0]);
+    for (let i = 1; i < args.length; i += 1) {
+      const nextSource = args[i];
       if (nextSource !== void 0 && nextSource !== null && !isNode(nextSource)) {
-        const keysArray = Object.keys(Object(nextSource)).filter((key) => noExtend.indexOf(key) < 0);
+        const keysArray = Object.keys(Object(nextSource)).filter((key) => key !== "__proto__" && key !== "constructor" && key !== "prototype");
         for (let nextIndex = 0, len = keysArray.length; nextIndex < len; nextIndex += 1) {
           const nextKey = keysArray[nextIndex];
           const desc = Object.getOwnPropertyDescriptor(nextSource, nextKey);
@@ -300,12 +253,11 @@ var AlpineSwiper = (() => {
   function setCSSProperty(el, varName, varValue) {
     el.style.setProperty(varName, varValue);
   }
-  function animateCSSModeScroll(_ref) {
-    let {
-      swiper,
-      targetPosition,
-      side
-    } = _ref;
+  function animateCSSModeScroll({
+    swiper,
+    targetPosition,
+    side
+  }) {
     const window2 = getWindow();
     const startPosition = -swiper.translate;
     let startTime = null;
@@ -350,10 +302,7 @@ var AlpineSwiper = (() => {
   function getSlideTransformEl(slideEl) {
     return slideEl.querySelector(".swiper-slide-transform") || slideEl.shadowRoot && slideEl.shadowRoot.querySelector(".swiper-slide-transform") || slideEl;
   }
-  function elementChildren(element, selector) {
-    if (selector === void 0) {
-      selector = "";
-    }
+  function elementChildren(element, selector = "") {
     const window2 = getWindow();
     const children = [...element.children];
     if (window2.HTMLSlotElement && element instanceof HTMLSlotElement) {
@@ -393,10 +342,7 @@ var AlpineSwiper = (() => {
     } catch (err) {
     }
   }
-  function createElement(tag, classes2) {
-    if (classes2 === void 0) {
-      classes2 = [];
-    }
+  function createElement(tag, classes2 = []) {
     const el = document.createElement(tag);
     el.classList.add(...Array.isArray(classes2) ? classes2 : classesToTokens(classes2));
     return el;
@@ -420,10 +366,8 @@ var AlpineSwiper = (() => {
     while (el.previousElementSibling) {
       const prev = el.previousElementSibling;
       if (selector) {
-        if (prev.matches(selector))
-          prevEls.push(prev);
-      } else
-        prevEls.push(prev);
+        if (prev.matches(selector)) prevEls.push(prev);
+      } else prevEls.push(prev);
       el = prev;
     }
     return prevEls;
@@ -433,10 +377,8 @@ var AlpineSwiper = (() => {
     while (el.nextElementSibling) {
       const next = el.nextElementSibling;
       if (selector) {
-        if (next.matches(selector))
-          nextEls.push(next);
-      } else
-        nextEls.push(next);
+        if (next.matches(selector)) nextEls.push(next);
+      } else nextEls.push(next);
       el = next;
     }
     return nextEls;
@@ -451,8 +393,7 @@ var AlpineSwiper = (() => {
     if (child) {
       i = 0;
       while ((child = child.previousSibling) !== null) {
-        if (child.nodeType === 1)
-          i += 1;
+        if (child.nodeType === 1) i += 1;
       }
       return i;
     }
@@ -463,8 +404,7 @@ var AlpineSwiper = (() => {
     let parent = el.parentElement;
     while (parent) {
       if (selector) {
-        if (parent.matches(selector))
-          parents.push(parent);
+        if (parent.matches(selector)) parents.push(parent);
       } else {
         parents.push(parent);
       }
@@ -474,8 +414,7 @@ var AlpineSwiper = (() => {
   }
   function elementTransitionEnd(el, callback) {
     function fireCallBack(e) {
-      if (e.target !== el)
-        return;
+      if (e.target !== el) return;
       callback.call(el, e);
       el.removeEventListener("transitionend", fireCallBack);
     }
@@ -501,6 +440,15 @@ var AlpineSwiper = (() => {
       return v;
     };
   }
+  function setInnerHTML(el, html = "") {
+    if (typeof trustedTypes !== "undefined") {
+      el.innerHTML = trustedTypes.createPolicy("html", {
+        createHTML: (s) => s
+      }).createHTML(html);
+    } else {
+      el.innerHTML = html;
+    }
+  }
 
   // node_modules/swiper/shared/swiper-core.mjs
   var support;
@@ -519,10 +467,9 @@ var AlpineSwiper = (() => {
     return support;
   }
   var deviceCached;
-  function calcDevice(_temp) {
-    let {
-      userAgent
-    } = _temp === void 0 ? {} : _temp;
+  function calcDevice({
+    userAgent
+  } = {}) {
     const support2 = getSupport();
     const window2 = getWindow();
     const platform = window2.navigator.platform;
@@ -534,7 +481,7 @@ var AlpineSwiper = (() => {
     const screenWidth = window2.screen.width;
     const screenHeight = window2.screen.height;
     const android = ua.match(/(Android);?[\s\/]+([\d.]+)?/);
-    let ipad = ua.match(/(iPad).*OS\s([\d_]+)/);
+    let ipad = ua.match(/(iPad)(?!\1).*OS\s([\d_]+)/);
     const ipod = ua.match(/(iPod)(.*OS\s([\d_]+))?/);
     const iphone = !ipad && ua.match(/(iPhone\sOS|iOS)\s([\d_]+)/);
     const windows = platform === "Win32";
@@ -542,8 +489,7 @@ var AlpineSwiper = (() => {
     const iPadScreens = ["1024x1366", "1366x1024", "834x1194", "1194x834", "834x1112", "1112x834", "768x1024", "1024x768", "820x1180", "1180x820", "810x1080", "1080x810"];
     if (!ipad && macos && support2.touch && iPadScreens.indexOf(`${screenWidth}x${screenHeight}`) >= 0) {
       ipad = ua.match(/(Version)\/([\d.]+)/);
-      if (!ipad)
-        ipad = [0, 1, "13_0_0"];
+      if (!ipad) ipad = [0, 1, "13_0_0"];
       macos = false;
     }
     if (android && !windows) {
@@ -556,10 +502,7 @@ var AlpineSwiper = (() => {
     }
     return device;
   }
-  function getDevice(overrides) {
-    if (overrides === void 0) {
-      overrides = {};
-    }
+  function getDevice(overrides = {}) {
     if (!deviceCached) {
       deviceCached = calcDevice(overrides);
     }
@@ -597,24 +540,21 @@ var AlpineSwiper = (() => {
     }
     return browser;
   }
-  function Resize(_ref) {
-    let {
-      swiper,
-      on,
-      emit
-    } = _ref;
+  function Resize({
+    swiper,
+    on,
+    emit
+  }) {
     const window2 = getWindow();
     let observer = null;
     let animationFrame = null;
     const resizeHandler = () => {
-      if (!swiper || swiper.destroyed || !swiper.initialized)
-        return;
+      if (!swiper || swiper.destroyed || !swiper.initialized) return;
       emit("beforeResize");
       emit("resize");
     };
     const createObserver = () => {
-      if (!swiper || swiper.destroyed || !swiper.initialized)
-        return;
+      if (!swiper || swiper.destroyed || !swiper.initialized) return;
       observer = new ResizeObserver((entries) => {
         animationFrame = window2.requestAnimationFrame(() => {
           const {
@@ -623,14 +563,12 @@ var AlpineSwiper = (() => {
           } = swiper;
           let newWidth = width;
           let newHeight = height;
-          entries.forEach((_ref2) => {
-            let {
-              contentBoxSize,
-              contentRect,
-              target
-            } = _ref2;
-            if (target && target !== swiper.el)
-              return;
+          entries.forEach(({
+            contentBoxSize,
+            contentRect,
+            target
+          }) => {
+            if (target && target !== swiper.el) return;
             newWidth = contentRect ? contentRect.width : (contentBoxSize[0] || contentBoxSize).inlineSize;
             newHeight = contentRect ? contentRect.height : (contentBoxSize[0] || contentBoxSize).blockSize;
           });
@@ -651,8 +589,7 @@ var AlpineSwiper = (() => {
       }
     };
     const orientationChangeHandler = () => {
-      if (!swiper || swiper.destroyed || !swiper.initialized)
-        return;
+      if (!swiper || swiper.destroyed || !swiper.initialized) return;
       emit("orientationchange");
     };
     on("init", () => {
@@ -669,23 +606,18 @@ var AlpineSwiper = (() => {
       window2.removeEventListener("orientationchange", orientationChangeHandler);
     });
   }
-  function Observer(_ref) {
-    let {
-      swiper,
-      extendParams,
-      on,
-      emit
-    } = _ref;
+  function Observer({
+    swiper,
+    extendParams,
+    on,
+    emit
+  }) {
     const observers = [];
     const window2 = getWindow();
-    const attach = function(target, options) {
-      if (options === void 0) {
-        options = {};
-      }
+    const attach = (target, options = {}) => {
       const ObserverFunc = window2.MutationObserver || window2.WebkitMutationObserver;
       const observer = new ObserverFunc((mutations) => {
-        if (swiper.__preventObserver__)
-          return;
+        if (swiper.__preventObserver__) return;
         if (mutations.length === 1) {
           emit("observerUpdate", mutations[0]);
           return;
@@ -707,8 +639,7 @@ var AlpineSwiper = (() => {
       observers.push(observer);
     };
     const init = () => {
-      if (!swiper.params.observer)
-        return;
+      if (!swiper.params.observer) return;
       if (swiper.params.observeParents) {
         const containerParents = elementParents(swiper.hostEl);
         for (let i = 0; i < containerParents.length; i += 1) {
@@ -739,31 +670,23 @@ var AlpineSwiper = (() => {
   var eventsEmitter = {
     on(events2, handler, priority) {
       const self = this;
-      if (!self.eventsListeners || self.destroyed)
-        return self;
-      if (typeof handler !== "function")
-        return self;
+      if (!self.eventsListeners || self.destroyed) return self;
+      if (typeof handler !== "function") return self;
       const method = priority ? "unshift" : "push";
       events2.split(" ").forEach((event2) => {
-        if (!self.eventsListeners[event2])
-          self.eventsListeners[event2] = [];
+        if (!self.eventsListeners[event2]) self.eventsListeners[event2] = [];
         self.eventsListeners[event2][method](handler);
       });
       return self;
     },
     once(events2, handler, priority) {
       const self = this;
-      if (!self.eventsListeners || self.destroyed)
-        return self;
-      if (typeof handler !== "function")
-        return self;
-      function onceHandler() {
+      if (!self.eventsListeners || self.destroyed) return self;
+      if (typeof handler !== "function") return self;
+      function onceHandler(...args) {
         self.off(events2, onceHandler);
         if (onceHandler.__emitterProxy) {
           delete onceHandler.__emitterProxy;
-        }
-        for (var _len = arguments.length, args = new Array(_len), _key = 0; _key < _len; _key++) {
-          args[_key] = arguments[_key];
         }
         handler.apply(self, args);
       }
@@ -772,10 +695,8 @@ var AlpineSwiper = (() => {
     },
     onAny(handler, priority) {
       const self = this;
-      if (!self.eventsListeners || self.destroyed)
-        return self;
-      if (typeof handler !== "function")
-        return self;
+      if (!self.eventsListeners || self.destroyed) return self;
+      if (typeof handler !== "function") return self;
       const method = priority ? "unshift" : "push";
       if (self.eventsAnyListeners.indexOf(handler) < 0) {
         self.eventsAnyListeners[method](handler);
@@ -784,10 +705,8 @@ var AlpineSwiper = (() => {
     },
     offAny(handler) {
       const self = this;
-      if (!self.eventsListeners || self.destroyed)
-        return self;
-      if (!self.eventsAnyListeners)
-        return self;
+      if (!self.eventsListeners || self.destroyed) return self;
+      if (!self.eventsAnyListeners) return self;
       const index = self.eventsAnyListeners.indexOf(handler);
       if (index >= 0) {
         self.eventsAnyListeners.splice(index, 1);
@@ -796,10 +715,8 @@ var AlpineSwiper = (() => {
     },
     off(events2, handler) {
       const self = this;
-      if (!self.eventsListeners || self.destroyed)
-        return self;
-      if (!self.eventsListeners)
-        return self;
+      if (!self.eventsListeners || self.destroyed) return self;
+      if (!self.eventsListeners) return self;
       events2.split(" ").forEach((event2) => {
         if (typeof handler === "undefined") {
           self.eventsListeners[event2] = [];
@@ -813,18 +730,13 @@ var AlpineSwiper = (() => {
       });
       return self;
     },
-    emit() {
+    emit(...args) {
       const self = this;
-      if (!self.eventsListeners || self.destroyed)
-        return self;
-      if (!self.eventsListeners)
-        return self;
+      if (!self.eventsListeners || self.destroyed) return self;
+      if (!self.eventsListeners) return self;
       let events2;
       let data;
       let context;
-      for (var _len2 = arguments.length, args = new Array(_len2), _key2 = 0; _key2 < _len2; _key2++) {
-        args[_key2] = arguments[_key2];
-      }
       if (typeof args[0] === "string" || Array.isArray(args[0])) {
         events2 = args[0];
         data = args.slice(1, args.length);
@@ -871,10 +783,8 @@ var AlpineSwiper = (() => {
     }
     width = width - parseInt(elementStyle(el, "padding-left") || 0, 10) - parseInt(elementStyle(el, "padding-right") || 0, 10);
     height = height - parseInt(elementStyle(el, "padding-top") || 0, 10) - parseInt(elementStyle(el, "padding-bottom") || 0, 10);
-    if (Number.isNaN(width))
-      width = 0;
-    if (Number.isNaN(height))
-      height = 0;
+    if (Number.isNaN(width)) width = 0;
+    if (Number.isNaN(height)) height = 0;
     Object.assign(swiper, {
       width,
       height,
@@ -890,7 +800,6 @@ var AlpineSwiper = (() => {
     const {
       wrapperEl,
       slidesEl,
-      size: swiperSize,
       rtlTranslate: rtl,
       wrongRTL
     } = swiper;
@@ -911,6 +820,7 @@ var AlpineSwiper = (() => {
     }
     const previousSnapGridLength = swiper.snapGrid.length;
     const previousSlidesGridLength = swiper.slidesGrid.length;
+    const swiperSize = swiper.size - offsetBefore - offsetAfter;
     let spaceBetween = params.spaceBetween;
     let slidePosition = -offsetBefore;
     let prevSlideSize = 0;
@@ -923,7 +833,7 @@ var AlpineSwiper = (() => {
     } else if (typeof spaceBetween === "string") {
       spaceBetween = parseFloat(spaceBetween);
     }
-    swiper.virtualSize = -spaceBetween;
+    swiper.virtualSize = -spaceBetween - offsetBefore - offsetAfter;
     slides.forEach((slideEl) => {
       if (rtl) {
         slideEl.style.marginLeft = "";
@@ -937,6 +847,10 @@ var AlpineSwiper = (() => {
       setCSSProperty(wrapperEl, "--swiper-centered-offset-before", "");
       setCSSProperty(wrapperEl, "--swiper-centered-offset-after", "");
     }
+    if (params.cssMode) {
+      setCSSProperty(wrapperEl, "--swiper-slides-offset-before", `${offsetBefore}px`);
+      setCSSProperty(wrapperEl, "--swiper-slides-offset-after", `${offsetAfter}px`);
+    }
     const gridEnabled = params.grid && params.grid.rows > 1 && swiper.grid;
     if (gridEnabled) {
       swiper.grid.initSlides(slides);
@@ -949,17 +863,24 @@ var AlpineSwiper = (() => {
     }).length > 0;
     for (let i = 0; i < slidesLength; i += 1) {
       slideSize = 0;
-      let slide2;
-      if (slides[i])
-        slide2 = slides[i];
-      if (gridEnabled) {
-        swiper.grid.updateSlide(i, slide2, slides);
+      const slide2 = slides[i];
+      if (slide2) {
+        if (gridEnabled) {
+          swiper.grid.updateSlide(i, slide2, slides);
+        }
+        if (elementStyle(slide2, "display") === "none") continue;
       }
-      if (slides[i] && elementStyle(slide2, "display") === "none")
-        continue;
-      if (params.slidesPerView === "auto") {
+      if (isVirtual && params.slidesPerView === "auto") {
+        if (params.virtual.slidesPerViewAutoSlideSize) {
+          slideSize = params.virtual.slidesPerViewAutoSlideSize;
+        }
+        if (slideSize && slide2) {
+          if (params.roundLengths) slideSize = Math.floor(slideSize);
+          slide2.style[swiper.getDirectionLabel("width")] = `${slideSize}px`;
+        }
+      } else if (params.slidesPerView === "auto") {
         if (shouldResetSlideSize) {
-          slides[i].style[swiper.getDirectionLabel("width")] = ``;
+          slide2.style[swiper.getDirectionLabel("width")] = ``;
         }
         const slideStyles = getComputedStyle(slide2);
         const currentTransform = slide2.style.transform;
@@ -995,38 +916,29 @@ var AlpineSwiper = (() => {
         if (currentWebKitTransform) {
           slide2.style.webkitTransform = currentWebKitTransform;
         }
-        if (params.roundLengths)
-          slideSize = Math.floor(slideSize);
+        if (params.roundLengths) slideSize = Math.floor(slideSize);
       } else {
         slideSize = (swiperSize - (params.slidesPerView - 1) * spaceBetween) / params.slidesPerView;
-        if (params.roundLengths)
-          slideSize = Math.floor(slideSize);
-        if (slides[i]) {
-          slides[i].style[swiper.getDirectionLabel("width")] = `${slideSize}px`;
+        if (params.roundLengths) slideSize = Math.floor(slideSize);
+        if (slide2) {
+          slide2.style[swiper.getDirectionLabel("width")] = `${slideSize}px`;
         }
       }
-      if (slides[i]) {
-        slides[i].swiperSlideSize = slideSize;
+      if (slide2) {
+        slide2.swiperSlideSize = slideSize;
       }
       slidesSizesGrid.push(slideSize);
       if (params.centeredSlides) {
         slidePosition = slidePosition + slideSize / 2 + prevSlideSize / 2 + spaceBetween;
-        if (prevSlideSize === 0 && i !== 0)
-          slidePosition = slidePosition - swiperSize / 2 - spaceBetween;
-        if (i === 0)
-          slidePosition = slidePosition - swiperSize / 2 - spaceBetween;
-        if (Math.abs(slidePosition) < 1 / 1e3)
-          slidePosition = 0;
-        if (params.roundLengths)
-          slidePosition = Math.floor(slidePosition);
-        if (index % params.slidesPerGroup === 0)
-          snapGrid.push(slidePosition);
+        if (prevSlideSize === 0 && i !== 0) slidePosition = slidePosition - swiperSize / 2 - spaceBetween;
+        if (i === 0) slidePosition = slidePosition - swiperSize / 2 - spaceBetween;
+        if (Math.abs(slidePosition) < 1 / 1e3) slidePosition = 0;
+        if (params.roundLengths) slidePosition = Math.floor(slidePosition);
+        if (index % params.slidesPerGroup === 0) snapGrid.push(slidePosition);
         slidesGrid.push(slidePosition);
       } else {
-        if (params.roundLengths)
-          slidePosition = Math.floor(slidePosition);
-        if ((index - Math.min(swiper.params.slidesPerGroupSkip, index)) % swiper.params.slidesPerGroup === 0)
-          snapGrid.push(slidePosition);
+        if (params.roundLengths) slidePosition = Math.floor(slidePosition);
+        if ((index - Math.min(swiper.params.slidesPerGroupSkip, index)) % swiper.params.slidesPerGroup === 0) snapGrid.push(slidePosition);
         slidesGrid.push(slidePosition);
         slidePosition = slidePosition + slideSize + spaceBetween;
       }
@@ -1045,18 +957,44 @@ var AlpineSwiper = (() => {
       swiper.grid.updateWrapperSize(slideSize, snapGrid);
     }
     if (!params.centeredSlides) {
+      const isFractionalSlidesPerView = params.slidesPerView !== "auto" && params.slidesPerView % 1 !== 0;
+      const shouldSnapToSlideEdge = params.snapToSlideEdge && !params.loop && (params.slidesPerView === "auto" || isFractionalSlidesPerView);
+      let lastAllowedSnapIndex = snapGrid.length;
+      if (shouldSnapToSlideEdge) {
+        let minVisibleSlides;
+        if (params.slidesPerView === "auto") {
+          minVisibleSlides = 1;
+          let accumulatedSize = 0;
+          for (let i = slidesSizesGrid.length - 1; i >= 0; i -= 1) {
+            accumulatedSize += slidesSizesGrid[i] + (i < slidesSizesGrid.length - 1 ? spaceBetween : 0);
+            if (accumulatedSize <= swiperSize) {
+              minVisibleSlides = slidesSizesGrid.length - i;
+            } else {
+              break;
+            }
+          }
+        } else {
+          minVisibleSlides = Math.floor(params.slidesPerView);
+        }
+        lastAllowedSnapIndex = Math.max(slidesLength - minVisibleSlides, 0);
+      }
       const newSlidesGrid = [];
       for (let i = 0; i < snapGrid.length; i += 1) {
         let slidesGridItem = snapGrid[i];
-        if (params.roundLengths)
-          slidesGridItem = Math.floor(slidesGridItem);
-        if (snapGrid[i] <= swiper.virtualSize - swiperSize) {
+        if (params.roundLengths) slidesGridItem = Math.floor(slidesGridItem);
+        if (shouldSnapToSlideEdge) {
+          if (i <= lastAllowedSnapIndex) {
+            newSlidesGrid.push(slidesGridItem);
+          }
+        } else if (snapGrid[i] <= swiper.virtualSize - swiperSize) {
           newSlidesGrid.push(slidesGridItem);
         }
       }
       snapGrid = newSlidesGrid;
       if (Math.floor(swiper.virtualSize - swiperSize) - Math.floor(snapGrid[snapGrid.length - 1]) > 1) {
-        snapGrid.push(swiper.virtualSize - swiperSize);
+        if (!shouldSnapToSlideEdge) {
+          snapGrid.push(swiper.virtualSize - swiperSize);
+        }
       }
     }
     if (isVirtual && params.loop) {
@@ -1076,13 +1014,11 @@ var AlpineSwiper = (() => {
         swiper.virtualSize += size;
       }
     }
-    if (snapGrid.length === 0)
-      snapGrid = [0];
+    if (snapGrid.length === 0) snapGrid = [0];
     if (spaceBetween !== 0) {
       const key = swiper.isHorizontal() && rtl ? "marginLeft" : swiper.getDirectionLabel("marginRight");
       slides.filter((_, slideIndex) => {
-        if (!params.cssMode || params.loop)
-          return true;
+        if (!params.cssMode || params.loop) return true;
         if (slideIndex === slides.length - 1) {
           return false;
         }
@@ -1099,10 +1035,8 @@ var AlpineSwiper = (() => {
       allSlidesSize -= spaceBetween;
       const maxSnap = allSlidesSize > swiperSize ? allSlidesSize - swiperSize : 0;
       snapGrid = snapGrid.map((snap) => {
-        if (snap <= 0)
-          return -offsetBefore;
-        if (snap > maxSnap)
-          return maxSnap + offsetAfter;
+        if (snap <= 0) return -offsetBefore;
+        if (snap > maxSnap) return maxSnap + offsetAfter;
         return snap;
       });
     }
@@ -1112,9 +1046,8 @@ var AlpineSwiper = (() => {
         allSlidesSize += slideSizeValue + (spaceBetween || 0);
       });
       allSlidesSize -= spaceBetween;
-      const offsetSize = (params.slidesOffsetBefore || 0) + (params.slidesOffsetAfter || 0);
-      if (allSlidesSize + offsetSize < swiperSize) {
-        const allSlidesOffset = (swiperSize - allSlidesSize - offsetSize) / 2;
+      if (allSlidesSize < swiperSize) {
+        const allSlidesOffset = (swiperSize - allSlidesSize) / 2;
         snapGrid.forEach((snap, snapIndex) => {
           snapGrid[snapIndex] = snap - allSlidesOffset;
         });
@@ -1141,8 +1074,7 @@ var AlpineSwiper = (() => {
       swiper.emit("slidesLengthChange");
     }
     if (snapGrid.length !== previousSnapGridLength) {
-      if (swiper.params.watchOverflow)
-        swiper.checkOverflow();
+      if (swiper.params.watchOverflow) swiper.checkOverflow();
       swiper.emit("snapGridLengthChange");
     }
     if (slidesGrid.length !== previousSlidesGridLength) {
@@ -1156,8 +1088,7 @@ var AlpineSwiper = (() => {
       const backFaceHiddenClass = `${params.containerModifierClass}backface-hidden`;
       const hasClassBackfaceClassAdded = swiper.el.classList.contains(backFaceHiddenClass);
       if (slidesLength <= params.maxBackfaceHiddenSlides) {
-        if (!hasClassBackfaceClassAdded)
-          swiper.el.classList.add(backFaceHiddenClass);
+        if (!hasClassBackfaceClassAdded) swiper.el.classList.add(backFaceHiddenClass);
       } else if (hasClassBackfaceClassAdded) {
         swiper.el.classList.remove(backFaceHiddenClass);
       }
@@ -1188,8 +1119,7 @@ var AlpineSwiper = (() => {
       } else {
         for (i = 0; i < Math.ceil(swiper.params.slidesPerView); i += 1) {
           const index = swiper.activeIndex + i;
-          if (index > swiper.slides.length && !isVirtual)
-            break;
+          if (index > swiper.slides.length && !isVirtual) break;
           activeSlides.push(getSlideByIndex(index));
         }
       }
@@ -1202,8 +1132,7 @@ var AlpineSwiper = (() => {
         newHeight = height > newHeight ? height : newHeight;
       }
     }
-    if (newHeight || newHeight === 0)
-      swiper.wrapperEl.style.height = `${newHeight}px`;
+    if (newHeight || newHeight === 0) swiper.wrapperEl.style.height = `${newHeight}px`;
   }
   function updateSlidesOffset() {
     const swiper = this;
@@ -1220,10 +1149,7 @@ var AlpineSwiper = (() => {
       slideEl.classList.remove(className);
     }
   };
-  function updateSlidesProgress(translate2) {
-    if (translate2 === void 0) {
-      translate2 = this && this.translate || 0;
-    }
+  function updateSlidesProgress(translate2 = this && this.translate || 0) {
     const swiper = this;
     const params = swiper.params;
     const {
@@ -1231,13 +1157,10 @@ var AlpineSwiper = (() => {
       rtlTranslate: rtl,
       snapGrid
     } = swiper;
-    if (slides.length === 0)
-      return;
-    if (typeof slides[0].swiperSlideOffset === "undefined")
-      swiper.updateSlidesOffset();
+    if (slides.length === 0) return;
+    if (typeof slides[0].swiperSlideOffset === "undefined") swiper.updateSlidesOffset();
     let offsetCenter = -translate2;
-    if (rtl)
-      offsetCenter = translate2;
+    if (rtl) offsetCenter = translate2;
     swiper.visibleSlidesIndexes = [];
     swiper.visibleSlides = [];
     let spaceBetween = params.spaceBetween;
@@ -1294,10 +1217,8 @@ var AlpineSwiper = (() => {
       const isEndRounded = Math.abs(translate2 - swiper.maxTranslate()) < 1;
       isBeginning = isBeginningRounded || progress <= 0;
       isEnd = isEndRounded || progress >= 1;
-      if (isBeginningRounded)
-        progress = 0;
-      if (isEndRounded)
-        progress = 1;
+      if (isBeginningRounded) progress = 0;
+      if (isEndRounded) progress = 1;
     }
     if (params.loop) {
       const firstSlideIndex = swiper.getSlideIndexByData(0);
@@ -1311,8 +1232,7 @@ var AlpineSwiper = (() => {
       } else {
         progressLoop = (translateAbs + translateMax - lastSlideTranslate) / translateMax;
       }
-      if (progressLoop > 1)
-        progressLoop -= 1;
+      if (progressLoop > 1) progressLoop -= 1;
     }
     Object.assign(swiper, {
       progress,
@@ -1320,8 +1240,7 @@ var AlpineSwiper = (() => {
       isBeginning,
       isEnd
     });
-    if (params.watchSlidesProgress || params.centeredSlides && params.autoHeight)
-      swiper.updateSlidesProgress(translate2);
+    if (params.watchSlidesProgress || params.centeredSlides && params.autoHeight) swiper.updateSlidesProgress(translate2);
     if (isBeginning && !wasBeginning) {
       swiper.emit("reachBeginning toEdge");
     }
@@ -1359,10 +1278,8 @@ var AlpineSwiper = (() => {
     if (isVirtual) {
       if (params.loop) {
         let slideIndex = activeIndex - swiper.virtual.slidesBefore;
-        if (slideIndex < 0)
-          slideIndex = swiper.virtual.slides.length + slideIndex;
-        if (slideIndex >= swiper.virtual.slides.length)
-          slideIndex -= swiper.virtual.slides.length;
+        if (slideIndex < 0) slideIndex = swiper.virtual.slides.length + slideIndex;
+        if (slideIndex >= swiper.virtual.slides.length) slideIndex -= swiper.virtual.slides.length;
         activeSlide = getFilteredSlide(`[data-swiper-slide-index="${slideIndex}"]`);
       } else {
         activeSlide = getFilteredSlide(`[data-swiper-slide-index="${activeIndex}"]`);
@@ -1396,8 +1313,7 @@ var AlpineSwiper = (() => {
     swiper.emitSlidesClasses();
   }
   var processLazyPreloader = (swiper, imageEl) => {
-    if (!swiper || swiper.destroyed || !swiper.params)
-      return;
+    if (!swiper || swiper.destroyed || !swiper.params) return;
     const slideSelector = () => swiper.isElement ? `swiper-slide` : `.${swiper.params.slideClass}`;
     const slideEl = imageEl.closest(slideSelector());
     if (slideEl) {
@@ -1409,30 +1325,24 @@ var AlpineSwiper = (() => {
           requestAnimationFrame(() => {
             if (slideEl.shadowRoot) {
               lazyEl = slideEl.shadowRoot.querySelector(`.${swiper.params.lazyPreloaderClass}`);
-              if (lazyEl)
-                lazyEl.remove();
+              if (lazyEl && !lazyEl.lazyPreloaderManaged) lazyEl.remove();
             }
           });
         }
       }
-      if (lazyEl)
-        lazyEl.remove();
+      if (lazyEl && !lazyEl.lazyPreloaderManaged) lazyEl.remove();
     }
   };
   var unlazy = (swiper, index) => {
-    if (!swiper.slides[index])
-      return;
+    if (!swiper.slides[index]) return;
     const imageEl = swiper.slides[index].querySelector('[loading="lazy"]');
-    if (imageEl)
-      imageEl.removeAttribute("loading");
+    if (imageEl) imageEl.removeAttribute("loading");
   };
   var preload = (swiper) => {
-    if (!swiper || swiper.destroyed || !swiper.params)
-      return;
+    if (!swiper || swiper.destroyed || !swiper.params) return;
     let amount = swiper.params.lazyPreloadPrevNext;
     const len = swiper.slides.length;
-    if (!len || !amount || amount < 0)
-      return;
+    if (!len || !amount || amount < 0) return;
     amount = Math.min(amount, len);
     const slidesPerView = swiper.params.slidesPerView === "auto" ? swiper.slidesPerViewDynamic() : Math.ceil(swiper.params.slidesPerView);
     const activeIndex = swiper.activeIndex;
@@ -1445,8 +1355,7 @@ var AlpineSwiper = (() => {
         return activeColumn + slidesPerView + i;
       }));
       swiper.slides.forEach((slideEl, i) => {
-        if (preloadColumns.includes(slideEl.column))
-          unlazy(swiper, i);
+        if (preloadColumns.includes(slideEl.column)) unlazy(swiper, i);
       });
       return;
     }
@@ -1454,8 +1363,7 @@ var AlpineSwiper = (() => {
     if (swiper.params.rewind || swiper.params.loop) {
       for (let i = activeIndex - amount; i <= slideIndexLastInView + amount; i += 1) {
         const realIndex = (i % len + len) % len;
-        if (realIndex < activeIndex || realIndex > slideIndexLastInView)
-          unlazy(swiper, realIndex);
+        if (realIndex < activeIndex || realIndex > slideIndexLastInView) unlazy(swiper, realIndex);
       }
     } else {
       for (let i = Math.max(activeIndex - amount, 0); i <= Math.min(slideIndexLastInView + amount, len - 1); i += 1) {
@@ -1484,8 +1392,7 @@ var AlpineSwiper = (() => {
       }
     }
     if (params.normalizeSlideIndex) {
-      if (activeIndex < 0 || typeof activeIndex === "undefined")
-        activeIndex = 0;
+      if (activeIndex < 0 || typeof activeIndex === "undefined") activeIndex = 0;
     }
     return activeIndex;
   }
@@ -1520,8 +1427,7 @@ var AlpineSwiper = (() => {
       const skip = Math.min(params.slidesPerGroupSkip, activeIndex);
       snapIndex = skip + Math.floor((activeIndex - skip) / params.slidesPerGroup);
     }
-    if (snapIndex >= snapGrid.length)
-      snapIndex = snapGrid.length - 1;
+    if (snapIndex >= snapGrid.length) snapIndex = snapGrid.length - 1;
     if (activeIndex === previousIndex && !swiper.params.loop) {
       if (snapIndex !== previousSnapIndex) {
         swiper.snapIndex = snapIndex;
@@ -1535,8 +1441,12 @@ var AlpineSwiper = (() => {
     }
     const gridEnabled = swiper.grid && params.grid && params.grid.rows > 1;
     let realIndex;
-    if (swiper.virtual && params.virtual.enabled && params.loop) {
-      realIndex = getVirtualRealIndex(activeIndex);
+    if (swiper.virtual && params.virtual.enabled) {
+      if (params.loop) {
+        realIndex = getVirtualRealIndex(activeIndex);
+      } else {
+        realIndex = activeIndex;
+      }
     } else if (gridEnabled) {
       const firstSlideInColumn = swiper.slides.find((slideEl) => slideEl.column === activeIndex);
       let activeSlideIndex = parseInt(firstSlideInColumn.getAttribute("data-swiper-slide-index"), 10);
@@ -1623,10 +1533,7 @@ var AlpineSwiper = (() => {
     updateActiveIndex,
     updateClickedSlide
   };
-  function getSwiperTranslate(axis) {
-    if (axis === void 0) {
-      axis = this.isHorizontal() ? "x" : "y";
-    }
+  function getSwiperTranslate(axis = this.isHorizontal() ? "x" : "y") {
     const swiper = this;
     const {
       params,
@@ -1642,8 +1549,7 @@ var AlpineSwiper = (() => {
     }
     let currentTranslate = getTranslate(wrapperEl, axis);
     currentTranslate += swiper.cssOverflowAdjustment();
-    if (rtl)
-      currentTranslate = -currentTranslate;
+    if (rtl) currentTranslate = -currentTranslate;
     return currentTranslate || 0;
   }
   function setTranslate(translate2, byController) {
@@ -1696,19 +1602,7 @@ var AlpineSwiper = (() => {
   function maxTranslate() {
     return -this.snapGrid[this.snapGrid.length - 1];
   }
-  function translateTo(translate2, speed, runCallbacks, translateBounds, internal) {
-    if (translate2 === void 0) {
-      translate2 = 0;
-    }
-    if (speed === void 0) {
-      speed = this.params.speed;
-    }
-    if (runCallbacks === void 0) {
-      runCallbacks = true;
-    }
-    if (translateBounds === void 0) {
-      translateBounds = true;
-    }
+  function translateTo(translate2 = 0, speed = this.params.speed, runCallbacks = true, translateBounds = true, internal) {
     const swiper = this;
     const {
       params,
@@ -1720,12 +1614,9 @@ var AlpineSwiper = (() => {
     const minTranslate2 = swiper.minTranslate();
     const maxTranslate2 = swiper.maxTranslate();
     let newTranslate;
-    if (translateBounds && translate2 > minTranslate2)
-      newTranslate = minTranslate2;
-    else if (translateBounds && translate2 < maxTranslate2)
-      newTranslate = maxTranslate2;
-    else
-      newTranslate = translate2;
+    if (translateBounds && translate2 > minTranslate2) newTranslate = minTranslate2;
+    else if (translateBounds && translate2 < maxTranslate2) newTranslate = maxTranslate2;
+    else newTranslate = translate2;
     swiper.updateProgress(newTranslate);
     if (params.cssMode) {
       const isH = swiper.isHorizontal();
@@ -1765,10 +1656,8 @@ var AlpineSwiper = (() => {
         swiper.animating = true;
         if (!swiper.onTranslateToWrapperTransitionEnd) {
           swiper.onTranslateToWrapperTransitionEnd = function transitionEnd2(e) {
-            if (!swiper || swiper.destroyed)
-              return;
-            if (e.target !== this)
-              return;
+            if (!swiper || swiper.destroyed) return;
+            if (e.target !== this) return;
             swiper.wrapperEl.removeEventListener("transitionend", swiper.onTranslateToWrapperTransitionEnd);
             swiper.onTranslateToWrapperTransitionEnd = null;
             delete swiper.onTranslateToWrapperTransitionEnd;
@@ -1798,32 +1687,26 @@ var AlpineSwiper = (() => {
     }
     swiper.emit("setTransition", duration, byController);
   }
-  function transitionEmit(_ref) {
-    let {
-      swiper,
-      runCallbacks,
-      direction,
-      step
-    } = _ref;
+  function transitionEmit({
+    swiper,
+    runCallbacks,
+    direction,
+    step
+  }) {
     const {
       activeIndex,
       previousIndex
     } = swiper;
     let dir = direction;
     if (!dir) {
-      if (activeIndex > previousIndex)
-        dir = "next";
-      else if (activeIndex < previousIndex)
-        dir = "prev";
-      else
-        dir = "reset";
+      if (activeIndex > previousIndex) dir = "next";
+      else if (activeIndex < previousIndex) dir = "prev";
+      else dir = "reset";
     }
     swiper.emit(`transition${step}`);
-    if (runCallbacks && activeIndex !== previousIndex) {
-      if (dir === "reset") {
-        swiper.emit(`slideResetTransition${step}`);
-        return;
-      }
+    if (runCallbacks && dir === "reset") {
+      swiper.emit(`slideResetTransition${step}`);
+    } else if (runCallbacks && activeIndex !== previousIndex) {
       swiper.emit(`slideChangeTransition${step}`);
       if (dir === "next") {
         swiper.emit(`slideNextTransition${step}`);
@@ -1832,16 +1715,12 @@ var AlpineSwiper = (() => {
       }
     }
   }
-  function transitionStart(runCallbacks, direction) {
-    if (runCallbacks === void 0) {
-      runCallbacks = true;
-    }
+  function transitionStart(runCallbacks = true, direction) {
     const swiper = this;
     const {
       params
     } = swiper;
-    if (params.cssMode)
-      return;
+    if (params.cssMode) return;
     if (params.autoHeight) {
       swiper.updateAutoHeight();
     }
@@ -1852,17 +1731,13 @@ var AlpineSwiper = (() => {
       step: "Start"
     });
   }
-  function transitionEnd(runCallbacks, direction) {
-    if (runCallbacks === void 0) {
-      runCallbacks = true;
-    }
+  function transitionEnd(runCallbacks = true, direction) {
     const swiper = this;
     const {
       params
     } = swiper;
     swiper.animating = false;
-    if (params.cssMode)
-      return;
+    if (params.cssMode) return;
     swiper.setTransition(0);
     transitionEmit({
       swiper,
@@ -1876,20 +1751,13 @@ var AlpineSwiper = (() => {
     transitionStart,
     transitionEnd
   };
-  function slideTo(index, speed, runCallbacks, internal, initial) {
-    if (index === void 0) {
-      index = 0;
-    }
-    if (runCallbacks === void 0) {
-      runCallbacks = true;
-    }
+  function slideTo(index = 0, speed, runCallbacks = true, internal, initial) {
     if (typeof index === "string") {
       index = parseInt(index, 10);
     }
     const swiper = this;
     let slideIndex = index;
-    if (slideIndex < 0)
-      slideIndex = 0;
+    if (slideIndex < 0) slideIndex = 0;
     const {
       params,
       snapGrid,
@@ -1908,8 +1776,7 @@ var AlpineSwiper = (() => {
     }
     const skip = Math.min(swiper.params.slidesPerGroupSkip, slideIndex);
     let snapIndex = skip + Math.floor((slideIndex - skip) / swiper.params.slidesPerGroup);
-    if (snapIndex >= snapGrid.length)
-      snapIndex = snapGrid.length - 1;
+    if (snapIndex >= snapGrid.length) snapIndex = snapGrid.length - 1;
     const translate2 = -snapGrid[snapIndex];
     if (params.normalizeSlideIndex) {
       for (let i = 0; i < slidesGrid.length; i += 1) {
@@ -1942,12 +1809,9 @@ var AlpineSwiper = (() => {
     }
     swiper.updateProgress(translate2);
     let direction;
-    if (slideIndex > activeIndex)
-      direction = "next";
-    else if (slideIndex < activeIndex)
-      direction = "prev";
-    else
-      direction = "reset";
+    if (slideIndex > activeIndex) direction = "next";
+    else if (slideIndex < activeIndex) direction = "prev";
+    else direction = "reset";
     const isVirtual = swiper.virtual && swiper.params.virtual.enabled;
     const isInitialVirtual = isVirtual && initial;
     if (!isInitialVirtual && (rtl && -translate2 === swiper.translate || !rtl && translate2 === swiper.translate)) {
@@ -2020,10 +1884,8 @@ var AlpineSwiper = (() => {
       swiper.animating = true;
       if (!swiper.onSlideToWrapperTransitionEnd) {
         swiper.onSlideToWrapperTransitionEnd = function transitionEnd2(e) {
-          if (!swiper || swiper.destroyed)
-            return;
-          if (e.target !== this)
-            return;
+          if (!swiper || swiper.destroyed) return;
+          if (e.target !== this) return;
           swiper.wrapperEl.removeEventListener("transitionend", swiper.onSlideToWrapperTransitionEnd);
           swiper.onSlideToWrapperTransitionEnd = null;
           delete swiper.onSlideToWrapperTransitionEnd;
@@ -2034,20 +1896,13 @@ var AlpineSwiper = (() => {
     }
     return true;
   }
-  function slideToLoop(index, speed, runCallbacks, internal) {
-    if (index === void 0) {
-      index = 0;
-    }
-    if (runCallbacks === void 0) {
-      runCallbacks = true;
-    }
+  function slideToLoop(index = 0, speed, runCallbacks = true, internal) {
     if (typeof index === "string") {
       const indexAsNumber = parseInt(index, 10);
       index = indexAsNumber;
     }
     const swiper = this;
-    if (swiper.destroyed)
-      return;
+    if (swiper.destroyed) return;
     if (typeof speed === "undefined") {
       speed = swiper.params.speed;
     }
@@ -2066,26 +1921,29 @@ var AlpineSwiper = (() => {
         }
         const cols = gridEnabled ? Math.ceil(swiper.slides.length / swiper.params.grid.rows) : swiper.slides.length;
         const {
-          centeredSlides
+          centeredSlides,
+          slidesOffsetBefore,
+          slidesOffsetAfter
         } = swiper.params;
+        const bothDirections = centeredSlides || !!slidesOffsetBefore || !!slidesOffsetAfter;
         let slidesPerView = swiper.params.slidesPerView;
         if (slidesPerView === "auto") {
           slidesPerView = swiper.slidesPerViewDynamic();
         } else {
           slidesPerView = Math.ceil(parseFloat(swiper.params.slidesPerView, 10));
-          if (centeredSlides && slidesPerView % 2 === 0) {
+          if (bothDirections && slidesPerView % 2 === 0) {
             slidesPerView = slidesPerView + 1;
           }
         }
         let needLoopFix = cols - targetSlideIndex < slidesPerView;
-        if (centeredSlides) {
+        if (bothDirections) {
           needLoopFix = needLoopFix || targetSlideIndex < Math.ceil(slidesPerView / 2);
         }
-        if (internal && centeredSlides && swiper.params.slidesPerView !== "auto" && !gridEnabled) {
+        if (internal && bothDirections && swiper.params.slidesPerView !== "auto" && !gridEnabled) {
           needLoopFix = false;
         }
         if (needLoopFix) {
-          const direction = centeredSlides ? targetSlideIndex < swiper.activeIndex ? "prev" : "next" : targetSlideIndex - swiper.activeIndex - 1 < swiper.params.slidesPerView ? "next" : "prev";
+          const direction = bothDirections ? targetSlideIndex < swiper.activeIndex ? "prev" : "next" : targetSlideIndex - swiper.activeIndex - 1 < swiper.params.slidesPerView ? "next" : "prev";
           swiper.loopFix({
             direction,
             slideTo: true,
@@ -2106,18 +1964,14 @@ var AlpineSwiper = (() => {
     });
     return swiper;
   }
-  function slideNext(speed, runCallbacks, internal) {
-    if (runCallbacks === void 0) {
-      runCallbacks = true;
-    }
+  function slideNext(speed, runCallbacks = true, internal) {
     const swiper = this;
     const {
       enabled,
       params,
       animating
     } = swiper;
-    if (!enabled || swiper.destroyed)
-      return swiper;
+    if (!enabled || swiper.destroyed) return swiper;
     if (typeof speed === "undefined") {
       speed = swiper.params.speed;
     }
@@ -2128,8 +1982,7 @@ var AlpineSwiper = (() => {
     const increment = swiper.activeIndex < params.slidesPerGroupSkip ? 1 : perGroup;
     const isVirtual = swiper.virtual && params.virtual.enabled;
     if (params.loop) {
-      if (animating && !isVirtual && params.loopPreventsSliding)
-        return false;
+      if (animating && !isVirtual && params.loopPreventsSliding) return false;
       swiper.loopFix({
         direction: "next"
       });
@@ -2146,10 +1999,7 @@ var AlpineSwiper = (() => {
     }
     return swiper.slideTo(swiper.activeIndex + increment, speed, runCallbacks, internal);
   }
-  function slidePrev(speed, runCallbacks, internal) {
-    if (runCallbacks === void 0) {
-      runCallbacks = true;
-    }
+  function slidePrev(speed, runCallbacks = true, internal) {
     const swiper = this;
     const {
       params,
@@ -2159,15 +2009,13 @@ var AlpineSwiper = (() => {
       enabled,
       animating
     } = swiper;
-    if (!enabled || swiper.destroyed)
-      return swiper;
+    if (!enabled || swiper.destroyed) return swiper;
     if (typeof speed === "undefined") {
       speed = swiper.params.speed;
     }
     const isVirtual = swiper.virtual && params.virtual.enabled;
     if (params.loop) {
-      if (animating && !isVirtual && params.loopPreventsSliding)
-        return false;
+      if (animating && !isVirtual && params.loopPreventsSliding) return false;
       swiper.loopFix({
         direction: "prev"
       });
@@ -2175,8 +2023,7 @@ var AlpineSwiper = (() => {
     }
     const translate2 = rtlTranslate ? swiper.translate : -swiper.translate;
     function normalize(val) {
-      if (val < 0)
-        return -Math.floor(Math.abs(val));
+      if (val < 0) return -Math.floor(Math.abs(val));
       return Math.floor(val);
     }
     const normalizedTranslate = normalize(translate2);
@@ -2197,8 +2044,7 @@ var AlpineSwiper = (() => {
     let prevIndex = 0;
     if (typeof prevSnap !== "undefined") {
       prevIndex = slidesGrid.indexOf(prevSnap);
-      if (prevIndex < 0)
-        prevIndex = swiper.activeIndex - 1;
+      if (prevIndex < 0) prevIndex = swiper.activeIndex - 1;
       if (params.slidesPerView === "auto" && params.slidesPerGroup === 1 && params.slidesPerGroupAuto) {
         prevIndex = prevIndex - swiper.slidesPerViewDynamic("previous", true) + 1;
         prevIndex = Math.max(prevIndex, 0);
@@ -2215,28 +2061,17 @@ var AlpineSwiper = (() => {
     }
     return swiper.slideTo(prevIndex, speed, runCallbacks, internal);
   }
-  function slideReset(speed, runCallbacks, internal) {
-    if (runCallbacks === void 0) {
-      runCallbacks = true;
-    }
+  function slideReset(speed, runCallbacks = true, internal) {
     const swiper = this;
-    if (swiper.destroyed)
-      return;
+    if (swiper.destroyed) return;
     if (typeof speed === "undefined") {
       speed = swiper.params.speed;
     }
     return swiper.slideTo(swiper.activeIndex, speed, runCallbacks, internal);
   }
-  function slideToClosest(speed, runCallbacks, internal, threshold) {
-    if (runCallbacks === void 0) {
-      runCallbacks = true;
-    }
-    if (threshold === void 0) {
-      threshold = 0.5;
-    }
+  function slideToClosest(speed, runCallbacks = true, internal, threshold = 0.5) {
     const swiper = this;
-    if (swiper.destroyed)
-      return;
+    if (swiper.destroyed) return;
     if (typeof speed === "undefined") {
       speed = swiper.params.speed;
     }
@@ -2263,31 +2098,22 @@ var AlpineSwiper = (() => {
   }
   function slideToClickedSlide() {
     const swiper = this;
-    if (swiper.destroyed)
-      return;
+    if (swiper.destroyed) return;
     const {
       params,
       slidesEl
     } = swiper;
     const slidesPerView = params.slidesPerView === "auto" ? swiper.slidesPerViewDynamic() : params.slidesPerView;
-    let slideToIndex = swiper.clickedIndex;
+    let slideToIndex = swiper.getSlideIndexWhenGrid(swiper.clickedIndex);
     let realIndex;
     const slideSelector = swiper.isElement ? `swiper-slide` : `.${params.slideClass}`;
+    const isGrid = swiper.grid && swiper.params.grid && swiper.params.grid.rows > 1;
     if (params.loop) {
-      if (swiper.animating)
-        return;
+      if (swiper.animating) return;
       realIndex = parseInt(swiper.clickedSlide.getAttribute("data-swiper-slide-index"), 10);
       if (params.centeredSlides) {
-        if (slideToIndex < swiper.loopedSlides - slidesPerView / 2 || slideToIndex > swiper.slides.length - swiper.loopedSlides + slidesPerView / 2) {
-          swiper.loopFix();
-          slideToIndex = swiper.getSlideIndex(elementChildren(slidesEl, `${slideSelector}[data-swiper-slide-index="${realIndex}"]`)[0]);
-          nextTick(() => {
-            swiper.slideTo(slideToIndex);
-          });
-        } else {
-          swiper.slideTo(slideToIndex);
-        }
-      } else if (slideToIndex > swiper.slides.length - slidesPerView) {
+        swiper.slideToLoop(realIndex);
+      } else if (slideToIndex > (isGrid ? (swiper.slides.length - slidesPerView) / 2 - (swiper.params.grid.rows - 1) : swiper.slides.length - slidesPerView)) {
         swiper.loopFix();
         slideToIndex = swiper.getSlideIndex(elementChildren(slidesEl, `${slideSelector}[data-swiper-slide-index="${realIndex}"]`)[0]);
         nextTick(() => {
@@ -2315,15 +2141,27 @@ var AlpineSwiper = (() => {
       params,
       slidesEl
     } = swiper;
-    if (!params.loop || swiper.virtual && swiper.params.virtual.enabled)
-      return;
+    if (!params.loop || swiper.virtual && swiper.params.virtual.enabled) return;
     const initSlides = () => {
       const slides = elementChildren(slidesEl, `.${params.slideClass}, swiper-slide`);
       slides.forEach((el, index) => {
         el.setAttribute("data-swiper-slide-index", index);
       });
     };
+    const clearBlankSlides = () => {
+      const slides = elementChildren(slidesEl, `.${params.slideBlankClass}`);
+      slides.forEach((el) => {
+        el.remove();
+      });
+      if (slides.length > 0) {
+        swiper.recalcSlides();
+        swiper.updateSlides();
+      }
+    };
     const gridEnabled = swiper.grid && params.grid && params.grid.rows > 1;
+    if (params.loopAddBlankSlides && (params.slidesPerGroup > 1 || gridEnabled)) {
+      clearBlankSlides();
+    }
     const slidesPerGroup = params.slidesPerGroup * (gridEnabled ? params.grid.rows : 1);
     const shouldFillGroup = swiper.slides.length % slidesPerGroup !== 0;
     const shouldFillGrid = gridEnabled && swiper.slides.length % params.grid.rows !== 0;
@@ -2356,26 +2194,25 @@ var AlpineSwiper = (() => {
     } else {
       initSlides();
     }
+    const bothDirections = params.centeredSlides || !!params.slidesOffsetBefore || !!params.slidesOffsetAfter;
     swiper.loopFix({
       slideRealIndex,
-      direction: params.centeredSlides ? void 0 : "next",
+      direction: bothDirections ? void 0 : "next",
       initial
     });
   }
-  function loopFix(_temp) {
-    let {
-      slideRealIndex,
-      slideTo: slideTo2 = true,
-      direction,
-      setTranslate: setTranslate2,
-      activeSlideIndex,
-      initial,
-      byController,
-      byMousewheel
-    } = _temp === void 0 ? {} : _temp;
+  function loopFix({
+    slideRealIndex,
+    slideTo: slideTo2 = true,
+    direction,
+    setTranslate: setTranslate2,
+    activeSlideIndex,
+    initial,
+    byController,
+    byMousewheel
+  } = {}) {
     const swiper = this;
-    if (!swiper.params.loop)
-      return;
+    if (!swiper.params.loop) return;
     swiper.emit("beforeLoopFix");
     const {
       slides,
@@ -2386,15 +2223,18 @@ var AlpineSwiper = (() => {
     } = swiper;
     const {
       centeredSlides,
+      slidesOffsetBefore,
+      slidesOffsetAfter,
       initialSlide
     } = params;
+    const bothDirections = centeredSlides || !!slidesOffsetBefore || !!slidesOffsetAfter;
     swiper.allowSlidePrev = true;
     swiper.allowSlideNext = true;
     if (swiper.virtual && params.virtual.enabled) {
       if (slideTo2) {
-        if (!params.centeredSlides && swiper.snapIndex === 0) {
+        if (!bothDirections && swiper.snapIndex === 0) {
           swiper.slideTo(swiper.virtual.slides.length, 0, false, true);
-        } else if (params.centeredSlides && swiper.snapIndex < params.slidesPerView) {
+        } else if (bothDirections && swiper.snapIndex < params.slidesPerView) {
           swiper.slideTo(swiper.virtual.slides.length + swiper.snapIndex, 0, false, true);
         } else if (swiper.snapIndex === swiper.snapGrid.length - 1) {
           swiper.slideTo(swiper.virtual.slidesBefore, 0, false, true);
@@ -2410,12 +2250,12 @@ var AlpineSwiper = (() => {
       slidesPerView = swiper.slidesPerViewDynamic();
     } else {
       slidesPerView = Math.ceil(parseFloat(params.slidesPerView, 10));
-      if (centeredSlides && slidesPerView % 2 === 0) {
+      if (bothDirections && slidesPerView % 2 === 0) {
         slidesPerView = slidesPerView + 1;
       }
     }
     const slidesPerGroup = params.slidesPerGroupAuto ? slidesPerView : params.slidesPerGroup;
-    let loopedSlides = slidesPerGroup;
+    let loopedSlides = bothDirections ? Math.max(slidesPerGroup, Math.ceil(slidesPerView / 2)) : slidesPerGroup;
     if (loopedSlides % slidesPerGroup !== 0) {
       loopedSlides += slidesPerGroup - loopedSlides % slidesPerGroup;
     }
@@ -2430,7 +2270,7 @@ var AlpineSwiper = (() => {
     const prependSlidesIndexes = [];
     const appendSlidesIndexes = [];
     const cols = gridEnabled ? Math.ceil(slides.length / params.grid.rows) : slides.length;
-    const isInitialOverflow = initial && cols - initialSlide < slidesPerView && !centeredSlides;
+    const isInitialOverflow = initial && cols - initialSlide < slidesPerView && !bothDirections;
     let activeIndex = isInitialOverflow ? initialSlide : swiper.activeIndex;
     if (typeof activeSlideIndex === "undefined") {
       activeSlideIndex = swiper.getSlideIndex(slides.find((el) => el.classList.contains(params.slideActiveClass)));
@@ -2442,7 +2282,7 @@ var AlpineSwiper = (() => {
     let slidesPrepended = 0;
     let slidesAppended = 0;
     const activeColIndex = gridEnabled ? slides[activeSlideIndex].column : activeSlideIndex;
-    const activeColIndexWithShift = activeColIndex + (centeredSlides && typeof setTranslate2 === "undefined" ? -slidesPerView / 2 + 0.5 : 0);
+    const activeColIndexWithShift = activeColIndex + (bothDirections && typeof setTranslate2 === "undefined" ? -slidesPerView / 2 + 0.5 : 0);
     if (activeColIndexWithShift < loopedSlides) {
       slidesPrepended = Math.max(loopedSlides - activeColIndexWithShift, slidesPerGroup);
       for (let i = 0; i < loopedSlides - activeColIndexWithShift; i += 1) {
@@ -2450,8 +2290,7 @@ var AlpineSwiper = (() => {
         if (gridEnabled) {
           const colIndexToPrepend = cols - index - 1;
           for (let i2 = slides.length - 1; i2 >= 0; i2 -= 1) {
-            if (slides[i2].column === colIndexToPrepend)
-              prependSlidesIndexes.push(i2);
+            if (slides[i2].column === colIndexToPrepend) prependSlidesIndexes.push(i2);
           }
         } else {
           prependSlidesIndexes.push(cols - index - 1);
@@ -2466,8 +2305,7 @@ var AlpineSwiper = (() => {
         const index = i - Math.floor(i / cols) * cols;
         if (gridEnabled) {
           slides.forEach((slide2, slideIndex) => {
-            if (slide2.column === index)
-              appendSlidesIndexes.push(slideIndex);
+            if (slide2.column === index) appendSlidesIndexes.push(slideIndex);
           });
         } else {
           appendSlidesIndexes.push(index);
@@ -2565,11 +2403,10 @@ var AlpineSwiper = (() => {
       };
       if (Array.isArray(swiper.controller.control)) {
         swiper.controller.control.forEach((c) => {
-          if (!c.destroyed && c.params.loop)
-            c.loopFix({
-              ...loopParams,
-              slideTo: c.params.slidesPerView === params.slidesPerView ? slideTo2 : false
-            });
+          if (!c.destroyed && c.params.loop) c.loopFix({
+            ...loopParams,
+            slideTo: c.params.slidesPerView === params.slidesPerView ? slideTo2 : false
+          });
         });
       } else if (swiper.controller.control instanceof swiper.constructor && swiper.controller.control.params.loop) {
         swiper.controller.control.loopFix({
@@ -2586,8 +2423,7 @@ var AlpineSwiper = (() => {
       params,
       slidesEl
     } = swiper;
-    if (!params.loop || !slidesEl || swiper.virtual && swiper.params.virtual.enabled)
-      return;
+    if (!params.loop || !slidesEl || swiper.virtual && swiper.params.virtual.enabled) return;
     swiper.recalcSlides();
     const newSlidesOrder = [];
     swiper.slides.forEach((slideEl) => {
@@ -2610,8 +2446,7 @@ var AlpineSwiper = (() => {
   };
   function setGrabCursor(moving) {
     const swiper = this;
-    if (!swiper.params.simulateTouch || swiper.params.watchOverflow && swiper.isLocked || swiper.params.cssMode)
-      return;
+    if (!swiper.params.simulateTouch || swiper.params.watchOverflow && swiper.isLocked || swiper.params.cssMode) return;
     const el = swiper.params.touchEventsTarget === "container" ? swiper.el : swiper.wrapperEl;
     if (swiper.isElement) {
       swiper.__preventObserver__ = true;
@@ -2643,15 +2478,10 @@ var AlpineSwiper = (() => {
     setGrabCursor,
     unsetGrabCursor
   };
-  function closestElement(selector, base) {
-    if (base === void 0) {
-      base = this;
-    }
+  function closestElement(selector, base = this) {
     function __closestFrom(el) {
-      if (!el || el === getDocument() || el === getWindow())
-        return null;
-      if (el.assignedSlot)
-        el = el.assignedSlot;
+      if (!el || el === getDocument() || el === getWindow()) return null;
+      if (el.assignedSlot) el = el.assignedSlot;
       const found = el.closest(selector);
       if (!found && !el.getRootNode) {
         return null;
@@ -2678,10 +2508,10 @@ var AlpineSwiper = (() => {
   }
   function onTouchStart(event2) {
     const swiper = this;
+    if (swiper.destroyed) return;
     const document2 = getDocument();
     let e = event2;
-    if (e.originalEvent)
-      e = e.originalEvent;
+    if (e.originalEvent) e = e.originalEvent;
     const data = swiper.touchEventsData;
     if (e.type === "pointerdown") {
       if (data.pointerId !== null && data.pointerId !== e.pointerId) {
@@ -2700,10 +2530,8 @@ var AlpineSwiper = (() => {
       touches,
       enabled
     } = swiper;
-    if (!enabled)
-      return;
-    if (!params.simulateTouch && e.pointerType === "mouse")
-      return;
+    if (!enabled) return;
+    if (!params.simulateTouch && e.pointerType === "mouse") return;
     if (swiper.animating && params.preventInteractionOnTransition) {
       return;
     }
@@ -2712,15 +2540,11 @@ var AlpineSwiper = (() => {
     }
     let targetEl = e.target;
     if (params.touchEventsTarget === "wrapper") {
-      if (!elementIsChildOf(targetEl, swiper.wrapperEl))
-        return;
+      if (!elementIsChildOf(targetEl, swiper.wrapperEl)) return;
     }
-    if ("which" in e && e.which === 3)
-      return;
-    if ("button" in e && e.button > 0)
-      return;
-    if (data.isTouched && data.isMoved)
-      return;
+    if ("which" in e && e.which === 3) return;
+    if ("button" in e && e.button > 0) return;
+    if (data.isTouched && data.isMoved) return;
     const swipingClassHasValue = !!params.noSwipingClass && params.noSwipingClass !== "";
     const eventPath = e.composedPath ? e.composedPath() : e.path;
     if (swipingClassHasValue && e.target && e.target.shadowRoot && eventPath) {
@@ -2733,8 +2557,7 @@ var AlpineSwiper = (() => {
       return;
     }
     if (params.swipeHandler) {
-      if (!targetEl.closest(params.swipeHandler))
-        return;
+      if (!targetEl.closest(params.swipeHandler)) return;
     }
     touches.currentX = e.pageX;
     touches.currentY = e.pageY;
@@ -2756,8 +2579,7 @@ var AlpineSwiper = (() => {
     swiper.allowClick = true;
     swiper.updateSize();
     swiper.swipeDirection = void 0;
-    if (params.threshold > 0)
-      data.allowThresholdMove = false;
+    if (params.threshold > 0) data.allowThresholdMove = false;
     let preventDefault = true;
     if (targetEl.matches(data.focusableElements)) {
       preventDefault = false;
@@ -2780,6 +2602,7 @@ var AlpineSwiper = (() => {
   function onTouchMove(event2) {
     const document2 = getDocument();
     const swiper = this;
+    if (swiper.destroyed) return;
     const data = swiper.touchEventsData;
     const {
       params,
@@ -2787,25 +2610,19 @@ var AlpineSwiper = (() => {
       rtlTranslate: rtl,
       enabled
     } = swiper;
-    if (!enabled)
-      return;
-    if (!params.simulateTouch && event2.pointerType === "mouse")
-      return;
+    if (!enabled) return;
+    if (!params.simulateTouch && event2.pointerType === "mouse") return;
     let e = event2;
-    if (e.originalEvent)
-      e = e.originalEvent;
+    if (e.originalEvent) e = e.originalEvent;
     if (e.type === "pointermove") {
-      if (data.touchId !== null)
-        return;
+      if (data.touchId !== null) return;
       const id = e.pointerId;
-      if (id !== data.pointerId)
-        return;
+      if (id !== data.pointerId) return;
     }
     let targetTouch;
     if (e.type === "touchmove") {
       targetTouch = [...e.changedTouches].find((t) => t.identifier === data.touchId);
-      if (!targetTouch || targetTouch.identifier !== data.touchId)
-        return;
+      if (!targetTouch || targetTouch.identifier !== data.touchId) return;
     } else {
       targetTouch = e;
     }
@@ -2869,8 +2686,7 @@ var AlpineSwiper = (() => {
     touches.currentY = pageY;
     const diffX = touches.currentX - touches.startX;
     const diffY = touches.currentY - touches.startY;
-    if (swiper.params.threshold && Math.sqrt(diffX ** 2 + diffY ** 2) < swiper.params.threshold)
-      return;
+    if (swiper.params.threshold && Math.sqrt(diffX ** 2 + diffY ** 2) < swiper.params.threshold) return;
     if (typeof data.isScrolling === "undefined") {
       let touchAngle;
       if (swiper.isHorizontal() && touches.currentY === touches.startY || swiper.isVertical() && touches.currentX === touches.startX) {
@@ -3023,8 +2839,7 @@ var AlpineSwiper = (() => {
         return;
       }
     }
-    if (!params.followFinger || params.cssMode)
-      return;
+    if (!params.followFinger || params.cssMode) return;
     if (params.freeMode && params.freeMode.enabled && swiper.freeMode || params.watchSlidesProgress) {
       swiper.updateActiveIndex();
       swiper.updateSlidesClasses();
@@ -3037,22 +2852,19 @@ var AlpineSwiper = (() => {
   }
   function onTouchEnd(event2) {
     const swiper = this;
+    if (swiper.destroyed) return;
     const data = swiper.touchEventsData;
     let e = event2;
-    if (e.originalEvent)
-      e = e.originalEvent;
+    if (e.originalEvent) e = e.originalEvent;
     let targetTouch;
     const isTouchEvent = e.type === "touchend" || e.type === "touchcancel";
     if (!isTouchEvent) {
-      if (data.touchId !== null)
-        return;
-      if (e.pointerId !== data.pointerId)
-        return;
+      if (data.touchId !== null) return;
+      if (e.pointerId !== data.pointerId) return;
       targetTouch = e;
     } else {
       targetTouch = [...e.changedTouches].find((t) => t.identifier === data.touchId);
-      if (!targetTouch || targetTouch.identifier !== data.touchId)
-        return;
+      if (!targetTouch || targetTouch.identifier !== data.touchId) return;
     }
     if (["pointercancel", "pointerout", "pointerleave", "contextmenu"].includes(e.type)) {
       const proceed = ["pointercancel", "contextmenu"].includes(e.type) && (swiper.browser.isSafari || swiper.browser.isWebView);
@@ -3069,10 +2881,8 @@ var AlpineSwiper = (() => {
       slidesGrid,
       enabled
     } = swiper;
-    if (!enabled)
-      return;
-    if (!params.simulateTouch && e.pointerType === "mouse")
-      return;
+    if (!enabled) return;
+    if (!params.simulateTouch && e.pointerType === "mouse") return;
     if (data.allowTouchCallbacks) {
       swiper.emit("touchEnd", e);
     }
@@ -3100,8 +2910,7 @@ var AlpineSwiper = (() => {
     }
     data.lastClickTime = now();
     nextTick(() => {
-      if (!swiper.destroyed)
-        swiper.allowClick = true;
+      if (!swiper.destroyed) swiper.allowClick = true;
     });
     if (!data.isTouched || !data.isMoved || !swiper.swipeDirection || touches.diff === 0 && !data.loopSwapReset || data.currentTranslate === data.startTranslate && !data.loopSwapReset) {
       data.isTouched = false;
@@ -3159,10 +2968,8 @@ var AlpineSwiper = (() => {
         return;
       }
       if (swiper.swipeDirection === "next") {
-        if (ratio >= params.longSwipesRatio)
-          swiper.slideTo(params.rewind && swiper.isEnd ? rewindFirstIndex : stopIndex + increment);
-        else
-          swiper.slideTo(stopIndex);
+        if (ratio >= params.longSwipesRatio) swiper.slideTo(params.rewind && swiper.isEnd ? rewindFirstIndex : stopIndex + increment);
+        else swiper.slideTo(stopIndex);
       }
       if (swiper.swipeDirection === "prev") {
         if (ratio > 1 - params.longSwipesRatio) {
@@ -3199,8 +3006,7 @@ var AlpineSwiper = (() => {
       params,
       el
     } = swiper;
-    if (el && el.offsetWidth === 0)
-      return;
+    if (el && el.offsetWidth === 0) return;
     if (params.breakpoints) {
       swiper.setBreakpoint();
     }
@@ -3217,7 +3023,8 @@ var AlpineSwiper = (() => {
     swiper.updateSlidesClasses();
     const isVirtualLoop = isVirtual && params.loop;
     if ((params.slidesPerView === "auto" || params.slidesPerView > 1) && swiper.isEnd && !swiper.isBeginning && !swiper.params.centeredSlides && !isVirtualLoop) {
-      swiper.slideTo(swiper.slides.length - 1, 0, false, true);
+      const slides = isVirtual ? swiper.virtual.slides : swiper.slides;
+      swiper.slideTo(slides.length - 1, 0, false, true);
     } else {
       if (swiper.params.loop && !isVirtual) {
         swiper.slideToLoop(swiper.realIndex, 0, false, true);
@@ -3241,11 +3048,10 @@ var AlpineSwiper = (() => {
   }
   function onClick(e) {
     const swiper = this;
-    if (!swiper.enabled)
-      return;
+    if (swiper.destroyed) return;
+    if (!swiper.enabled) return;
     if (!swiper.allowClick) {
-      if (swiper.params.preventClicks)
-        e.preventDefault();
+      if (swiper.params.preventClicks) e.preventDefault();
       if (swiper.params.preventClicksPropagation && swiper.animating) {
         e.stopPropagation();
         e.stopImmediatePropagation();
@@ -3254,21 +3060,20 @@ var AlpineSwiper = (() => {
   }
   function onScroll() {
     const swiper = this;
+    if (swiper.destroyed) return;
     const {
       wrapperEl,
       rtlTranslate,
       enabled
     } = swiper;
-    if (!enabled)
-      return;
+    if (!enabled) return;
     swiper.previousTranslate = swiper.translate;
     if (swiper.isHorizontal()) {
       swiper.translate = -wrapperEl.scrollLeft;
     } else {
       swiper.translate = -wrapperEl.scrollTop;
     }
-    if (swiper.translate === 0)
-      swiper.translate = 0;
+    if (swiper.translate === 0) swiper.translate = 0;
     swiper.updateActiveIndex();
     swiper.updateSlidesClasses();
     let newProgress;
@@ -3285,6 +3090,7 @@ var AlpineSwiper = (() => {
   }
   function onLoad(e) {
     const swiper = this;
+    if (swiper.destroyed) return;
     processLazyPreloader(swiper, e.target);
     if (swiper.params.cssMode || swiper.params.slidesPerView !== "auto" && !swiper.params.autoHeight) {
       return;
@@ -3293,8 +3099,8 @@ var AlpineSwiper = (() => {
   }
   function onDocumentTouchStart() {
     const swiper = this;
-    if (swiper.documentTouchHandlerProceeded)
-      return;
+    if (swiper.destroyed) return;
+    if (swiper.documentTouchHandlerProceeded) return;
     swiper.documentTouchHandlerProceeded = true;
     if (swiper.params.touchReleaseOnEdges) {
       swiper.el.style.touchAction = "auto";
@@ -3311,8 +3117,7 @@ var AlpineSwiper = (() => {
     const capture = !!params.nested;
     const domMethod = method === "on" ? "addEventListener" : "removeEventListener";
     const swiperMethod = method;
-    if (!el || typeof el === "string")
-      return;
+    if (!el || typeof el === "string") return;
     document2[domMethod]("touchstart", swiper.onDocumentTouchStart, {
       passive: false,
       capture
@@ -3403,14 +3208,12 @@ var AlpineSwiper = (() => {
       el
     } = swiper;
     const breakpoints2 = params.breakpoints;
-    if (!breakpoints2 || breakpoints2 && Object.keys(breakpoints2).length === 0)
-      return;
+    if (!breakpoints2 || breakpoints2 && Object.keys(breakpoints2).length === 0) return;
     const document2 = getDocument();
     const breakpointsBase = params.breakpointsBase === "window" || !params.breakpointsBase ? params.breakpointsBase : "container";
     const breakpointContainer = ["window", "container"].includes(params.breakpointsBase) || !params.breakpointsBase ? swiper.el : document2.querySelector(params.breakpointsBase);
     const breakpoint = swiper.getBreakpoint(breakpoints2, breakpointsBase, breakpointContainer);
-    if (!breakpoint || swiper.currentBreakpoint === breakpoint)
-      return;
+    if (!breakpoint || swiper.currentBreakpoint === breakpoint) return;
     const breakpointOnlyParams = breakpoint in breakpoints2 ? breakpoints2[breakpoint] : void 0;
     const breakpointParams = breakpointOnlyParams || swiper.originalParams;
     const wasMultiRow = isGridEnabled(swiper, params);
@@ -3434,8 +3237,7 @@ var AlpineSwiper = (() => {
       swiper.setGrabCursor();
     }
     ["navigation", "pagination", "scrollbar"].forEach((prop) => {
-      if (typeof breakpointParams[prop] === "undefined")
-        return;
+      if (typeof breakpointParams[prop] === "undefined") return;
       const wasModuleEnabled = params[prop] && params[prop].enabled;
       const isModuleEnabled = breakpointParams[prop] && breakpointParams[prop].enabled;
       if (wasModuleEnabled && !isModuleEnabled) {
@@ -3480,12 +3282,8 @@ var AlpineSwiper = (() => {
     }
     swiper.emit("breakpoint", breakpointParams);
   }
-  function getBreakpoint(breakpoints2, base, containerEl) {
-    if (base === void 0) {
-      base = "window";
-    }
-    if (!breakpoints2 || base === "container" && !containerEl)
-      return void 0;
+  function getBreakpoint(breakpoints2, base = "window", containerEl) {
+    if (!breakpoints2 || base === "container" && !containerEl) return void 0;
     let breakpoint = false;
     const window2 = getWindow();
     const currentHeight = base === "window" ? window2.innerHeight : containerEl.clientHeight;
@@ -3578,8 +3376,7 @@ var AlpineSwiper = (() => {
       el,
       classNames
     } = swiper;
-    if (!el || typeof el === "string")
-      return;
+    if (!el || typeof el === "string") return;
     el.classList.remove(...classNames);
     swiper.emitContainerClasses();
   }
@@ -3672,6 +3469,7 @@ var AlpineSwiper = (() => {
     // in px
     normalizeSlideIndex: true,
     centerInsufficientSlides: false,
+    snapToSlideEdge: false,
     // Disable swiper and hide navigation when container not overflow
     watchOverflow: true,
     // Round length
@@ -3741,10 +3539,7 @@ var AlpineSwiper = (() => {
     _emitClasses: false
   };
   function moduleExtendParams(params, allModulesParams) {
-    return function extendParams(obj) {
-      if (obj === void 0) {
-        obj = {};
-      }
+    return function extendParams(obj = {}) {
       const moduleParamName = Object.keys(obj)[0];
       const moduleParams = obj[moduleParamName];
       if (typeof moduleParams !== "object" || moduleParams === null) {
@@ -3769,10 +3564,9 @@ var AlpineSwiper = (() => {
       if (typeof params[moduleParamName] === "object" && !("enabled" in params[moduleParamName])) {
         params[moduleParamName].enabled = true;
       }
-      if (!params[moduleParamName])
-        params[moduleParamName] = {
-          enabled: false
-        };
+      if (!params[moduleParamName]) params[moduleParamName] = {
+        enabled: false
+      };
       extend2(allModulesParams, obj);
     };
   }
@@ -3791,22 +3585,17 @@ var AlpineSwiper = (() => {
   };
   var extendedDefaults = {};
   var Swiper = class _Swiper {
-    constructor() {
+    constructor(...args) {
       let el;
       let params;
-      for (var _len = arguments.length, args = new Array(_len), _key = 0; _key < _len; _key++) {
-        args[_key] = arguments[_key];
-      }
       if (args.length === 1 && args[0].constructor && Object.prototype.toString.call(args[0]).slice(8, -1) === "Object") {
         params = args[0];
       } else {
         [el, params] = args;
       }
-      if (!params)
-        params = {};
+      if (!params) params = {};
       params = extend2({}, params);
-      if (el && !params.el)
-        params.el = el;
+      if (el && !params.el) params.el = el;
       const document2 = getDocument();
       if (params.el && typeof params.el === "string" && document2.querySelectorAll(params.el).length > 1) {
         const swipers = [];
@@ -3829,7 +3618,11 @@ var AlpineSwiper = (() => {
       swiper.eventsAnyListeners = [];
       swiper.modules = [...swiper.__modules__];
       if (params.modules && Array.isArray(params.modules)) {
-        swiper.modules.push(...params.modules);
+        params.modules.forEach((mod) => {
+          if (typeof mod === "function" && swiper.modules.indexOf(mod) < 0) {
+            swiper.modules.push(mod);
+          }
+        });
       }
       const allModulesParams = {};
       swiper.modules.forEach((mod) => {
@@ -3960,6 +3753,16 @@ var AlpineSwiper = (() => {
     getSlideIndexByData(index) {
       return this.getSlideIndex(this.slides.find((slideEl) => slideEl.getAttribute("data-swiper-slide-index") * 1 === index));
     }
+    getSlideIndexWhenGrid(index) {
+      if (this.grid && this.params.grid && this.params.grid.rows > 1) {
+        if (this.params.grid.fill === "column") {
+          index = Math.floor(index / this.params.grid.rows);
+        } else if (this.params.grid.fill === "row") {
+          index = index % Math.ceil(this.slides.length / this.params.grid.rows);
+        }
+      }
+      return index;
+    }
     recalcSlides() {
       const swiper = this;
       const {
@@ -3970,8 +3773,7 @@ var AlpineSwiper = (() => {
     }
     enable() {
       const swiper = this;
-      if (swiper.enabled)
-        return;
+      if (swiper.enabled) return;
       swiper.enabled = true;
       if (swiper.params.grabCursor) {
         swiper.setGrabCursor();
@@ -3980,8 +3782,7 @@ var AlpineSwiper = (() => {
     }
     disable() {
       const swiper = this;
-      if (!swiper.enabled)
-        return;
+      if (!swiper.enabled) return;
       swiper.enabled = false;
       if (swiper.params.grabCursor) {
         swiper.unsetGrabCursor();
@@ -4000,8 +3801,7 @@ var AlpineSwiper = (() => {
     }
     emitContainerClasses() {
       const swiper = this;
-      if (!swiper.params._emitClasses || !swiper.el)
-        return;
+      if (!swiper.params._emitClasses || !swiper.el) return;
       const cls = swiper.el.className.split(" ").filter((className) => {
         return className.indexOf("swiper") === 0 || className.indexOf(swiper.params.containerModifierClass) === 0;
       });
@@ -4009,16 +3809,14 @@ var AlpineSwiper = (() => {
     }
     getSlideClasses(slideEl) {
       const swiper = this;
-      if (swiper.destroyed)
-        return "";
+      if (swiper.destroyed) return "";
       return slideEl.className.split(" ").filter((className) => {
         return className.indexOf("swiper-slide") === 0 || className.indexOf(swiper.params.slideClass) === 0;
       }).join(" ");
     }
     emitSlidesClasses() {
       const swiper = this;
-      if (!swiper.params._emitClasses || !swiper.el)
-        return;
+      if (!swiper.params._emitClasses || !swiper.el) return;
       const updates = [];
       swiper.slides.forEach((slideEl) => {
         const classNames = swiper.getSlideClasses(slideEl);
@@ -4030,13 +3828,7 @@ var AlpineSwiper = (() => {
       });
       swiper.emit("_slideClasses", updates);
     }
-    slidesPerViewDynamic(view, exact) {
-      if (view === void 0) {
-        view = "current";
-      }
-      if (exact === void 0) {
-        exact = false;
-      }
+    slidesPerViewDynamic(view = "current", exact = false) {
       const swiper = this;
       const {
         params,
@@ -4047,8 +3839,7 @@ var AlpineSwiper = (() => {
         activeIndex
       } = swiper;
       let spv = 1;
-      if (typeof params.slidesPerView === "number")
-        return params.slidesPerView;
+      if (typeof params.slidesPerView === "number") return params.slidesPerView;
       if (params.centeredSlides) {
         let slideSize = slides[activeIndex] ? Math.ceil(slides[activeIndex].swiperSlideSize) : 0;
         let breakLoop;
@@ -4056,16 +3847,14 @@ var AlpineSwiper = (() => {
           if (slides[i] && !breakLoop) {
             slideSize += Math.ceil(slides[i].swiperSlideSize);
             spv += 1;
-            if (slideSize > swiperSize)
-              breakLoop = true;
+            if (slideSize > swiperSize) breakLoop = true;
           }
         }
         for (let i = activeIndex - 1; i >= 0; i -= 1) {
           if (slides[i] && !breakLoop) {
             slideSize += slides[i].swiperSlideSize;
             spv += 1;
-            if (slideSize > swiperSize)
-              breakLoop = true;
+            if (slideSize > swiperSize) breakLoop = true;
           }
         }
       } else {
@@ -4089,8 +3878,7 @@ var AlpineSwiper = (() => {
     }
     update() {
       const swiper = this;
-      if (!swiper || swiper.destroyed)
-        return;
+      if (!swiper || swiper.destroyed) return;
       const {
         snapGrid,
         params
@@ -4136,10 +3924,7 @@ var AlpineSwiper = (() => {
       }
       swiper.emit("update");
     }
-    changeDirection(newDirection, needUpdate) {
-      if (needUpdate === void 0) {
-        needUpdate = true;
-      }
+    changeDirection(newDirection, needUpdate = true) {
       const swiper = this;
       const currentDirection = swiper.params.direction;
       if (!newDirection) {
@@ -4160,14 +3945,12 @@ var AlpineSwiper = (() => {
         }
       });
       swiper.emit("changeDirection");
-      if (needUpdate)
-        swiper.update();
+      if (needUpdate) swiper.update();
       return swiper;
     }
     changeLanguageDirection(direction) {
       const swiper = this;
-      if (swiper.rtl && direction === "rtl" || !swiper.rtl && direction === "ltr")
-        return;
+      if (swiper.rtl && direction === "rtl" || !swiper.rtl && direction === "ltr") return;
       swiper.rtl = direction === "rtl";
       swiper.rtlTranslate = swiper.params.direction === "horizontal" && swiper.rtl;
       if (swiper.rtl) {
@@ -4181,8 +3964,7 @@ var AlpineSwiper = (() => {
     }
     mount(element) {
       const swiper = this;
-      if (swiper.mounted)
-        return true;
+      if (swiper.mounted) return true;
       let el = element || swiper.params.el;
       if (typeof el === "string") {
         el = document.querySelector(el);
@@ -4227,11 +4009,9 @@ var AlpineSwiper = (() => {
     }
     init(el) {
       const swiper = this;
-      if (swiper.initialized)
-        return swiper;
+      if (swiper.initialized) return swiper;
       const mounted = swiper.mount(el);
-      if (mounted === false)
-        return swiper;
+      if (mounted === false) return swiper;
       swiper.emit("beforeInit");
       if (swiper.params.breakpoints) {
         swiper.setBreakpoint();
@@ -4274,13 +4054,7 @@ var AlpineSwiper = (() => {
       swiper.emit("afterInit");
       return swiper;
     }
-    destroy(deleteInstance, cleanStyles) {
-      if (deleteInstance === void 0) {
-        deleteInstance = true;
-      }
-      if (cleanStyles === void 0) {
-        cleanStyles = true;
-      }
+    destroy(deleteInstance = true, cleanStyles = true) {
       const swiper = this;
       const {
         params,
@@ -4336,8 +4110,7 @@ var AlpineSwiper = (() => {
       return defaults;
     }
     static installModule(mod) {
-      if (!_Swiper.prototype.__modules__)
-        _Swiper.prototype.__modules__ = [];
+      if (!_Swiper.prototype.__modules__) _Swiper.prototype.__modules__ = [];
       const modules2 = _Swiper.prototype.__modules__;
       if (typeof mod === "function" && modules2.indexOf(mod) < 0) {
         modules2.push(mod);
@@ -4360,18 +4133,18 @@ var AlpineSwiper = (() => {
   Swiper.use([Resize, Observer]);
 
   // node_modules/swiper/modules/virtual.mjs
-  function Virtual(_ref) {
-    let {
-      swiper,
-      extendParams,
-      on,
-      emit
-    } = _ref;
+  function Virtual({
+    swiper,
+    extendParams,
+    on,
+    emit
+  }) {
     extendParams({
       virtual: {
         enabled: false,
         slides: [],
         cache: true,
+        slidesPerViewAutoSlideSize: 320,
         renderSlide: null,
         renderExternal: null,
         renderExternalUpdate: true,
@@ -4399,7 +4172,7 @@ var AlpineSwiper = (() => {
       if (params.renderSlide) {
         slideEl = params.renderSlide.call(swiper, slide2, index);
         if (typeof slideEl === "string") {
-          tempDOM.innerHTML = slideEl;
+          setInnerHTML(tempDOM, slideEl);
           slideEl = tempDOM.children[0];
         }
       } else if (swiper.isElement) {
@@ -4409,7 +4182,7 @@ var AlpineSwiper = (() => {
       }
       slideEl.setAttribute("data-swiper-slide-index", index);
       if (!params.renderSlide) {
-        slideEl.innerHTML = slide2;
+        setInnerHTML(slideEl, slide2);
       }
       if (params.cache) {
         swiper.virtual.cache[index] = slideEl;
@@ -4418,9 +4191,9 @@ var AlpineSwiper = (() => {
     }
     function update2(force, beforeInit, forceActiveIndex) {
       const {
-        slidesPerView,
         slidesPerGroup,
         centeredSlides,
+        slidesPerView,
         loop: isLoop,
         initialSlide
       } = swiper.params;
@@ -4429,7 +4202,8 @@ var AlpineSwiper = (() => {
       }
       const {
         addSlidesBefore,
-        addSlidesAfter
+        addSlidesAfter,
+        slidesPerViewAutoSlideSize
       } = swiper.params.virtual;
       const {
         from: previousFrom,
@@ -4443,18 +4217,30 @@ var AlpineSwiper = (() => {
       }
       const activeIndex = typeof forceActiveIndex === "undefined" ? swiper.activeIndex || 0 : forceActiveIndex;
       let offsetProp;
-      if (swiper.rtlTranslate)
-        offsetProp = "right";
-      else
-        offsetProp = swiper.isHorizontal() ? "left" : "top";
+      if (swiper.rtlTranslate) offsetProp = "right";
+      else offsetProp = swiper.isHorizontal() ? "left" : "top";
+      let slidesPerViewNumeric;
+      if (slidesPerView === "auto") {
+        if (slidesPerViewAutoSlideSize) {
+          let swiperSize = swiper.size;
+          if (!swiperSize) {
+            swiperSize = swiper.isHorizontal() ? swiper.el.getBoundingClientRect().width : swiper.el.getBoundingClientRect().height;
+          }
+          slidesPerViewNumeric = Math.max(1, Math.ceil(swiperSize / slidesPerViewAutoSlideSize));
+        } else {
+          slidesPerViewNumeric = 1;
+        }
+      } else {
+        slidesPerViewNumeric = slidesPerView;
+      }
       let slidesAfter;
       let slidesBefore;
       if (centeredSlides) {
-        slidesAfter = Math.floor(slidesPerView / 2) + slidesPerGroup + addSlidesAfter;
-        slidesBefore = Math.floor(slidesPerView / 2) + slidesPerGroup + addSlidesBefore;
+        slidesAfter = Math.floor(slidesPerViewNumeric / 2) + slidesPerGroup + addSlidesAfter;
+        slidesBefore = Math.floor(slidesPerViewNumeric / 2) + slidesPerGroup + addSlidesBefore;
       } else {
-        slidesAfter = slidesPerView + (slidesPerGroup - 1) + addSlidesAfter;
-        slidesBefore = (isLoop ? slidesPerView : slidesPerGroup) + addSlidesBefore;
+        slidesAfter = slidesPerViewNumeric + (slidesPerGroup - 1) + addSlidesAfter;
+        slidesBefore = (isLoop ? slidesPerViewNumeric : slidesPerGroup) + addSlidesBefore;
       }
       let from = activeIndex - slidesBefore;
       let to = activeIndex + slidesAfter;
@@ -4465,12 +4251,10 @@ var AlpineSwiper = (() => {
       let offset = (swiper.slidesGrid[from] || 0) - (swiper.slidesGrid[0] || 0);
       if (isLoop && activeIndex >= slidesBefore) {
         from -= slidesBefore;
-        if (!centeredSlides)
-          offset += swiper.slidesGrid[0];
+        if (!centeredSlides) offset += swiper.slidesGrid[0];
       } else if (isLoop && activeIndex < slidesBefore) {
         from = -slidesBefore;
-        if (centeredSlides)
-          offset += swiper.slidesGrid[0];
+        if (centeredSlides) offset += swiper.slidesGrid[0];
       }
       Object.assign(swiper.virtual, {
         from,
@@ -4501,13 +4285,13 @@ var AlpineSwiper = (() => {
           offset,
           from,
           to,
-          slides: function getSlides() {
+          slides: (function getSlides() {
             const slidesToRender = [];
             for (let i = from; i <= to; i += 1) {
               slidesToRender.push(slides[i]);
             }
             return slidesToRender;
-          }()
+          })()
         });
         if (swiper.params.virtual.renderExternalUpdate) {
           onRendered();
@@ -4549,10 +4333,8 @@ var AlpineSwiper = (() => {
           if (typeof previousTo === "undefined" || force) {
             appendIndexes.push(slideIndex);
           } else {
-            if (i > previousTo)
-              appendIndexes.push(slideIndex);
-            if (i < previousFrom)
-              prependIndexes.push(slideIndex);
+            if (i > previousTo) appendIndexes.push(slideIndex);
+            if (i < previousFrom) prependIndexes.push(slideIndex);
           }
         }
       }
@@ -4578,8 +4360,7 @@ var AlpineSwiper = (() => {
     function appendSlide2(slides) {
       if (typeof slides === "object" && "length" in slides) {
         for (let i = 0; i < slides.length; i += 1) {
-          if (slides[i])
-            swiper.virtual.slides.push(slides[i]);
+          if (slides[i]) swiper.virtual.slides.push(slides[i]);
         }
       } else {
         swiper.virtual.slides.push(slides);
@@ -4592,8 +4373,7 @@ var AlpineSwiper = (() => {
       let numberOfNewSlides = 1;
       if (Array.isArray(slides)) {
         for (let i = 0; i < slides.length; i += 1) {
-          if (slides[i])
-            swiper.virtual.slides.unshift(slides[i]);
+          if (slides[i]) swiper.virtual.slides.unshift(slides[i]);
         }
         newActiveIndex = activeIndex + slides.length;
         numberOfNewSlides = slides.length;
@@ -4617,8 +4397,7 @@ var AlpineSwiper = (() => {
       swiper.slideTo(newActiveIndex, 0);
     }
     function removeSlide2(slidesIndexes) {
-      if (typeof slidesIndexes === "undefined" || slidesIndexes === null)
-        return;
+      if (typeof slidesIndexes === "undefined" || slidesIndexes === null) return;
       let activeIndex = swiper.activeIndex;
       if (Array.isArray(slidesIndexes)) {
         for (let i = slidesIndexes.length - 1; i >= 0; i -= 1) {
@@ -4633,8 +4412,7 @@ var AlpineSwiper = (() => {
             });
           }
           swiper.virtual.slides.splice(slidesIndexes[i], 1);
-          if (slidesIndexes[i] < activeIndex)
-            activeIndex -= 1;
+          if (slidesIndexes[i] < activeIndex) activeIndex -= 1;
           activeIndex = Math.max(activeIndex, 0);
         }
       } else {
@@ -4649,8 +4427,7 @@ var AlpineSwiper = (() => {
           });
         }
         swiper.virtual.slides.splice(slidesIndexes, 1);
-        if (slidesIndexes < activeIndex)
-          activeIndex -= 1;
+        if (slidesIndexes < activeIndex) activeIndex -= 1;
         activeIndex = Math.max(activeIndex, 0);
       }
       update2(true);
@@ -4665,8 +4442,7 @@ var AlpineSwiper = (() => {
       swiper.slideTo(0, 0);
     }
     on("beforeInit", () => {
-      if (!swiper.params.virtual.enabled)
-        return;
+      if (!swiper.params.virtual.enabled) return;
       let domSlidesAssigned;
       if (typeof swiper.passedParams.virtual.slides === "undefined") {
         const slides = [...swiper.slidesEl.children].filter((el) => el.matches(`.${swiper.params.slideClass}, swiper-slide`));
@@ -4689,8 +4465,7 @@ var AlpineSwiper = (() => {
       update2(false, true);
     });
     on("setTranslate", () => {
-      if (!swiper.params.virtual.enabled)
-        return;
+      if (!swiper.params.virtual.enabled) return;
       if (swiper.params.cssMode && !swiper._immediateVirtual) {
         clearTimeout(cssModeTimeout);
         cssModeTimeout = setTimeout(() => {
@@ -4701,8 +4476,7 @@ var AlpineSwiper = (() => {
       }
     });
     on("init update resize", () => {
-      if (!swiper.params.virtual.enabled)
-        return;
+      if (!swiper.params.virtual.enabled) return;
       if (swiper.params.cssMode) {
         setCSSProperty(swiper.wrapperEl, "--swiper-virtual-size", `${swiper.virtualSize}px`);
       }
@@ -4717,13 +4491,12 @@ var AlpineSwiper = (() => {
   }
 
   // node_modules/swiper/modules/keyboard.mjs
-  function Keyboard(_ref) {
-    let {
-      swiper,
-      extendParams,
-      on,
-      emit
-    } = _ref;
+  function Keyboard({
+    swiper,
+    extendParams,
+    on,
+    emit
+  }) {
     const document2 = getDocument();
     const window2 = getWindow();
     swiper.keyboard = {
@@ -4733,18 +4506,17 @@ var AlpineSwiper = (() => {
       keyboard: {
         enabled: false,
         onlyInViewport: true,
-        pageUpDown: true
+        pageUpDown: true,
+        speed: void 0
       }
     });
     function handle(event2) {
-      if (!swiper.enabled)
-        return;
+      if (!swiper.enabled) return;
       const {
         rtlTranslate: rtl
       } = swiper;
       let e = event2;
-      if (e.originalEvent)
-        e = e.originalEvent;
+      if (e.originalEvent) e = e.originalEvent;
       const kc = e.keyCode || e.charCode;
       const pageUpDown = swiper.params.keyboard.pageUpDown;
       const isPageUp = pageUpDown && kc === 33;
@@ -4762,7 +4534,7 @@ var AlpineSwiper = (() => {
       if (e.shiftKey || e.altKey || e.ctrlKey || e.metaKey) {
         return void 0;
       }
-      if (document2.activeElement && document2.activeElement.nodeName && (document2.activeElement.nodeName.toLowerCase() === "input" || document2.activeElement.nodeName.toLowerCase() === "textarea")) {
+      if (document2.activeElement && (document2.activeElement.isContentEditable || document2.activeElement.nodeName && (document2.activeElement.nodeName.toLowerCase() === "input" || document2.activeElement.nodeName.toLowerCase() === "textarea"))) {
         return void 0;
       }
       if (swiper.params.keyboard.onlyInViewport && (isPageUp || isPageDown || isArrowLeft || isArrowRight || isArrowUp || isArrowDown)) {
@@ -4776,55 +4548,43 @@ var AlpineSwiper = (() => {
         const windowWidth = window2.innerWidth;
         const windowHeight = window2.innerHeight;
         const swiperOffset = elementOffset(el);
-        if (rtl)
-          swiperOffset.left -= el.scrollLeft;
+        if (rtl) swiperOffset.left -= el.scrollLeft;
         const swiperCoord = [[swiperOffset.left, swiperOffset.top], [swiperOffset.left + swiperWidth, swiperOffset.top], [swiperOffset.left, swiperOffset.top + swiperHeight], [swiperOffset.left + swiperWidth, swiperOffset.top + swiperHeight]];
         for (let i = 0; i < swiperCoord.length; i += 1) {
           const point = swiperCoord[i];
           if (point[0] >= 0 && point[0] <= windowWidth && point[1] >= 0 && point[1] <= windowHeight) {
-            if (point[0] === 0 && point[1] === 0)
-              continue;
+            if (point[0] === 0 && point[1] === 0) continue;
             inView = true;
           }
         }
-        if (!inView)
-          return void 0;
+        if (!inView) return void 0;
       }
+      const speed = swiper.params.keyboard.speed;
       if (swiper.isHorizontal()) {
         if (isPageUp || isPageDown || isArrowLeft || isArrowRight) {
-          if (e.preventDefault)
-            e.preventDefault();
-          else
-            e.returnValue = false;
+          if (e.preventDefault) e.preventDefault();
+          else e.returnValue = false;
         }
-        if ((isPageDown || isArrowRight) && !rtl || (isPageUp || isArrowLeft) && rtl)
-          swiper.slideNext();
-        if ((isPageUp || isArrowLeft) && !rtl || (isPageDown || isArrowRight) && rtl)
-          swiper.slidePrev();
+        if ((isPageDown || isArrowRight) && !rtl || (isPageUp || isArrowLeft) && rtl) swiper.slideNext(speed);
+        if ((isPageUp || isArrowLeft) && !rtl || (isPageDown || isArrowRight) && rtl) swiper.slidePrev(speed);
       } else {
         if (isPageUp || isPageDown || isArrowUp || isArrowDown) {
-          if (e.preventDefault)
-            e.preventDefault();
-          else
-            e.returnValue = false;
+          if (e.preventDefault) e.preventDefault();
+          else e.returnValue = false;
         }
-        if (isPageDown || isArrowDown)
-          swiper.slideNext();
-        if (isPageUp || isArrowUp)
-          swiper.slidePrev();
+        if (isPageDown || isArrowDown) swiper.slideNext(speed);
+        if (isPageUp || isArrowUp) swiper.slidePrev(speed);
       }
       emit("keyPress", kc);
       return void 0;
     }
     function enable() {
-      if (swiper.keyboard.enabled)
-        return;
+      if (swiper.keyboard.enabled) return;
       document2.addEventListener("keydown", handle);
       swiper.keyboard.enabled = true;
     }
     function disable() {
-      if (!swiper.keyboard.enabled)
-        return;
+      if (!swiper.keyboard.enabled) return;
       document2.removeEventListener("keydown", handle);
       swiper.keyboard.enabled = false;
     }
@@ -4845,13 +4605,12 @@ var AlpineSwiper = (() => {
   }
 
   // node_modules/swiper/modules/mousewheel.mjs
-  function Mousewheel(_ref) {
-    let {
-      swiper,
-      extendParams,
-      on,
-      emit
-    } = _ref;
+  function Mousewheel({
+    swiper,
+    extendParams,
+    on,
+    emit
+  }) {
     const window2 = getWindow();
     extendParams({
       mousewheel: {
@@ -4932,13 +4691,11 @@ var AlpineSwiper = (() => {
       };
     }
     function handleMouseEnter() {
-      if (!swiper.enabled)
-        return;
+      if (!swiper.enabled) return;
       swiper.mouseEntered = true;
     }
     function handleMouseLeave() {
-      if (!swiper.enabled)
-        return;
+      if (!swiper.enabled) return;
       swiper.mouseEntered = false;
     }
     function animateSlider(newEvent) {
@@ -4977,10 +4734,8 @@ var AlpineSwiper = (() => {
     function handle(event2) {
       let e = event2;
       let disableParentSwiper = true;
-      if (!swiper.enabled)
-        return;
-      if (event2.target.closest(`.${swiper.params.mousewheel.noMousewheelClass}`))
-        return;
+      if (!swiper.enabled) return;
+      if (event2.target.closest(`.${swiper.params.mousewheel.noMousewheelClass}`)) return;
       const params = swiper.params.mousewheel;
       if (swiper.params.cssMode) {
         e.preventDefault();
@@ -4990,38 +4745,27 @@ var AlpineSwiper = (() => {
         targetEl = document.querySelector(swiper.params.mousewheel.eventsTarget);
       }
       const targetElContainsTarget = targetEl && targetEl.contains(e.target);
-      if (!swiper.mouseEntered && !targetElContainsTarget && !params.releaseOnEdges)
-        return true;
-      if (e.originalEvent)
-        e = e.originalEvent;
+      if (!swiper.mouseEntered && !targetElContainsTarget && !params.releaseOnEdges) return true;
+      if (e.originalEvent) e = e.originalEvent;
       let delta = 0;
       const rtlFactor = swiper.rtlTranslate ? -1 : 1;
       const data = normalize(e);
       if (params.forceToAxis) {
         if (swiper.isHorizontal()) {
-          if (Math.abs(data.pixelX) > Math.abs(data.pixelY))
-            delta = -data.pixelX * rtlFactor;
-          else
-            return true;
-        } else if (Math.abs(data.pixelY) > Math.abs(data.pixelX))
-          delta = -data.pixelY;
-        else
-          return true;
+          if (Math.abs(data.pixelX) > Math.abs(data.pixelY)) delta = -data.pixelX * rtlFactor;
+          else return true;
+        } else if (Math.abs(data.pixelY) > Math.abs(data.pixelX)) delta = -data.pixelY;
+        else return true;
       } else {
         delta = Math.abs(data.pixelX) > Math.abs(data.pixelY) ? -data.pixelX * rtlFactor : -data.pixelY;
       }
-      if (delta === 0)
-        return true;
-      if (params.invert)
-        delta = -delta;
+      if (delta === 0) return true;
+      if (params.invert) delta = -delta;
       let positions = swiper.getTranslate() + delta * params.sensitivity;
-      if (positions >= swiper.minTranslate())
-        positions = swiper.minTranslate();
-      if (positions <= swiper.maxTranslate())
-        positions = swiper.maxTranslate();
+      if (positions >= swiper.minTranslate()) positions = swiper.minTranslate();
+      if (positions <= swiper.maxTranslate()) positions = swiper.maxTranslate();
       disableParentSwiper = swiper.params.loop ? true : !(positions === swiper.minTranslate() || positions === swiper.maxTranslate());
-      if (disableParentSwiper && swiper.params.nested)
-        e.stopPropagation();
+      if (disableParentSwiper && swiper.params.nested) e.stopPropagation();
       if (!swiper.params.freeMode || !swiper.params.freeMode.enabled) {
         const newEvent = {
           time: now(),
@@ -5056,10 +4800,8 @@ var AlpineSwiper = (() => {
           let position = swiper.getTranslate() + delta * params.sensitivity;
           const wasBeginning = swiper.isBeginning;
           const wasEnd = swiper.isEnd;
-          if (position >= swiper.minTranslate())
-            position = swiper.minTranslate();
-          if (position <= swiper.maxTranslate())
-            position = swiper.maxTranslate();
+          if (position >= swiper.minTranslate()) position = swiper.minTranslate();
+          if (position <= swiper.maxTranslate()) position = swiper.maxTranslate();
           swiper.setTransition(0);
           swiper.setTranslate(position);
           swiper.updateProgress();
@@ -5090,15 +4832,13 @@ var AlpineSwiper = (() => {
               lastEventBeforeSnap = newEvent;
               recentWheelEvents.splice(0);
               timeout = nextTick(() => {
-                if (swiper.destroyed || !swiper.params)
-                  return;
+                if (swiper.destroyed || !swiper.params) return;
                 swiper.slideToClosest(swiper.params.speed, true, void 0, snapToThreshold);
               }, 0);
             }
             if (!timeout) {
               timeout = nextTick(() => {
-                if (swiper.destroyed || !swiper.params)
-                  return;
+                if (swiper.destroyed || !swiper.params) return;
                 const snapToThreshold = 0.5;
                 lastEventBeforeSnap = newEvent;
                 recentWheelEvents.splice(0);
@@ -5106,19 +4846,15 @@ var AlpineSwiper = (() => {
               }, 500);
             }
           }
-          if (!ignoreWheelEvents)
-            emit("scroll", e);
-          if (swiper.params.autoplay && swiper.params.autoplay.disableOnInteraction)
-            swiper.autoplay.stop();
+          if (!ignoreWheelEvents) emit("scroll", e);
+          if (swiper.params.autoplay && swiper.params.autoplay.disableOnInteraction) swiper.autoplay.stop();
           if (params.releaseOnEdges && (position === swiper.minTranslate() || position === swiper.maxTranslate())) {
             return true;
           }
         }
       }
-      if (e.preventDefault)
-        e.preventDefault();
-      else
-        e.returnValue = false;
+      if (e.preventDefault) e.preventDefault();
+      else e.returnValue = false;
       return false;
     }
     function events2(method) {
@@ -5135,8 +4871,7 @@ var AlpineSwiper = (() => {
         swiper.wrapperEl.removeEventListener("wheel", handle);
         return true;
       }
-      if (swiper.mousewheel.enabled)
-        return false;
+      if (swiper.mousewheel.enabled) return false;
       events2("addEventListener");
       swiper.mousewheel.enabled = true;
       return true;
@@ -5146,8 +4881,7 @@ var AlpineSwiper = (() => {
         swiper.wrapperEl.addEventListener(event, handle);
         return true;
       }
-      if (!swiper.mousewheel.enabled)
-        return false;
+      if (!swiper.mousewheel.enabled) return false;
       events2("removeEventListener");
       swiper.mousewheel.enabled = false;
       return true;
@@ -5156,15 +4890,13 @@ var AlpineSwiper = (() => {
       if (!swiper.params.mousewheel.enabled && swiper.params.cssMode) {
         disable();
       }
-      if (swiper.params.mousewheel.enabled)
-        enable();
+      if (swiper.params.mousewheel.enabled) enable();
     });
     on("destroy", () => {
       if (swiper.params.cssMode) {
         enable();
       }
-      if (swiper.mousewheel.enabled)
-        disable();
+      if (swiper.mousewheel.enabled) disable();
     });
     Object.assign(swiper.mousewheel, {
       enable,
@@ -5192,17 +4924,18 @@ var AlpineSwiper = (() => {
   }
 
   // node_modules/swiper/modules/navigation.mjs
-  function Navigation(_ref) {
-    let {
-      swiper,
-      extendParams,
-      on,
-      emit
-    } = _ref;
+  var arrowSvg = `<svg class="swiper-navigation-icon" width="11" height="20" viewBox="0 0 11 20" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M0.38296 20.0762C0.111788 19.805 0.111788 19.3654 0.38296 19.0942L9.19758 10.2796L0.38296 1.46497C0.111788 1.19379 0.111788 0.754138 0.38296 0.482966C0.654131 0.211794 1.09379 0.211794 1.36496 0.482966L10.4341 9.55214C10.8359 9.9539 10.8359 10.6053 10.4341 11.007L1.36496 20.0762C1.09379 20.3474 0.654131 20.3474 0.38296 20.0762Z" fill="currentColor"/></svg>`;
+  function Navigation({
+    swiper,
+    extendParams,
+    on,
+    emit
+  }) {
     extendParams({
       navigation: {
         nextEl: null,
         prevEl: null,
+        addIcons: true,
         hideOnClick: false,
         disabledClass: "swiper-button-disabled",
         hiddenClass: "swiper-button-hidden",
@@ -5212,26 +4945,24 @@ var AlpineSwiper = (() => {
     });
     swiper.navigation = {
       nextEl: null,
-      prevEl: null
+      prevEl: null,
+      arrowSvg
     };
     function getEl(el) {
       let res;
       if (el && typeof el === "string" && swiper.isElement) {
         res = swiper.el.querySelector(el) || swiper.hostEl.querySelector(el);
-        if (res)
-          return res;
+        if (res) return res;
       }
       if (el) {
-        if (typeof el === "string")
-          res = [...document.querySelectorAll(el)];
+        if (typeof el === "string") res = [...document.querySelectorAll(el)];
         if (swiper.params.uniqueNavElements && typeof el === "string" && res && res.length > 1 && swiper.el.querySelectorAll(el).length === 1) {
           res = swiper.el.querySelector(el);
         } else if (res && res.length === 1) {
           res = res[0];
         }
       }
-      if (el && !res)
-        return el;
+      if (el && !res) return el;
       return res;
     }
     function toggleEl(el, disabled) {
@@ -5240,8 +4971,7 @@ var AlpineSwiper = (() => {
       el.forEach((subEl) => {
         if (subEl) {
           subEl.classList[disabled ? "add" : "remove"](...params.disabledClass.split(" "));
-          if (subEl.tagName === "BUTTON")
-            subEl.disabled = disabled;
+          if (subEl.tagName === "BUTTON") subEl.disabled = disabled;
           if (swiper.params.watchOverflow && swiper.enabled) {
             subEl.classList[swiper.isLocked ? "add" : "remove"](params.lockClass);
           }
@@ -5263,15 +4993,13 @@ var AlpineSwiper = (() => {
     }
     function onPrevClick(e) {
       e.preventDefault();
-      if (swiper.isBeginning && !swiper.params.loop && !swiper.params.rewind)
-        return;
+      if (swiper.isBeginning && !swiper.params.loop && !swiper.params.rewind) return;
       swiper.slidePrev();
       emit("navigationPrev");
     }
     function onNextClick(e) {
       e.preventDefault();
-      if (swiper.isEnd && !swiper.params.loop && !swiper.params.rewind)
-        return;
+      if (swiper.isEnd && !swiper.params.loop && !swiper.params.rewind) return;
       swiper.slideNext();
       emit("navigationNext");
     }
@@ -5281,8 +5009,7 @@ var AlpineSwiper = (() => {
         nextEl: "swiper-button-next",
         prevEl: "swiper-button-prev"
       });
-      if (!(params.nextEl || params.prevEl))
-        return;
+      if (!(params.nextEl || params.prevEl)) return;
       let nextEl = getEl(params.nextEl);
       let prevEl = getEl(params.prevEl);
       Object.assign(swiper.navigation, {
@@ -5293,6 +5020,12 @@ var AlpineSwiper = (() => {
       prevEl = makeElementsArray(prevEl);
       const initButton = (el, dir) => {
         if (el) {
+          if (params.addIcons && el.matches(".swiper-button-next,.swiper-button-prev") && !el.querySelector("svg")) {
+            const tempEl = document.createElement("div");
+            setInnerHTML(tempEl, arrowSvg);
+            el.appendChild(tempEl.querySelector("svg"));
+            tempEl.remove();
+          }
           el.addEventListener("click", dir === "next" ? onNextClick : onPrevClick);
         }
         if (!swiper.enabled && el) {
@@ -5359,8 +5092,7 @@ var AlpineSwiper = (() => {
         }
       }
       if (swiper.params.navigation.hideOnClick && !targetIsButton) {
-        if (swiper.pagination && swiper.params.pagination && swiper.params.pagination.clickable && (swiper.pagination.el === targetEl || swiper.pagination.el.contains(targetEl)))
-          return;
+        if (swiper.pagination && swiper.params.pagination && swiper.params.pagination.clickable && (swiper.pagination.el === targetEl || swiper.pagination.el.contains(targetEl))) return;
         let isHidden;
         if (nextEl.length) {
           isHidden = nextEl[0].classList.contains(swiper.params.navigation.hiddenClass);
@@ -5394,21 +5126,17 @@ var AlpineSwiper = (() => {
   }
 
   // node_modules/swiper/shared/classes-to-selector.mjs
-  function classesToSelector(classes2) {
-    if (classes2 === void 0) {
-      classes2 = "";
-    }
-    return `.${classes2.trim().replace(/([\.:!+\/])/g, "\\$1").replace(/ /g, ".")}`;
+  function classesToSelector(classes2 = "") {
+    return `.${classes2.trim().replace(/([\.:!+\/()[\]#>~*^$|=,'"@{}\\])/g, "\\$1").replace(/ /g, ".")}`;
   }
 
   // node_modules/swiper/modules/pagination.mjs
-  function Pagination(_ref) {
-    let {
-      swiper,
-      extendParams,
-      on,
-      emit
-    } = _ref;
+  function Pagination({
+    swiper,
+    extendParams,
+    on,
+    emit
+  }) {
     const pfx = "swiper-pagination";
     extendParams({
       pagination: {
@@ -5455,8 +5183,7 @@ var AlpineSwiper = (() => {
       const {
         bulletActiveClass
       } = swiper.params.pagination;
-      if (!bulletEl)
-        return;
+      if (!bulletEl) return;
       bulletEl = bulletEl[`${position === "prev" ? "previous" : "next"}ElementSibling`];
       if (bulletEl) {
         bulletEl.classList.add(`${bulletActiveClass}-${position}`);
@@ -5484,8 +5211,7 @@ var AlpineSwiper = (() => {
       e.preventDefault();
       const index = elementIndex(bulletEl) * swiper.params.slidesPerGroup;
       if (swiper.params.loop) {
-        if (swiper.realIndex === index)
-          return;
+        if (swiper.realIndex === index) return;
         const moveDirection = getMoveDirection(swiper.realIndex, index, swiper.slides.length);
         if (moveDirection === "next") {
           swiper.slideNext();
@@ -5501,8 +5227,7 @@ var AlpineSwiper = (() => {
     function update2() {
       const rtl = swiper.rtl;
       const params = swiper.params.pagination;
-      if (isPaginationDisabled())
-        return;
+      if (isPaginationDisabled()) return;
       let el = swiper.pagination.el;
       el = makeElementsArray(el);
       let current;
@@ -5626,12 +5351,10 @@ var AlpineSwiper = (() => {
           });
         }
         if (params.type === "custom" && params.renderCustom) {
-          subEl.innerHTML = params.renderCustom(swiper, current + 1, total);
-          if (subElIndex === 0)
-            emit("paginationRender", subEl);
+          setInnerHTML(subEl, params.renderCustom(swiper, current + 1, total));
+          if (subElIndex === 0) emit("paginationRender", subEl);
         } else {
-          if (subElIndex === 0)
-            emit("paginationRender", subEl);
+          if (subElIndex === 0) emit("paginationRender", subEl);
           emit("paginationUpdate", subEl);
         }
         if (swiper.params.watchOverflow && swiper.enabled) {
@@ -5641,8 +5364,7 @@ var AlpineSwiper = (() => {
     }
     function render() {
       const params = swiper.params.pagination;
-      if (isPaginationDisabled())
-        return;
+      if (isPaginationDisabled()) return;
       const slidesLength = swiper.virtual && swiper.params.virtual.enabled ? swiper.virtual.slides.length : swiper.grid && swiper.params.grid.rows > 1 ? swiper.slides.length / Math.ceil(swiper.params.grid.rows) : swiper.slides.length;
       let el = swiper.pagination.el;
       el = makeElementsArray(el);
@@ -5677,7 +5399,7 @@ var AlpineSwiper = (() => {
       swiper.pagination.bullets = [];
       el.forEach((subEl) => {
         if (params.type !== "custom") {
-          subEl.innerHTML = paginationHTML || "";
+          setInnerHTML(subEl, paginationHTML || "");
         }
         if (params.type === "bullets") {
           swiper.pagination.bullets.push(...subEl.querySelectorAll(classesToSelector(params.bulletClass)));
@@ -5692,8 +5414,7 @@ var AlpineSwiper = (() => {
         el: "swiper-pagination"
       });
       const params = swiper.params.pagination;
-      if (!params.el)
-        return;
+      if (!params.el) return;
       let el;
       if (typeof params.el === "string" && swiper.isElement) {
         el = swiper.el.querySelector(params.el);
@@ -5704,20 +5425,17 @@ var AlpineSwiper = (() => {
       if (!el) {
         el = params.el;
       }
-      if (!el || el.length === 0)
-        return;
+      if (!el || el.length === 0) return;
       if (swiper.params.uniqueNavElements && typeof params.el === "string" && Array.isArray(el) && el.length > 1) {
         el = [...swiper.el.querySelectorAll(params.el)];
         if (el.length > 1) {
           el = el.find((subEl) => {
-            if (elementParents(subEl, ".swiper")[0] !== swiper.el)
-              return false;
+            if (elementParents(subEl, ".swiper")[0] !== swiper.el) return false;
             return true;
           });
         }
       }
-      if (Array.isArray(el) && el.length === 1)
-        el = el[0];
+      if (Array.isArray(el) && el.length === 1) el = el[0];
       Object.assign(swiper.pagination, {
         el
       });
@@ -5748,8 +5466,7 @@ var AlpineSwiper = (() => {
     }
     function destroy() {
       const params = swiper.params.pagination;
-      if (isPaginationDisabled())
-        return;
+      if (isPaginationDisabled()) return;
       let el = swiper.pagination.el;
       if (el) {
         el = makeElementsArray(el);
@@ -5763,12 +5480,10 @@ var AlpineSwiper = (() => {
           }
         });
       }
-      if (swiper.pagination.bullets)
-        swiper.pagination.bullets.forEach((subEl) => subEl.classList.remove(...params.bulletActiveClass.split(" ")));
+      if (swiper.pagination.bullets) swiper.pagination.bullets.forEach((subEl) => subEl.classList.remove(...params.bulletActiveClass.split(" ")));
     }
     on("changeDirection", () => {
-      if (!swiper.pagination || !swiper.pagination.el)
-        return;
+      if (!swiper.pagination || !swiper.pagination.el) return;
       const params = swiper.params.pagination;
       let {
         el
@@ -5819,8 +5534,7 @@ var AlpineSwiper = (() => {
       const targetEl = e.target;
       const el = makeElementsArray(swiper.pagination.el);
       if (swiper.params.pagination.el && swiper.params.pagination.hideOnClick && el && el.length > 0 && !targetEl.classList.contains(swiper.params.pagination.bulletClass)) {
-        if (swiper.navigation && (swiper.navigation.nextEl && targetEl === swiper.navigation.nextEl || swiper.navigation.prevEl && targetEl === swiper.navigation.prevEl))
-          return;
+        if (swiper.navigation && (swiper.navigation.nextEl && targetEl === swiper.navigation.nextEl || swiper.navigation.prevEl && targetEl === swiper.navigation.prevEl)) return;
         const isHidden = el[0].classList.contains(swiper.params.pagination.hiddenClass);
         if (isHidden === true) {
           emit("paginationShow");
@@ -5865,13 +5579,12 @@ var AlpineSwiper = (() => {
   }
 
   // node_modules/swiper/modules/scrollbar.mjs
-  function Scrollbar(_ref) {
-    let {
-      swiper,
-      extendParams,
-      on,
-      emit
-    } = _ref;
+  function Scrollbar({
+    swiper,
+    extendParams,
+    on,
+    emit
+  }) {
     const document2 = getDocument();
     let isTouched = false;
     let timeout = null;
@@ -5899,8 +5612,7 @@ var AlpineSwiper = (() => {
       dragEl: null
     };
     function setTranslate2() {
-      if (!swiper.params.scrollbar.el || !swiper.scrollbar.el)
-        return;
+      if (!swiper.params.scrollbar.el || !swiper.scrollbar.el) return;
       const {
         scrollbar,
         rtlTranslate: rtl
@@ -5944,13 +5656,11 @@ var AlpineSwiper = (() => {
       }
     }
     function setTransition2(duration) {
-      if (!swiper.params.scrollbar.el || !swiper.scrollbar.el)
-        return;
+      if (!swiper.params.scrollbar.el || !swiper.scrollbar.el) return;
       swiper.scrollbar.dragEl.style.transitionDuration = `${duration}ms`;
     }
     function updateSize2() {
-      if (!swiper.params.scrollbar.el || !swiper.scrollbar.el)
-        return;
+      if (!swiper.params.scrollbar.el || !swiper.scrollbar.el) return;
       const {
         scrollbar
       } = swiper;
@@ -6043,12 +5753,9 @@ var AlpineSwiper = (() => {
         el,
         dragEl
       } = scrollbar;
-      if (!isTouched)
-        return;
-      if (e.preventDefault && e.cancelable)
-        e.preventDefault();
-      else
-        e.returnValue = false;
+      if (!isTouched) return;
+      if (e.preventDefault && e.cancelable) e.preventDefault();
+      else e.returnValue = false;
       setDragPosition(e);
       wrapperEl.style.transitionDuration = "0ms";
       el.style.transitionDuration = "0ms";
@@ -6064,8 +5771,7 @@ var AlpineSwiper = (() => {
       const {
         el
       } = scrollbar;
-      if (!isTouched)
-        return;
+      if (!isTouched) return;
       isTouched = false;
       if (swiper.params.cssMode) {
         swiper.wrapperEl.style["scroll-snap-type"] = "";
@@ -6089,8 +5795,7 @@ var AlpineSwiper = (() => {
         params
       } = swiper;
       const el = scrollbar.el;
-      if (!el)
-        return;
+      if (!el) return;
       const target = el;
       const activeListener = params.passiveListeners ? {
         passive: false,
@@ -6100,21 +5805,18 @@ var AlpineSwiper = (() => {
         passive: true,
         capture: false
       } : false;
-      if (!target)
-        return;
+      if (!target) return;
       const eventMethod = method === "on" ? "addEventListener" : "removeEventListener";
       target[eventMethod]("pointerdown", onDragStart, activeListener);
       document2[eventMethod]("pointermove", onDragMove, activeListener);
       document2[eventMethod]("pointerup", onDragEnd, passiveListener);
     }
     function enableDraggable() {
-      if (!swiper.params.scrollbar.el || !swiper.scrollbar.el)
-        return;
+      if (!swiper.params.scrollbar.el || !swiper.scrollbar.el) return;
       events2("on");
     }
     function disableDraggable() {
-      if (!swiper.params.scrollbar.el || !swiper.scrollbar.el)
-        return;
+      if (!swiper.params.scrollbar.el || !swiper.scrollbar.el) return;
       events2("off");
     }
     function init() {
@@ -6126,24 +5828,21 @@ var AlpineSwiper = (() => {
         el: "swiper-scrollbar"
       });
       const params = swiper.params.scrollbar;
-      if (!params.el)
-        return;
+      if (!params.el) return;
       let el;
       if (typeof params.el === "string" && swiper.isElement) {
         el = swiper.el.querySelector(params.el);
       }
       if (!el && typeof params.el === "string") {
         el = document2.querySelectorAll(params.el);
-        if (!el.length)
-          return;
+        if (!el.length) return;
       } else if (!el) {
         el = params.el;
       }
       if (swiper.params.uniqueNavElements && typeof params.el === "string" && el.length > 1 && swiperEl.querySelectorAll(params.el).length === 1) {
         el = swiperEl.querySelector(params.el);
       }
-      if (el.length > 0)
-        el = el[0];
+      if (el.length > 0) el = el[0];
       el.classList.add(swiper.isHorizontal() ? params.horizontalClass : params.verticalClass);
       let dragEl;
       if (el) {
@@ -6173,8 +5872,7 @@ var AlpineSwiper = (() => {
       disableDraggable();
     }
     on("changeDirection", () => {
-      if (!swiper.scrollbar || !swiper.scrollbar.el)
-        return;
+      if (!swiper.scrollbar || !swiper.scrollbar.el) return;
       const params = swiper.params.scrollbar;
       let {
         el
@@ -6241,12 +5939,11 @@ var AlpineSwiper = (() => {
   }
 
   // node_modules/swiper/modules/parallax.mjs
-  function Parallax(_ref) {
-    let {
-      swiper,
-      extendParams,
-      on
-    } = _ref;
+  function Parallax({
+    swiper,
+    extendParams,
+    on
+  }) {
     extendParams({
       parallax: {
         enabled: false
@@ -6325,10 +6022,7 @@ var AlpineSwiper = (() => {
         });
       });
     };
-    const setTransition2 = function(duration) {
-      if (duration === void 0) {
-        duration = swiper.params.speed;
-      }
+    const setTransition2 = (duration = swiper.params.speed) => {
       const {
         el,
         hostEl
@@ -6339,42 +6033,36 @@ var AlpineSwiper = (() => {
       }
       elements.forEach((parallaxEl) => {
         let parallaxDuration = parseInt(parallaxEl.getAttribute("data-swiper-parallax-duration"), 10) || duration;
-        if (duration === 0)
-          parallaxDuration = 0;
+        if (duration === 0) parallaxDuration = 0;
         parallaxEl.style.transitionDuration = `${parallaxDuration}ms`;
       });
     };
     on("beforeInit", () => {
-      if (!swiper.params.parallax.enabled)
-        return;
+      if (!swiper.params.parallax.enabled) return;
       swiper.params.watchSlidesProgress = true;
       swiper.originalParams.watchSlidesProgress = true;
     });
     on("init", () => {
-      if (!swiper.params.parallax.enabled)
-        return;
+      if (!swiper.params.parallax.enabled) return;
       setTranslate2();
     });
     on("setTranslate", () => {
-      if (!swiper.params.parallax.enabled)
-        return;
+      if (!swiper.params.parallax.enabled) return;
       setTranslate2();
     });
     on("setTransition", (_swiper, duration) => {
-      if (!swiper.params.parallax.enabled)
-        return;
+      if (!swiper.params.parallax.enabled) return;
       setTransition2(duration);
     });
   }
 
   // node_modules/swiper/modules/zoom.mjs
-  function Zoom(_ref) {
-    let {
-      swiper,
-      extendParams,
-      on,
-      emit
-    } = _ref;
+  function Zoom({
+    swiper,
+    extendParams,
+    on,
+    emit
+  }) {
     const window2 = getWindow();
     extendParams({
       zoom: {
@@ -6450,8 +6138,7 @@ var AlpineSwiper = (() => {
       }
     });
     function getDistanceBetweenTouches() {
-      if (evCache.length < 2)
-        return 1;
+      if (evCache.length < 2) return 1;
       const x1 = evCache[0].pageX;
       const y1 = evCache[0].pageY;
       const x2 = evCache[1].pageX;
@@ -6469,11 +6156,10 @@ var AlpineSwiper = (() => {
       return maxRatio;
     }
     function getScaleOrigin() {
-      if (evCache.length < 2)
-        return {
-          x: null,
-          y: null
-        };
+      if (evCache.length < 2) return {
+        x: null,
+        y: null
+      };
       const box = gesture.imageEl.getBoundingClientRect();
       return [(evCache[0].pageX + (evCache[1].pageX - evCache[0].pageX) / 2 - box.x - window2.scrollX) / currentScale, (evCache[0].pageY + (evCache[1].pageY - evCache[0].pageY) / 2 - box.y - window2.scrollY) / currentScale];
     }
@@ -6482,26 +6168,21 @@ var AlpineSwiper = (() => {
     }
     function eventWithinSlide(e) {
       const slideSelector = getSlideSelector();
-      if (e.target.matches(slideSelector))
-        return true;
-      if (swiper.slides.filter((slideEl) => slideEl.contains(e.target)).length > 0)
-        return true;
+      if (e.target.matches(slideSelector)) return true;
+      if (swiper.slides.filter((slideEl) => slideEl.contains(e.target)).length > 0) return true;
       return false;
     }
     function eventWithinZoomContainer(e) {
       const selector = `.${swiper.params.zoom.containerClass}`;
-      if (e.target.matches(selector))
-        return true;
-      if ([...swiper.hostEl.querySelectorAll(selector)].filter((containerEl) => containerEl.contains(e.target)).length > 0)
-        return true;
+      if (e.target.matches(selector)) return true;
+      if ([...swiper.hostEl.querySelectorAll(selector)].filter((containerEl) => containerEl.contains(e.target)).length > 0) return true;
       return false;
     }
     function onGestureStart(e) {
       if (e.pointerType === "mouse") {
         evCache.splice(0, evCache.length);
       }
-      if (!eventWithinSlide(e))
-        return;
+      if (!eventWithinSlide(e)) return;
       const params = swiper.params.zoom;
       fakeGestureTouched = false;
       fakeGestureMoved = false;
@@ -6513,8 +6194,7 @@ var AlpineSwiper = (() => {
       gesture.scaleStart = getDistanceBetweenTouches();
       if (!gesture.slideEl) {
         gesture.slideEl = e.target.closest(`.${swiper.params.slideClass}, swiper-slide`);
-        if (!gesture.slideEl)
-          gesture.slideEl = swiper.slides[swiper.activeIndex];
+        if (!gesture.slideEl) gesture.slideEl = swiper.slides[swiper.activeIndex];
         let imageEl = gesture.slideEl.querySelector(`.${params.containerClass}`);
         if (imageEl) {
           imageEl = imageEl.querySelectorAll("picture, img, svg, canvas, .swiper-zoom-target")[0];
@@ -6540,13 +6220,11 @@ var AlpineSwiper = (() => {
       isScaling = true;
     }
     function onGestureChange(e) {
-      if (!eventWithinSlide(e))
-        return;
+      if (!eventWithinSlide(e)) return;
       const params = swiper.params.zoom;
       const zoom = swiper.zoom;
       const pointerIndex = evCache.findIndex((cachedEv) => cachedEv.pointerId === e.pointerId);
-      if (pointerIndex >= 0)
-        evCache[pointerIndex] = e;
+      if (pointerIndex >= 0) evCache[pointerIndex] = e;
       if (evCache.length < 2) {
         return;
       }
@@ -6565,22 +6243,18 @@ var AlpineSwiper = (() => {
       gesture.imageEl.style.transform = `translate3d(0,0,0) scale(${zoom.scale})`;
     }
     function onGestureEnd(e) {
-      if (!eventWithinSlide(e))
-        return;
-      if (e.pointerType === "mouse" && e.type === "pointerout")
-        return;
+      if (!eventWithinSlide(e)) return;
+      if (e.pointerType === "mouse" && e.type === "pointerout") return;
       const params = swiper.params.zoom;
       const zoom = swiper.zoom;
       const pointerIndex = evCache.findIndex((cachedEv) => cachedEv.pointerId === e.pointerId);
-      if (pointerIndex >= 0)
-        evCache.splice(pointerIndex, 1);
+      if (pointerIndex >= 0) evCache.splice(pointerIndex, 1);
       if (!fakeGestureTouched || !fakeGestureMoved) {
         return;
       }
       fakeGestureTouched = false;
       fakeGestureMoved = false;
-      if (!gesture.imageEl)
-        return;
+      if (!gesture.imageEl) return;
       zoom.scale = Math.max(Math.min(zoom.scale, gesture.maxRatio), params.minRatio);
       gesture.imageEl.style.transitionDuration = `${swiper.params.speed}ms`;
       gesture.imageEl.style.transform = `translate3d(0,0,0) scale(${zoom.scale})`;
@@ -6605,19 +6279,15 @@ var AlpineSwiper = (() => {
       clearTimeout(allowTouchMoveTimeout);
       swiper.touchEventsData.preventTouchMoveFromPointerMove = true;
       allowTouchMoveTimeout = setTimeout(() => {
-        if (swiper.destroyed)
-          return;
+        if (swiper.destroyed) return;
         allowTouchMove();
       });
     }
     function onTouchStart2(e) {
       const device = swiper.device;
-      if (!gesture.imageEl)
-        return;
-      if (image.isTouched)
-        return;
-      if (device.android && e.cancelable)
-        e.preventDefault();
+      if (!gesture.imageEl) return;
+      if (image.isTouched) return;
+      if (device.android && e.cancelable) e.preventDefault();
       image.isTouched = true;
       const event2 = evCache.length > 0 ? evCache[0] : e;
       image.touchesStart.x = event2.pageX;
@@ -6634,8 +6304,7 @@ var AlpineSwiper = (() => {
         return;
       }
       if (!image.isTouched || !gesture.slideEl) {
-        if (isMousePan)
-          onMouseMove(e);
+        if (isMousePan) onMouseMove(e);
         return;
       }
       if (isMousePan) {
@@ -6700,18 +6369,13 @@ var AlpineSwiper = (() => {
       if (image.currentY > image.maxY) {
         image.currentY = image.maxY - 1 + (image.currentY - image.maxY + 1) ** 0.8;
       }
-      if (!velocity.prevPositionX)
-        velocity.prevPositionX = image.touchesCurrent.x;
-      if (!velocity.prevPositionY)
-        velocity.prevPositionY = image.touchesCurrent.y;
-      if (!velocity.prevTime)
-        velocity.prevTime = Date.now();
+      if (!velocity.prevPositionX) velocity.prevPositionX = image.touchesCurrent.x;
+      if (!velocity.prevPositionY) velocity.prevPositionY = image.touchesCurrent.y;
+      if (!velocity.prevTime) velocity.prevTime = Date.now();
       velocity.x = (image.touchesCurrent.x - velocity.prevPositionX) / (Date.now() - velocity.prevTime) / 2;
       velocity.y = (image.touchesCurrent.y - velocity.prevPositionY) / (Date.now() - velocity.prevTime) / 2;
-      if (Math.abs(image.touchesCurrent.x - velocity.prevPositionX) < 2)
-        velocity.x = 0;
-      if (Math.abs(image.touchesCurrent.y - velocity.prevPositionY) < 2)
-        velocity.y = 0;
+      if (Math.abs(image.touchesCurrent.x - velocity.prevPositionX) < 2) velocity.x = 0;
+      if (Math.abs(image.touchesCurrent.y - velocity.prevPositionY) < 2) velocity.y = 0;
       velocity.prevPositionX = image.touchesCurrent.x;
       velocity.prevPositionY = image.touchesCurrent.y;
       velocity.prevTime = Date.now();
@@ -6720,8 +6384,7 @@ var AlpineSwiper = (() => {
     function onTouchEnd2() {
       const zoom = swiper.zoom;
       evCache.length = 0;
-      if (!gesture.imageEl)
-        return;
+      if (!gesture.imageEl) return;
       if (!image.isTouched || !image.isMoved) {
         image.isTouched = false;
         image.isMoved = false;
@@ -6735,10 +6398,8 @@ var AlpineSwiper = (() => {
       const newPositionX = image.currentX + momentumDistanceX;
       const momentumDistanceY = velocity.y * momentumDurationY;
       const newPositionY = image.currentY + momentumDistanceY;
-      if (velocity.x !== 0)
-        momentumDurationX = Math.abs((newPositionX - image.currentX) / velocity.x);
-      if (velocity.y !== 0)
-        momentumDurationY = Math.abs((newPositionY - image.currentY) / velocity.y);
+      if (velocity.x !== 0) momentumDurationX = Math.abs((newPositionX - image.currentX) / velocity.x);
+      if (velocity.y !== 0) momentumDurationY = Math.abs((newPositionY - image.currentY) / velocity.y);
       const momentumDuration = Math.max(momentumDurationX, momentumDurationY);
       image.currentX = newPositionX;
       image.currentY = newPositionY;
@@ -6773,10 +6434,8 @@ var AlpineSwiper = (() => {
       }
     }
     function onMouseMove(e) {
-      if (currentScale <= 1 || !gesture.imageWrapEl)
-        return;
-      if (!eventWithinSlide(e) || !eventWithinZoomContainer(e))
-        return;
+      if (currentScale <= 1 || !gesture.imageWrapEl) return;
+      if (!eventWithinSlide(e) || !eventWithinZoomContainer(e)) return;
       const currentTransform = window2.getComputedStyle(gesture.imageWrapEl).transform;
       const matrix = new window2.DOMMatrix(currentTransform);
       if (!isPanningWithMouse) {
@@ -6837,8 +6496,8 @@ var AlpineSwiper = (() => {
           gesture.imageWrapEl = void 0;
         }
       }
-      if (!gesture.imageEl || !gesture.imageWrapEl)
-        return;
+      if (!gesture.imageEl || !gesture.imageWrapEl) return;
+      gesture.maxRatio = getMaxRatio();
       if (swiper.params.cssMode) {
         swiper.wrapperEl.style.overflow = "hidden";
         swiper.wrapperEl.style.touchAction = "none";
@@ -6949,8 +6608,8 @@ var AlpineSwiper = (() => {
           gesture.imageWrapEl = void 0;
         }
       }
-      if (!gesture.imageEl || !gesture.imageWrapEl)
-        return;
+      if (!gesture.imageEl || !gesture.imageWrapEl) return;
+      gesture.maxRatio = getMaxRatio();
       if (swiper.params.cssMode) {
         swiper.wrapperEl.style.overflow = "";
         swiper.wrapperEl.style.touchAction = "";
@@ -7005,8 +6664,7 @@ var AlpineSwiper = (() => {
     }
     function enable() {
       const zoom = swiper.zoom;
-      if (zoom.enabled)
-        return;
+      if (zoom.enabled) return;
       zoom.enabled = true;
       const {
         passiveListener,
@@ -7021,8 +6679,7 @@ var AlpineSwiper = (() => {
     }
     function disable() {
       const zoom = swiper.zoom;
-      if (!zoom.enabled)
-        return;
+      if (!zoom.enabled) return;
       zoom.enabled = false;
       const {
         passiveListener,
@@ -7044,13 +6701,11 @@ var AlpineSwiper = (() => {
       disable();
     });
     on("touchStart", (_s, e) => {
-      if (!swiper.zoom.enabled)
-        return;
+      if (!swiper.zoom.enabled) return;
       onTouchStart2(e);
     });
     on("touchEnd", (_s, e) => {
-      if (!swiper.zoom.enabled)
-        return;
+      if (!swiper.zoom.enabled) return;
       onTouchEnd2();
     });
     on("doubleTap", (_s, e) => {
@@ -7078,12 +6733,11 @@ var AlpineSwiper = (() => {
   }
 
   // node_modules/swiper/modules/controller.mjs
-  function Controller(_ref) {
-    let {
-      swiper,
-      extendParams,
-      on
-    } = _ref;
+  function Controller({
+    swiper,
+    extendParams,
+    on
+  }) {
     extendParams({
       controller: {
         control: void 0,
@@ -7096,7 +6750,7 @@ var AlpineSwiper = (() => {
       control: void 0
     };
     function LinearSpline(x, y) {
-      const binarySearch = /* @__PURE__ */ function search() {
+      const binarySearch = /* @__PURE__ */ (function search() {
         let maxIndex;
         let minIndex;
         let guess;
@@ -7113,15 +6767,14 @@ var AlpineSwiper = (() => {
           }
           return maxIndex;
         };
-      }();
+      })();
       this.x = x;
       this.y = y;
       this.lastIndex = x.length - 1;
       let i1;
       let i3;
       this.interpolate = function interpolate(x2) {
-        if (!x2)
-          return 0;
+        if (!x2) return 0;
         i3 = binarySearch(this.x, x2);
         i1 = i3 - 1;
         return (x2 - this.x[i1]) * (this.y[i3] - this.y[i1]) / (this.x[i3] - this.x[i1]) + this.y[i1];
@@ -7137,8 +6790,7 @@ var AlpineSwiper = (() => {
       let controlledTranslate;
       const Swiper2 = swiper.constructor;
       function setControlledTranslate(c) {
-        if (c.destroyed)
-          return;
+        if (c.destroyed) return;
         const translate2 = swiper.rtlTranslate ? -swiper.translate : swiper.translate;
         if (swiper.params.controller.by === "slide") {
           getInterpolateFunction(c);
@@ -7174,8 +6826,7 @@ var AlpineSwiper = (() => {
       const controlled = swiper.controller.control;
       let i;
       function setControlledTransition(c) {
-        if (c.destroyed)
-          return;
+        if (c.destroyed) return;
         c.setTransition(duration, swiper);
         if (duration !== 0) {
           c.transitionStart();
@@ -7185,8 +6836,7 @@ var AlpineSwiper = (() => {
             });
           }
           elementTransitionEnd(c.wrapperEl, () => {
-            if (!controlled)
-              return;
+            if (!controlled) return;
             c.transitionEnd();
           });
         }
@@ -7202,8 +6852,7 @@ var AlpineSwiper = (() => {
       }
     }
     function removeSpline() {
-      if (!swiper.controller.control)
-        return;
+      if (!swiper.controller.control) return;
       if (swiper.controller.spline) {
         swiper.controller.spline = void 0;
         delete swiper.controller.spline;
@@ -7214,8 +6863,7 @@ var AlpineSwiper = (() => {
       (typeof swiper.params.controller.control === "string" || swiper.params.controller.control instanceof HTMLElement)) {
         const controlElements = typeof swiper.params.controller.control === "string" ? [...document.querySelectorAll(swiper.params.controller.control)] : [swiper.params.controller.control];
         controlElements.forEach((controlElement) => {
-          if (!swiper.controller.control)
-            swiper.controller.control = [];
+          if (!swiper.controller.control) swiper.controller.control = [];
           if (controlElement && controlElement.swiper) {
             swiper.controller.control.push(controlElement.swiper);
           } else if (controlElement) {
@@ -7242,13 +6890,11 @@ var AlpineSwiper = (() => {
       removeSpline();
     });
     on("setTranslate", (_s, translate2, byController) => {
-      if (!swiper.controller.control || swiper.controller.control.destroyed)
-        return;
+      if (!swiper.controller.control || swiper.controller.control.destroyed) return;
       swiper.controller.setTranslate(translate2, byController);
     });
     on("setTransition", (_s, duration, byController) => {
-      if (!swiper.controller.control || swiper.controller.control.destroyed)
-        return;
+      if (!swiper.controller.control || swiper.controller.control.destroyed) return;
       swiper.controller.setTransition(duration, byController);
     });
     Object.assign(swiper.controller, {
@@ -7258,12 +6904,11 @@ var AlpineSwiper = (() => {
   }
 
   // node_modules/swiper/modules/a11y.mjs
-  function A11y(_ref) {
-    let {
-      swiper,
-      extendParams,
-      on
-    } = _ref;
+  function A11y({
+    swiper,
+    extendParams,
+    on
+  }) {
     extendParams({
       a11y: {
         enabled: true,
@@ -7280,7 +6925,8 @@ var AlpineSwiper = (() => {
         itemRoleDescriptionMessage: null,
         slideRole: "group",
         id: null,
-        scrollOnFocus: true
+        scrollOnFocus: true,
+        wrapperLiveRegion: true
       }
     });
     swiper.a11y = {
@@ -7292,15 +6938,10 @@ var AlpineSwiper = (() => {
     let visibilityChangedTimestamp = (/* @__PURE__ */ new Date()).getTime();
     function notify(message) {
       const notification = liveRegion;
-      if (notification.length === 0)
-        return;
-      notification.innerHTML = "";
-      notification.innerHTML = message;
+      if (notification.length === 0) return;
+      setInnerHTML(notification, message);
     }
-    function getRandomNumber(size) {
-      if (size === void 0) {
-        size = 16;
-      }
+    function getRandomNumber(size = 16) {
       const randomChar = () => Math.round(16 * Math.random()).toString(16);
       return "x".repeat(size).replace(/x/g, randomChar);
     }
@@ -7326,12 +6967,6 @@ var AlpineSwiper = (() => {
       el = makeElementsArray(el);
       el.forEach((subEl) => {
         subEl.setAttribute("aria-roledescription", description);
-      });
-    }
-    function addElControls(el, controls) {
-      el = makeElementsArray(el);
-      el.forEach((subEl) => {
-        subEl.setAttribute("aria-controls", controls);
       });
     }
     function addElLabel(el, label) {
@@ -7361,17 +6996,15 @@ var AlpineSwiper = (() => {
     function enableEl(el) {
       el = makeElementsArray(el);
       el.forEach((subEl) => {
-        subEl.setAttribute("aria-disabled", false);
+        subEl.removeAttribute("aria-disabled");
       });
     }
     function onEnterOrSpaceKey(e) {
-      if (e.keyCode !== 13 && e.keyCode !== 32)
-        return;
+      if (e.keyCode !== 13 && e.keyCode !== 32) return;
       const params = swiper.params.a11y;
       const targetEl = e.target;
       if (swiper.pagination && swiper.pagination.el && (targetEl === swiper.pagination.el || swiper.pagination.el.contains(e.target))) {
-        if (!e.target.matches(classesToSelector(swiper.params.pagination.bulletClass)))
-          return;
+        if (!e.target.matches(classesToSelector(swiper.params.pagination.bulletClass))) return;
       }
       if (swiper.navigation && swiper.navigation.prevEl && swiper.navigation.nextEl) {
         const prevEls = makeElementsArray(swiper.navigation.prevEl);
@@ -7402,8 +7035,7 @@ var AlpineSwiper = (() => {
       }
     }
     function updateNavigation() {
-      if (swiper.params.loop || swiper.params.rewind || !swiper.navigation)
-        return;
+      if (swiper.params.loop || swiper.params.rewind || !swiper.navigation) return;
       const {
         nextEl,
         prevEl
@@ -7435,8 +7067,7 @@ var AlpineSwiper = (() => {
     }
     function updatePagination() {
       const params = swiper.params.a11y;
-      if (!hasPagination())
-        return;
+      if (!hasPagination()) return;
       swiper.pagination.bullets.forEach((bulletEl) => {
         if (swiper.params.pagination.clickable) {
           makeElFocusable(bulletEl);
@@ -7459,7 +7090,6 @@ var AlpineSwiper = (() => {
         el.addEventListener("keydown", onEnterOrSpaceKey);
       }
       addElLabel(el, message);
-      addElControls(el, wrapperId);
     };
     const handlePointerDown = (e) => {
       if (focusTargetSlideEl && focusTargetSlideEl !== e.target && !focusTargetSlideEl.contains(e.target)) {
@@ -7481,32 +7111,29 @@ var AlpineSwiper = (() => {
       visibilityChangedTimestamp = (/* @__PURE__ */ new Date()).getTime();
     };
     const handleFocus = (e) => {
-      if (swiper.a11y.clicked || !swiper.params.a11y.scrollOnFocus)
-        return;
-      if ((/* @__PURE__ */ new Date()).getTime() - visibilityChangedTimestamp < 100)
-        return;
+      if (swiper.a11y.clicked || !swiper.params.a11y.scrollOnFocus) return;
+      if ((/* @__PURE__ */ new Date()).getTime() - visibilityChangedTimestamp < 100) return;
       const slideEl = e.target.closest(`.${swiper.params.slideClass}, swiper-slide`);
-      if (!slideEl || !swiper.slides.includes(slideEl))
-        return;
+      if (!slideEl || !swiper.slides.includes(slideEl)) return;
       focusTargetSlideEl = slideEl;
-      const isActive = swiper.slides.indexOf(slideEl) === swiper.activeIndex;
+      const isVirtual = swiper.virtual && swiper.params.virtual.enabled;
+      const isActive = (isVirtual ? parseInt(slideEl.getAttribute("data-swiper-slide-index"), 10) : swiper.slides.indexOf(slideEl)) === swiper.activeIndex;
       const isVisible = swiper.params.watchSlidesProgress && swiper.visibleSlides && swiper.visibleSlides.includes(slideEl);
-      if (isActive || isVisible)
-        return;
-      if (e.sourceCapabilities && e.sourceCapabilities.firesTouchEvents)
-        return;
+      if (isActive || isVisible) return;
+      if (e.sourceCapabilities && e.sourceCapabilities.firesTouchEvents) return;
       if (swiper.isHorizontal()) {
         swiper.el.scrollLeft = 0;
       } else {
         swiper.el.scrollTop = 0;
       }
       requestAnimationFrame(() => {
-        if (preventFocusHandler)
-          return;
+        if (preventFocusHandler) return;
         if (swiper.params.loop) {
-          swiper.slideToLoop(parseInt(slideEl.getAttribute("data-swiper-slide-index")), 0);
+          swiper.slideToLoop(swiper.getSlideIndexWhenGrid(parseInt(slideEl.getAttribute("data-swiper-slide-index"))), 0);
+        } else if (isVirtual) {
+          swiper.slideTo(swiper.getSlideIndexWhenGrid(parseInt(slideEl.getAttribute("data-swiper-slide-index"), 10)), 0);
         } else {
-          swiper.slideTo(swiper.slides.indexOf(slideEl), 0);
+          swiper.slideTo(swiper.getSlideIndexWhenGrid(swiper.slides.indexOf(slideEl)), 0);
         }
         preventFocusHandler = false;
       });
@@ -7543,9 +7170,11 @@ var AlpineSwiper = (() => {
       }
       const wrapperEl = swiper.wrapperEl;
       const wrapperId = params.id || wrapperEl.getAttribute("id") || `swiper-wrapper-${getRandomNumber(16)}`;
-      const live = swiper.params.autoplay && swiper.params.autoplay.enabled ? "off" : "polite";
       addElId(wrapperEl, wrapperId);
-      addElLive(wrapperEl, live);
+      if (params.wrapperLiveRegion) {
+        const live = swiper.params.autoplay && swiper.params.autoplay.enabled ? "off" : "polite";
+        addElLive(wrapperEl, live);
+      }
       initSlides();
       let {
         nextEl,
@@ -7568,13 +7197,11 @@ var AlpineSwiper = (() => {
       const document2 = getDocument();
       document2.addEventListener("visibilitychange", onVisibilityChange);
       swiper.el.addEventListener("focus", handleFocus, true);
-      swiper.el.addEventListener("focus", handleFocus, true);
       swiper.el.addEventListener("pointerdown", handlePointerDown, true);
       swiper.el.addEventListener("pointerup", handlePointerUp, true);
     };
     function destroy() {
-      if (liveRegion)
-        liveRegion.remove();
+      if (liveRegion) liveRegion.remove();
       let {
         nextEl,
         prevEl
@@ -7607,39 +7234,33 @@ var AlpineSwiper = (() => {
       liveRegion.setAttribute("aria-atomic", "true");
     });
     on("afterInit", () => {
-      if (!swiper.params.a11y.enabled)
-        return;
+      if (!swiper.params.a11y.enabled) return;
       init();
     });
     on("slidesLengthChange snapGridLengthChange slidesGridLengthChange", () => {
-      if (!swiper.params.a11y.enabled)
-        return;
+      if (!swiper.params.a11y.enabled) return;
       initSlides();
     });
     on("fromEdge toEdge afterInit lock unlock", () => {
-      if (!swiper.params.a11y.enabled)
-        return;
+      if (!swiper.params.a11y.enabled) return;
       updateNavigation();
     });
     on("paginationUpdate", () => {
-      if (!swiper.params.a11y.enabled)
-        return;
+      if (!swiper.params.a11y.enabled) return;
       updatePagination();
     });
     on("destroy", () => {
-      if (!swiper.params.a11y.enabled)
-        return;
+      if (!swiper.params.a11y.enabled) return;
       destroy();
     });
   }
 
   // node_modules/swiper/modules/history.mjs
-  function History(_ref) {
-    let {
-      swiper,
-      extendParams,
-      on
-    } = _ref;
+  function History({
+    swiper,
+    extendParams,
+    on
+  }) {
     extendParams({
       history: {
         enabled: false,
@@ -7673,8 +7294,7 @@ var AlpineSwiper = (() => {
     };
     const setHistory = (key, index) => {
       const window2 = getWindow();
-      if (!initialized || !swiper.params.history.enabled)
-        return;
+      if (!initialized || !swiper.params.history.enabled) return;
       let location;
       if (swiper.params.url) {
         location = new URL(swiper.params.url);
@@ -7685,8 +7305,7 @@ var AlpineSwiper = (() => {
       let value = slugify(slide2.getAttribute("data-history"));
       if (swiper.params.history.root.length > 0) {
         let root = swiper.params.history.root;
-        if (root[root.length - 1] === "/")
-          root = root.slice(0, root.length - 1);
+        if (root[root.length - 1] === "/") root = root.slice(0, root.length - 1);
         value = `${root}/${key ? `${key}/` : ""}${value}`;
       } else if (!location.pathname.includes(key)) {
         value = `${key ? `${key}/` : ""}${value}`;
@@ -7728,8 +7347,7 @@ var AlpineSwiper = (() => {
     };
     const init = () => {
       const window2 = getWindow();
-      if (!swiper.params.history)
-        return;
+      if (!swiper.params.history) return;
       if (!window2.history || !window2.history.pushState) {
         swiper.params.history.enabled = false;
         swiper.params.hashNavigation.enabled = true;
@@ -7777,13 +7395,12 @@ var AlpineSwiper = (() => {
   }
 
   // node_modules/swiper/modules/hash-navigation.mjs
-  function HashNavigation(_ref) {
-    let {
-      swiper,
-      extendParams,
-      emit,
-      on
-    } = _ref;
+  function HashNavigation({
+    swiper,
+    extendParams,
+    emit,
+    on
+  }) {
     let initialized = false;
     const document2 = getDocument();
     const window2 = getWindow();
@@ -7795,8 +7412,7 @@ var AlpineSwiper = (() => {
         getSlideIndex(_s, hash) {
           if (swiper.virtual && swiper.params.virtual.enabled) {
             const slideWithHash = swiper.slides.find((slideEl) => slideEl.getAttribute("data-hash") === hash);
-            if (!slideWithHash)
-              return 0;
+            if (!slideWithHash) return 0;
             const index = parseInt(slideWithHash.getAttribute("data-swiper-slide-index"), 10);
             return index;
           }
@@ -7811,14 +7427,12 @@ var AlpineSwiper = (() => {
       const activeSlideHash = activeSlideEl ? activeSlideEl.getAttribute("data-hash") : "";
       if (newHash !== activeSlideHash) {
         const newIndex = swiper.params.hashNavigation.getSlideIndex(swiper, newHash);
-        if (typeof newIndex === "undefined" || Number.isNaN(newIndex))
-          return;
+        if (typeof newIndex === "undefined" || Number.isNaN(newIndex)) return;
         swiper.slideTo(newIndex);
       }
     };
     const setHash = () => {
-      if (!initialized || !swiper.params.hashNavigation.enabled)
-        return;
+      if (!initialized || !swiper.params.hashNavigation.enabled) return;
       const activeSlideEl = swiper.virtual && swiper.params.virtual.enabled ? swiper.slidesEl.querySelector(`[data-swiper-slide-index="${swiper.activeIndex}"]`) : swiper.slides[swiper.activeIndex];
       const activeSlideHash = activeSlideEl ? activeSlideEl.getAttribute("data-hash") || activeSlideEl.getAttribute("data-history") : "";
       if (swiper.params.hashNavigation.replaceState && window2.history && window2.history.replaceState) {
@@ -7830,8 +7444,7 @@ var AlpineSwiper = (() => {
       }
     };
     const init = () => {
-      if (!swiper.params.hashNavigation.enabled || swiper.params.history && swiper.params.history.enabled)
-        return;
+      if (!swiper.params.hashNavigation.enabled || swiper.params.history && swiper.params.history.enabled) return;
       initialized = true;
       const hash = document2.location.hash.replace("#", "");
       if (hash) {
@@ -7871,14 +7484,13 @@ var AlpineSwiper = (() => {
   }
 
   // node_modules/swiper/modules/autoplay.mjs
-  function Autoplay(_ref) {
-    let {
-      swiper,
-      extendParams,
-      on,
-      emit,
-      params
-    } = _ref;
+  function Autoplay({
+    swiper,
+    extendParams,
+    on,
+    emit,
+    params
+  }) {
     swiper.autoplay = {
       running: false,
       paused: false,
@@ -7905,14 +7517,11 @@ var AlpineSwiper = (() => {
     let isTouched;
     let pausedByTouch;
     let touchStartTimeout;
-    let slideChanged;
     let pausedByInteraction;
     let pausedByPointerEnter;
     function onTransitionEnd(e) {
-      if (!swiper || swiper.destroyed || !swiper.wrapperEl)
-        return;
-      if (e.target !== swiper.wrapperEl)
-        return;
+      if (!swiper || swiper.destroyed || !swiper.wrapperEl) return;
+      if (e.target !== swiper.wrapperEl) return;
       swiper.wrapperEl.removeEventListener("transitionend", onTransitionEnd);
       if (pausedByPointerEnter || e.detail && e.detail.bySwiperTouchMove) {
         return;
@@ -7920,8 +7529,7 @@ var AlpineSwiper = (() => {
       resume();
     }
     const calcTimeLeft = () => {
-      if (swiper.destroyed || !swiper.autoplay.running)
-        return;
+      if (swiper.destroyed || !swiper.autoplay.running) return;
       if (swiper.autoplay.paused) {
         wasPaused = true;
       } else if (wasPaused) {
@@ -7942,30 +7550,32 @@ var AlpineSwiper = (() => {
       } else {
         activeSlideEl = swiper.slides[swiper.activeIndex];
       }
-      if (!activeSlideEl)
-        return void 0;
+      if (!activeSlideEl) return void 0;
       const currentSlideDelay = parseInt(activeSlideEl.getAttribute("data-swiper-autoplay"), 10);
       return currentSlideDelay;
     };
+    const getTotalDelay = () => {
+      let totalDelay = swiper.params.autoplay.delay;
+      const currentSlideDelay = getSlideDelay();
+      if (!Number.isNaN(currentSlideDelay) && currentSlideDelay > 0) {
+        totalDelay = currentSlideDelay;
+      }
+      return totalDelay;
+    };
     const run = (delayForce) => {
-      if (swiper.destroyed || !swiper.autoplay.running)
-        return;
+      if (swiper.destroyed || !swiper.autoplay.running) return;
       cancelAnimationFrame(raf);
       calcTimeLeft();
-      let delay = typeof delayForce === "undefined" ? swiper.params.autoplay.delay : delayForce;
-      autoplayDelayTotal = swiper.params.autoplay.delay;
-      autoplayDelayCurrent = swiper.params.autoplay.delay;
-      const currentSlideDelay = getSlideDelay();
-      if (!Number.isNaN(currentSlideDelay) && currentSlideDelay > 0 && typeof delayForce === "undefined") {
-        delay = currentSlideDelay;
-        autoplayDelayTotal = currentSlideDelay;
-        autoplayDelayCurrent = currentSlideDelay;
+      let delay = delayForce;
+      if (typeof delay === "undefined") {
+        delay = getTotalDelay();
+        autoplayDelayTotal = delay;
+        autoplayDelayCurrent = delay;
       }
       autoplayTimeLeft = delay;
       const speed = swiper.params.speed;
       const proceed = () => {
-        if (!swiper || swiper.destroyed)
-          return;
+        if (!swiper || swiper.destroyed) return;
         if (swiper.params.autoplay.reverseDirection) {
           if (!swiper.isBeginning || swiper.params.loop || swiper.params.rewind) {
             swiper.slidePrev(speed, true, true);
@@ -8015,8 +7625,7 @@ var AlpineSwiper = (() => {
       emit("autoplayStop");
     };
     const pause = (internal, reset) => {
-      if (swiper.destroyed || !swiper.autoplay.running)
-        return;
+      if (swiper.destroyed || !swiper.autoplay.running) return;
       clearTimeout(timeout);
       if (!internal) {
         pausedByInteraction = true;
@@ -8031,24 +7640,17 @@ var AlpineSwiper = (() => {
       };
       swiper.autoplay.paused = true;
       if (reset) {
-        if (slideChanged) {
-          autoplayTimeLeft = swiper.params.autoplay.delay;
-        }
-        slideChanged = false;
         proceed();
         return;
       }
       const delay = autoplayTimeLeft || swiper.params.autoplay.delay;
       autoplayTimeLeft = delay - ((/* @__PURE__ */ new Date()).getTime() - autoplayStartTime);
-      if (swiper.isEnd && autoplayTimeLeft < 0 && !swiper.params.loop)
-        return;
-      if (autoplayTimeLeft < 0)
-        autoplayTimeLeft = 0;
+      if (swiper.isEnd && autoplayTimeLeft < 0 && !swiper.params.loop) return;
+      if (autoplayTimeLeft < 0) autoplayTimeLeft = 0;
       proceed();
     };
     const resume = () => {
-      if (swiper.isEnd && autoplayTimeLeft < 0 && !swiper.params.loop || swiper.destroyed || !swiper.autoplay.running)
-        return;
+      if (swiper.isEnd && autoplayTimeLeft < 0 && !swiper.params.loop || swiper.destroyed || !swiper.autoplay.running) return;
       autoplayStartTime = (/* @__PURE__ */ new Date()).getTime();
       if (pausedByInteraction) {
         pausedByInteraction = false;
@@ -8060,8 +7662,7 @@ var AlpineSwiper = (() => {
       emit("autoplayResume");
     };
     const onVisibilityChange = () => {
-      if (swiper.destroyed || !swiper.autoplay.running)
-        return;
+      if (swiper.destroyed || !swiper.autoplay.running) return;
       const document2 = getDocument();
       if (document2.visibilityState === "hidden") {
         pausedByInteraction = true;
@@ -8072,17 +7673,14 @@ var AlpineSwiper = (() => {
       }
     };
     const onPointerEnter = (e) => {
-      if (e.pointerType !== "mouse")
-        return;
+      if (e.pointerType !== "mouse") return;
       pausedByInteraction = true;
       pausedByPointerEnter = true;
-      if (swiper.animating || swiper.autoplay.paused)
-        return;
+      if (swiper.animating || swiper.autoplay.paused) return;
       pause(true);
     };
     const onPointerLeave = (e) => {
-      if (e.pointerType !== "mouse")
-        return;
+      if (e.pointerType !== "mouse") return;
       pausedByPointerEnter = false;
       if (swiper.autoplay.paused) {
         resume();
@@ -8135,8 +7733,7 @@ var AlpineSwiper = (() => {
       }
     });
     on("beforeTransitionStart", (_s, speed, internal) => {
-      if (swiper.destroyed || !swiper.autoplay.running)
-        return;
+      if (swiper.destroyed || !swiper.autoplay.running) return;
       if (internal || !swiper.params.autoplay.disableOnInteraction) {
         pause(true, true);
       } else {
@@ -8144,8 +7741,7 @@ var AlpineSwiper = (() => {
       }
     });
     on("sliderFirstMove", () => {
-      if (swiper.destroyed || !swiper.autoplay.running)
-        return;
+      if (swiper.destroyed || !swiper.autoplay.running) return;
       if (swiper.params.autoplay.disableOnInteraction) {
         stop();
         return;
@@ -8160,8 +7756,7 @@ var AlpineSwiper = (() => {
       }, 200);
     });
     on("touchEnd", () => {
-      if (swiper.destroyed || !swiper.autoplay.running || !isTouched)
-        return;
+      if (swiper.destroyed || !swiper.autoplay.running || !isTouched) return;
       clearTimeout(touchStartTimeout);
       clearTimeout(timeout);
       if (swiper.params.autoplay.disableOnInteraction) {
@@ -8169,15 +7764,16 @@ var AlpineSwiper = (() => {
         isTouched = false;
         return;
       }
-      if (pausedByTouch && swiper.params.cssMode)
-        resume();
+      if (pausedByTouch && swiper.params.cssMode) resume();
       pausedByTouch = false;
       isTouched = false;
     });
     on("slideChange", () => {
-      if (swiper.destroyed || !swiper.autoplay.running)
-        return;
-      slideChanged = true;
+      if (swiper.destroyed || !swiper.autoplay.running) return;
+      if (swiper.autoplay.paused) {
+        autoplayTimeLeft = getTotalDelay();
+        autoplayDelayTotal = getTotalDelay();
+      }
     });
     Object.assign(swiper.autoplay, {
       start,
@@ -8188,12 +7784,11 @@ var AlpineSwiper = (() => {
   }
 
   // node_modules/swiper/modules/thumbs.mjs
-  function Thumb(_ref) {
-    let {
-      swiper,
-      extendParams,
-      on
-    } = _ref;
+  function Thumb({
+    swiper,
+    extendParams,
+    on
+  }) {
     extendParams({
       thumbs: {
         swiper: null,
@@ -8208,16 +7803,18 @@ var AlpineSwiper = (() => {
     swiper.thumbs = {
       swiper: null
     };
+    function isVirtualEnabled() {
+      const thumbsSwiper = swiper.thumbs.swiper;
+      if (!thumbsSwiper || thumbsSwiper.destroyed) return false;
+      return thumbsSwiper.params.virtual && thumbsSwiper.params.virtual.enabled;
+    }
     function onThumbClick() {
       const thumbsSwiper = swiper.thumbs.swiper;
-      if (!thumbsSwiper || thumbsSwiper.destroyed)
-        return;
+      if (!thumbsSwiper || thumbsSwiper.destroyed) return;
       const clickedIndex = thumbsSwiper.clickedIndex;
       const clickedSlide = thumbsSwiper.clickedSlide;
-      if (clickedSlide && clickedSlide.classList.contains(swiper.params.thumbs.slideThumbActiveClass))
-        return;
-      if (typeof clickedIndex === "undefined" || clickedIndex === null)
-        return;
+      if (clickedSlide && clickedSlide.classList.contains(swiper.params.thumbs.slideThumbActiveClass)) return;
+      if (typeof clickedIndex === "undefined" || clickedIndex === null) return;
       let slideToIndex;
       if (thumbsSwiper.params.loop) {
         slideToIndex = parseInt(thumbsSwiper.clickedSlide.getAttribute("data-swiper-slide-index"), 10);
@@ -8234,8 +7831,7 @@ var AlpineSwiper = (() => {
       const {
         thumbs: thumbsParams
       } = swiper.params;
-      if (initialized)
-        return false;
+      if (initialized) return false;
       initialized = true;
       const SwiperClass = swiper.constructor;
       if (thumbsParams.swiper instanceof SwiperClass) {
@@ -8264,13 +7860,18 @@ var AlpineSwiper = (() => {
       }
       swiper.thumbs.swiper.el.classList.add(swiper.params.thumbs.thumbsContainerClass);
       swiper.thumbs.swiper.on("tap", onThumbClick);
+      if (isVirtualEnabled()) {
+        swiper.thumbs.swiper.on("virtualUpdate", () => {
+          update2(false, {
+            autoScroll: false
+          });
+        });
+      }
       return true;
     }
-    function update2(initial) {
+    function update2(initial, p) {
       const thumbsSwiper = swiper.thumbs.swiper;
-      if (!thumbsSwiper || thumbsSwiper.destroyed)
-        return;
-      const slidesPerView = thumbsSwiper.params.slidesPerView === "auto" ? thumbsSwiper.slidesPerViewDynamic() : thumbsSwiper.params.slidesPerView;
+      if (!thumbsSwiper || thumbsSwiper.destroyed) return;
       let thumbsToActivate = 1;
       const thumbActiveClass = swiper.params.thumbs.slideThumbActiveClass;
       if (swiper.params.slidesPerView > 1 && !swiper.params.centeredSlides) {
@@ -8281,7 +7882,7 @@ var AlpineSwiper = (() => {
       }
       thumbsToActivate = Math.floor(thumbsToActivate);
       thumbsSwiper.slides.forEach((slideEl) => slideEl.classList.remove(thumbActiveClass));
-      if (thumbsSwiper.params.loop || thumbsSwiper.params.virtual && thumbsSwiper.params.virtual.enabled) {
+      if (thumbsSwiper.params.loop || isVirtualEnabled()) {
         for (let i = 0; i < thumbsToActivate; i += 1) {
           elementChildren(thumbsSwiper.slidesEl, `[data-swiper-slide-index="${swiper.realIndex + i}"]`).forEach((slideEl) => {
             slideEl.classList.add(thumbActiveClass);
@@ -8294,6 +7895,14 @@ var AlpineSwiper = (() => {
           }
         }
       }
+      if (p?.autoScroll ?? true) {
+        autoScroll(initial ? 0 : void 0);
+      }
+    }
+    function autoScroll(slideSpeed) {
+      const thumbsSwiper = swiper.thumbs.swiper;
+      if (!thumbsSwiper || thumbsSwiper.destroyed) return;
+      const slidesPerView = thumbsSwiper.params.slidesPerView === "auto" ? thumbsSwiper.slidesPerViewDynamic() : thumbsSwiper.params.slidesPerView;
       const autoScrollOffset = swiper.params.thumbs.autoScrollOffset;
       const useOffset = autoScrollOffset && !thumbsSwiper.params.loop;
       if (swiper.realIndex !== thumbsSwiper.realIndex || useOffset) {
@@ -8318,9 +7927,8 @@ var AlpineSwiper = (() => {
             } else {
               newThumbsIndex = newThumbsIndex + Math.floor(slidesPerView / 2) - 1;
             }
-          } else if (newThumbsIndex > currentThumbsIndex && thumbsSwiper.params.slidesPerGroup === 1)
-            ;
-          thumbsSwiper.slideTo(newThumbsIndex, initial ? 0 : void 0);
+          } else if (newThumbsIndex > currentThumbsIndex && thumbsSwiper.params.slidesPerGroup === 1) ;
+          thumbsSwiper.slideTo(newThumbsIndex, slideSpeed);
         }
       }
     }
@@ -8328,8 +7936,7 @@ var AlpineSwiper = (() => {
       const {
         thumbs
       } = swiper.params;
-      if (!thumbs || !thumbs.swiper)
-        return;
+      if (!thumbs || !thumbs.swiper) return;
       if (typeof thumbs.swiper === "string" || thumbs.swiper instanceof HTMLElement) {
         const document2 = getDocument();
         const getThumbsElementAndInit = () => {
@@ -8353,8 +7960,7 @@ var AlpineSwiper = (() => {
           return thumbsElement;
         };
         const watchForThumbsToAppear = () => {
-          if (swiper.destroyed)
-            return;
+          if (swiper.destroyed) return;
           const thumbsElement = getThumbsElementAndInit();
           if (!thumbsElement) {
             requestAnimationFrame(watchForThumbsToAppear);
@@ -8371,14 +7977,12 @@ var AlpineSwiper = (() => {
     });
     on("setTransition", (_s, duration) => {
       const thumbsSwiper = swiper.thumbs.swiper;
-      if (!thumbsSwiper || thumbsSwiper.destroyed)
-        return;
+      if (!thumbsSwiper || thumbsSwiper.destroyed) return;
       thumbsSwiper.setTransition(duration);
     });
     on("beforeDestroy", () => {
       const thumbsSwiper = swiper.thumbs.swiper;
-      if (!thumbsSwiper || thumbsSwiper.destroyed)
-        return;
+      if (!thumbsSwiper || thumbsSwiper.destroyed) return;
       if (swiperCreated) {
         thumbsSwiper.destroy();
       }
@@ -8390,13 +7994,12 @@ var AlpineSwiper = (() => {
   }
 
   // node_modules/swiper/modules/free-mode.mjs
-  function freeMode(_ref) {
-    let {
-      swiper,
-      extendParams,
-      emit,
-      once
-    } = _ref;
+  function freeMode({
+    swiper,
+    extendParams,
+    emit,
+    once
+  }) {
     extendParams({
       freeMode: {
         enabled: false,
@@ -8410,8 +8013,7 @@ var AlpineSwiper = (() => {
       }
     });
     function onTouchStart2() {
-      if (swiper.params.cssMode)
-        return;
+      if (swiper.params.cssMode) return;
       const translate2 = swiper.getTranslate();
       swiper.setTranslate(translate2);
       swiper.setTransition(0);
@@ -8421,8 +8023,7 @@ var AlpineSwiper = (() => {
       });
     }
     function onTouchMove2() {
-      if (swiper.params.cssMode)
-        return;
+      if (swiper.params.cssMode) return;
       const {
         touchEventsData: data,
         touches
@@ -8438,12 +8039,10 @@ var AlpineSwiper = (() => {
         time: now()
       });
     }
-    function onTouchEnd2(_ref2) {
-      let {
-        currentPos
-      } = _ref2;
-      if (swiper.params.cssMode)
-        return;
+    function onTouchEnd2({
+      currentPos
+    }) {
+      if (swiper.params.cssMode) return;
       const {
         params,
         wrapperEl,
@@ -8487,8 +8086,7 @@ var AlpineSwiper = (() => {
         let momentumDuration = 1e3 * params.freeMode.momentumRatio;
         const momentumDistance = swiper.velocity * momentumDuration;
         let newPosition = swiper.translate + momentumDistance;
-        if (rtl)
-          newPosition = -newPosition;
+        if (rtl) newPosition = -newPosition;
         let doBounce = false;
         let afterBouncePosition;
         const bounceAmount = Math.abs(swiper.velocity) * 20 * params.freeMode.momentumBounceRatio;
@@ -8504,8 +8102,7 @@ var AlpineSwiper = (() => {
           } else {
             newPosition = swiper.maxTranslate();
           }
-          if (params.loop && params.centeredSlides)
-            needsLoopFix = true;
+          if (params.loop && params.centeredSlides) needsLoopFix = true;
         } else if (newPosition > swiper.minTranslate()) {
           if (params.freeMode.momentumBounce) {
             if (newPosition - swiper.minTranslate() > bounceAmount) {
@@ -8517,8 +8114,7 @@ var AlpineSwiper = (() => {
           } else {
             newPosition = swiper.minTranslate();
           }
-          if (params.loop && params.centeredSlides)
-            needsLoopFix = true;
+          if (params.loop && params.centeredSlides) needsLoopFix = true;
         } else if (params.freeMode.sticky) {
           let nextSlide;
           for (let j = 0; j < snapGrid.length; j += 1) {
@@ -8567,15 +8163,13 @@ var AlpineSwiper = (() => {
           swiper.transitionStart(true, swiper.swipeDirection);
           swiper.animating = true;
           elementTransitionEnd(wrapperEl, () => {
-            if (!swiper || swiper.destroyed || !data.allowMomentumBounce)
-              return;
+            if (!swiper || swiper.destroyed || !data.allowMomentumBounce) return;
             emit("momentumBounce");
             swiper.setTransition(params.speed);
             setTimeout(() => {
               swiper.setTranslate(afterBouncePosition);
               elementTransitionEnd(wrapperEl, () => {
-                if (!swiper || swiper.destroyed)
-                  return;
+                if (!swiper || swiper.destroyed) return;
                 swiper.transitionEnd();
               });
             }, 0);
@@ -8589,8 +8183,7 @@ var AlpineSwiper = (() => {
           if (!swiper.animating) {
             swiper.animating = true;
             elementTransitionEnd(wrapperEl, () => {
-              if (!swiper || swiper.destroyed)
-                return;
+              if (!swiper || swiper.destroyed) return;
               swiper.transitionEnd();
             });
           }
@@ -8622,12 +8215,11 @@ var AlpineSwiper = (() => {
   }
 
   // node_modules/swiper/modules/grid.mjs
-  function Grid(_ref) {
-    let {
-      swiper,
-      extendParams,
-      on
-    } = _ref;
+  function Grid({
+    swiper,
+    extendParams,
+    on
+  }) {
     extendParams({
       grid: {
         rows: 1,
@@ -8663,7 +8255,7 @@ var AlpineSwiper = (() => {
         slidesNumberEvenToRows = Math.ceil(slidesLength / rows) * rows;
       }
       if (slidesPerView !== "auto" && fill === "row") {
-        slidesNumberEvenToRows = Math.max(slidesNumberEvenToRows, slidesPerView * rows);
+        slidesNumberEvenToRows = Math.max(slidesNumberEvenToRows, Math.floor(slidesPerView) * rows);
       }
       slidesPerRow = slidesNumberEvenToRows / rows;
     };
@@ -8736,10 +8328,8 @@ var AlpineSwiper = (() => {
         const newSlidesGrid = [];
         for (let i = 0; i < snapGrid.length; i += 1) {
           let slidesGridItem = snapGrid[i];
-          if (roundLengths)
-            slidesGridItem = Math.floor(slidesGridItem);
-          if (snapGrid[i] < swiper.virtualSize + snapGrid[0])
-            newSlidesGrid.push(slidesGridItem);
+          if (roundLengths) slidesGridItem = Math.floor(slidesGridItem);
+          if (snapGrid[i] < swiper.virtualSize + snapGrid[0]) newSlidesGrid.push(slidesGridItem);
         }
         snapGrid.splice(0, snapGrid.length);
         snapGrid.push(...newSlidesGrid);
@@ -8790,17 +8380,16 @@ var AlpineSwiper = (() => {
     const appendElement = (slideEl) => {
       if (typeof slideEl === "string") {
         const tempDOM = document.createElement("div");
-        tempDOM.innerHTML = slideEl;
+        setInnerHTML(tempDOM, slideEl);
         slidesEl.append(tempDOM.children[0]);
-        tempDOM.innerHTML = "";
+        setInnerHTML(tempDOM, "");
       } else {
         slidesEl.append(slideEl);
       }
     };
     if (typeof slides === "object" && "length" in slides) {
       for (let i = 0; i < slides.length; i += 1) {
-        if (slides[i])
-          appendElement(slides[i]);
+        if (slides[i]) appendElement(slides[i]);
       }
     } else {
       appendElement(slides);
@@ -8827,17 +8416,16 @@ var AlpineSwiper = (() => {
     const prependElement = (slideEl) => {
       if (typeof slideEl === "string") {
         const tempDOM = document.createElement("div");
-        tempDOM.innerHTML = slideEl;
+        setInnerHTML(tempDOM, slideEl);
         slidesEl.prepend(tempDOM.children[0]);
-        tempDOM.innerHTML = "";
+        setInnerHTML(tempDOM, "");
       } else {
         slidesEl.prepend(slideEl);
       }
     };
     if (typeof slides === "object" && "length" in slides) {
       for (let i = 0; i < slides.length; i += 1) {
-        if (slides[i])
-          prependElement(slides[i]);
+        if (slides[i]) prependElement(slides[i]);
       }
       newActiveIndex = activeIndex + slides.length;
     } else {
@@ -8883,8 +8471,7 @@ var AlpineSwiper = (() => {
     }
     if (typeof slides === "object" && "length" in slides) {
       for (let i = 0; i < slides.length; i += 1) {
-        if (slides[i])
-          slidesEl.append(slides[i]);
+        if (slides[i]) slidesEl.append(slides[i]);
       }
       newActiveIndex = activeIndexBuffer > index ? activeIndexBuffer + slides.length : activeIndexBuffer;
     } else {
@@ -8922,18 +8509,14 @@ var AlpineSwiper = (() => {
     if (typeof slidesIndexes === "object" && "length" in slidesIndexes) {
       for (let i = 0; i < slidesIndexes.length; i += 1) {
         indexToRemove = slidesIndexes[i];
-        if (swiper.slides[indexToRemove])
-          swiper.slides[indexToRemove].remove();
-        if (indexToRemove < newActiveIndex)
-          newActiveIndex -= 1;
+        if (swiper.slides[indexToRemove]) swiper.slides[indexToRemove].remove();
+        if (indexToRemove < newActiveIndex) newActiveIndex -= 1;
       }
       newActiveIndex = Math.max(newActiveIndex, 0);
     } else {
       indexToRemove = slidesIndexes;
-      if (swiper.slides[indexToRemove])
-        swiper.slides[indexToRemove].remove();
-      if (indexToRemove < newActiveIndex)
-        newActiveIndex -= 1;
+      if (swiper.slides[indexToRemove]) swiper.slides[indexToRemove].remove();
+      if (indexToRemove < newActiveIndex) newActiveIndex -= 1;
       newActiveIndex = Math.max(newActiveIndex, 0);
     }
     swiper.recalcSlides();
@@ -8957,10 +8540,9 @@ var AlpineSwiper = (() => {
     }
     swiper.removeSlide(slidesIndexes);
   }
-  function Manipulation(_ref) {
-    let {
-      swiper
-    } = _ref;
+  function Manipulation({
+    swiper
+  }) {
     Object.assign(swiper, {
       appendSlide: appendSlide.bind(swiper),
       prependSlide: prependSlide.bind(swiper),
@@ -8984,8 +8566,7 @@ var AlpineSwiper = (() => {
       getEffectParams
     } = params;
     on("beforeInit", () => {
-      if (swiper.params.effect !== effect)
-        return;
+      if (swiper.params.effect !== effect) return;
       swiper.classNames.push(`${swiper.params.containerModifierClass}${effect}`);
       if (perspective && perspective()) {
         swiper.classNames.push(`${swiper.params.containerModifierClass}3d`);
@@ -8994,22 +8575,18 @@ var AlpineSwiper = (() => {
       Object.assign(swiper.params, overwriteParamsResult);
       Object.assign(swiper.originalParams, overwriteParamsResult);
     });
-    on("setTranslate", () => {
-      if (swiper.params.effect !== effect)
-        return;
+    on("setTranslate _virtualUpdated", () => {
+      if (swiper.params.effect !== effect) return;
       setTranslate2();
     });
     on("setTransition", (_s, duration) => {
-      if (swiper.params.effect !== effect)
-        return;
+      if (swiper.params.effect !== effect) return;
       setTransition2(duration);
     });
     on("transitionEnd", () => {
-      if (swiper.params.effect !== effect)
-        return;
+      if (swiper.params.effect !== effect) return;
       if (recreateShadows) {
-        if (!getEffectParams || !getEffectParams().slideShadows)
-          return;
+        if (!getEffectParams || !getEffectParams().slideShadows) return;
         swiper.slides.forEach((slideEl) => {
           slideEl.querySelectorAll(".swiper-slide-shadow-top, .swiper-slide-shadow-right, .swiper-slide-shadow-bottom, .swiper-slide-shadow-left").forEach((shadowEl) => shadowEl.remove());
         });
@@ -9018,8 +8595,7 @@ var AlpineSwiper = (() => {
     });
     let requireUpdateOnVirtual;
     on("virtualUpdate", () => {
-      if (swiper.params.effect !== effect)
-        return;
+      if (swiper.params.effect !== effect) return;
       if (!swiper.slides.length) {
         requireUpdateOnVirtual = true;
       }
@@ -9043,13 +8619,12 @@ var AlpineSwiper = (() => {
   }
 
   // node_modules/swiper/shared/effect-virtual-transition-end.mjs
-  function effectVirtualTransitionEnd(_ref) {
-    let {
-      swiper,
-      duration,
-      transformElements,
-      allSlides
-    } = _ref;
+  function effectVirtualTransitionEnd({
+    swiper,
+    duration,
+    transformElements,
+    allSlides
+  }) {
     const {
       activeIndex
     } = swiper;
@@ -9073,10 +8648,8 @@ var AlpineSwiper = (() => {
       }
       transitionEndTarget.forEach((el) => {
         elementTransitionEnd(el, () => {
-          if (eventTriggered)
-            return;
-          if (!swiper || swiper.destroyed)
-            return;
+          if (eventTriggered) return;
+          if (!swiper || swiper.destroyed) return;
           eventTriggered = true;
           swiper.animating = false;
           const evt = new window.CustomEvent("transitionend", {
@@ -9090,12 +8663,11 @@ var AlpineSwiper = (() => {
   }
 
   // node_modules/swiper/modules/effect-fade.mjs
-  function EffectFade(_ref) {
-    let {
-      swiper,
-      extendParams,
-      on
-    } = _ref;
+  function EffectFade({
+    swiper,
+    extendParams,
+    on
+  }) {
     extendParams({
       fadeEffect: {
         crossFade: false
@@ -9110,8 +8682,7 @@ var AlpineSwiper = (() => {
         const slideEl = swiper.slides[i];
         const offset = slideEl.swiperSlideOffset;
         let tx = -offset;
-        if (!swiper.params.virtualTranslate)
-          tx -= swiper.translate;
+        if (!swiper.params.virtualTranslate) tx -= swiper.translate;
         let ty = 0;
         if (!swiper.isHorizontal()) {
           ty = tx;
@@ -9152,12 +8723,11 @@ var AlpineSwiper = (() => {
   }
 
   // node_modules/swiper/modules/effect-cube.mjs
-  function EffectCube(_ref) {
-    let {
-      swiper,
-      extendParams,
-      on
-    } = _ref;
+  function EffectCube({
+    swiper,
+    extendParams,
+    on
+  }) {
     extendParams({
       cubeEffect: {
         slideShadows: true,
@@ -9177,10 +8747,8 @@ var AlpineSwiper = (() => {
         shadowAfter = createElement("div", `swiper-slide-shadow-cube swiper-slide-shadow-${isHorizontal ? "right" : "bottom"}`.split(" "));
         slideEl.append(shadowAfter);
       }
-      if (shadowBefore)
-        shadowBefore.style.opacity = Math.max(-progress, 0);
-      if (shadowAfter)
-        shadowAfter.style.opacity = Math.max(progress, 0);
+      if (shadowBefore) shadowBefore.style.opacity = Math.max(-progress, 0);
+      if (shadowAfter) shadowAfter.style.opacity = Math.max(progress, 0);
     };
     const recreateShadows = () => {
       const isHorizontal = swiper.isHorizontal();
@@ -9261,8 +8829,7 @@ var AlpineSwiper = (() => {
         const transform = `rotateX(${r(isHorizontal ? 0 : -slideAngle)}deg) rotateY(${r(isHorizontal ? slideAngle : 0)}deg) translate3d(${tx}px, ${ty}px, ${tz}px)`;
         if (progress <= 1 && progress > -1) {
           wrapperRotate = slideIndex * 90 + progress * 90;
-          if (rtl)
-            wrapperRotate = -slideIndex * 90 - progress * 90;
+          if (rtl) wrapperRotate = -slideIndex * 90 - progress * 90;
         }
         slideEl.style.transform = transform;
         if (params.slideShadows) {
@@ -9300,8 +8867,7 @@ var AlpineSwiper = (() => {
       });
       if (swiper.params.cubeEffect.shadow && !swiper.isHorizontal()) {
         const shadowEl = el.querySelector(".swiper-cube-shadow");
-        if (shadowEl)
-          shadowEl.style.transitionDuration = `${duration}ms`;
+        if (shadowEl) shadowEl.style.transitionDuration = `${duration}ms`;
       }
     };
     effectInit({
@@ -9338,12 +8904,11 @@ var AlpineSwiper = (() => {
   }
 
   // node_modules/swiper/modules/effect-flip.mjs
-  function EffectFlip(_ref) {
-    let {
-      swiper,
-      extendParams,
-      on
-    } = _ref;
+  function EffectFlip({
+    swiper,
+    extendParams,
+    on
+  }) {
     extendParams({
       flipEffect: {
         slideShadows: true,
@@ -9359,10 +8924,8 @@ var AlpineSwiper = (() => {
       if (!shadowAfter) {
         shadowAfter = createShadow("flip", slideEl, swiper.isHorizontal() ? "right" : "bottom");
       }
-      if (shadowBefore)
-        shadowBefore.style.opacity = Math.max(-progress, 0);
-      if (shadowAfter)
-        shadowAfter.style.opacity = Math.max(progress, 0);
+      if (shadowBefore) shadowBefore.style.opacity = Math.max(-progress, 0);
+      if (shadowAfter) shadowAfter.style.opacity = Math.max(progress, 0);
     };
     const recreateShadows = () => {
       swiper.params.flipEffect;
@@ -9444,12 +9007,11 @@ var AlpineSwiper = (() => {
   }
 
   // node_modules/swiper/modules/effect-coverflow.mjs
-  function EffectCoverflow(_ref) {
-    let {
-      swiper,
-      extendParams,
-      on
-    } = _ref;
+  function EffectCoverflow({
+    swiper,
+    extendParams,
+    on
+  }) {
     extendParams({
       coverflowEffect: {
         rotate: 50,
@@ -9490,18 +9052,12 @@ var AlpineSwiper = (() => {
         let translateY = isHorizontal ? 0 : stretch * offsetMultiplier;
         let translateX = isHorizontal ? stretch * offsetMultiplier : 0;
         let scale = 1 - (1 - params.scale) * Math.abs(offsetMultiplier);
-        if (Math.abs(translateX) < 1e-3)
-          translateX = 0;
-        if (Math.abs(translateY) < 1e-3)
-          translateY = 0;
-        if (Math.abs(translateZ) < 1e-3)
-          translateZ = 0;
-        if (Math.abs(rotateY) < 1e-3)
-          rotateY = 0;
-        if (Math.abs(rotateX) < 1e-3)
-          rotateX = 0;
-        if (Math.abs(scale) < 1e-3)
-          scale = 0;
+        if (Math.abs(translateX) < 1e-3) translateX = 0;
+        if (Math.abs(translateY) < 1e-3) translateY = 0;
+        if (Math.abs(translateZ) < 1e-3) translateZ = 0;
+        if (Math.abs(rotateY) < 1e-3) rotateY = 0;
+        if (Math.abs(rotateX) < 1e-3) rotateX = 0;
+        if (Math.abs(scale) < 1e-3) scale = 0;
         const slideTransform = `translate3d(${translateX}px,${translateY}px,${translateZ}px)  rotateX(${r(rotateX)}deg) rotateY(${r(rotateY)}deg) scale(${scale})`;
         const targetEl = effectTarget(params, slideEl);
         targetEl.style.transform = slideTransform;
@@ -9515,10 +9071,8 @@ var AlpineSwiper = (() => {
           if (!shadowAfterEl) {
             shadowAfterEl = createShadow("coverflow", slideEl, isHorizontal ? "right" : "bottom");
           }
-          if (shadowBeforeEl)
-            shadowBeforeEl.style.opacity = offsetMultiplier > 0 ? offsetMultiplier : 0;
-          if (shadowAfterEl)
-            shadowAfterEl.style.opacity = -offsetMultiplier > 0 ? -offsetMultiplier : 0;
+          if (shadowBeforeEl) shadowBeforeEl.style.opacity = offsetMultiplier > 0 ? offsetMultiplier : 0;
+          if (shadowAfterEl) shadowAfterEl.style.opacity = -offsetMultiplier > 0 ? -offsetMultiplier : 0;
         }
       }
     };
@@ -9545,12 +9099,11 @@ var AlpineSwiper = (() => {
   }
 
   // node_modules/swiper/modules/effect-creative.mjs
-  function EffectCreative(_ref) {
-    let {
-      swiper,
-      extendParams,
-      on
-    } = _ref;
+  function EffectCreative({
+    swiper,
+    extendParams,
+    on
+  }) {
     extendParams({
       creativeEffect: {
         limitProgress: 1,
@@ -9572,8 +9125,7 @@ var AlpineSwiper = (() => {
       }
     });
     const getTranslateValue = (value) => {
-      if (typeof value === "string")
-        return value;
+      if (typeof value === "string") return value;
       return `${value}px`;
     };
     const setTranslate2 = () => {
@@ -9682,12 +9234,11 @@ var AlpineSwiper = (() => {
   }
 
   // node_modules/swiper/modules/effect-cards.mjs
-  function EffectCards(_ref) {
-    let {
-      swiper,
-      extendParams,
-      on
-    } = _ref;
+  function EffectCards({
+    swiper,
+    extendParams,
+    on
+  }) {
     extendParams({
       cardsEffect: {
         slideShadows: true,
@@ -9733,7 +9284,7 @@ var AlpineSwiper = (() => {
           rotate += -28 * progress * subProgress;
           scale += -0.5 * subProgress;
           tXAdd += 96 * subProgress;
-          tY = `${-25 * subProgress * Math.abs(progress)}%`;
+          tY = `${(params.rotate || swiper.isHorizontal() ? -25 : 0) * subProgress * Math.abs(progress)}%`;
         }
         if (progress < 0) {
           tX = `calc(${tX}px ${rtl ? "-" : "+"} (${tXAdd * Math.abs(progress)}%))`;
@@ -9758,8 +9309,7 @@ var AlpineSwiper = (() => {
           if (!shadowEl) {
             shadowEl = createShadow("cards", slideEl);
           }
-          if (shadowEl)
-            shadowEl.style.opacity = Math.min(Math.max((Math.abs(progress) - 0.5) / 0.5, 0), 1);
+          if (shadowEl) shadowEl.style.opacity = Math.min(Math.max((Math.abs(progress) - 0.5) / 0.5, 0), 1);
         }
         slideEl.style.zIndex = -Math.abs(Math.round(slideProgress)) + slides.length;
         const targetEl = effectTarget(params, slideEl);
@@ -9802,118 +9352,179 @@ var AlpineSwiper = (() => {
   Swiper.use(modules);
 
   // src/index.js
-  function src_default(Alpine) {
-    Alpine.store("swipers", {
-      instances: {},
-      registerSwiper(id, swiper) {
-        this.instances[id] = {
-          instance: swiper,
-          activeIndex: swiper.activeIndex,
-          isBeginning: swiper.isBeginning,
-          isEnd: swiper.isEnd,
-          slides: swiper.slides.length,
-          progress: swiper.progress
-        };
-      },
-      updateState(id, key, value) {
-        if (this.instances[id]) {
-          this.instances[id][key] = value;
+  var STATE_EVENTS = [
+    "init",
+    "slideChange",
+    "progress",
+    "reachBeginning",
+    "reachEnd",
+    "fromEdge",
+    "update",
+    "resize",
+    "slidesLengthChange",
+    "snapGridLengthChange",
+    "breakpoint",
+    "observerUpdate"
+  ];
+  var READY_EVENT = "alpine-swiper:ready";
+  function toCamelCase(value) {
+    return value.replace(/-([a-z])/g, (_, letter) => letter.toUpperCase());
+  }
+  function findSwiperElement(element) {
+    if (element._swiper) return element;
+    return element.closest?.("[data-swiper-id], [x-swiper]") ?? null;
+  }
+  function createPlugin(SwiperClass = Swiper) {
+    const registeredAlpines = /* @__PURE__ */ new WeakSet();
+    let generatedId = 0;
+    return function AlpineSwiper2(Alpine) {
+      if (registeredAlpines.has(Alpine)) return;
+      registeredAlpines.add(Alpine);
+      Alpine.store("swipers", {
+        instances: {},
+        register(id, swiper) {
+          this.instances[id] = {
+            instance: swiper,
+            activeIndex: swiper.activeIndex,
+            realIndex: swiper.realIndex,
+            isBeginning: swiper.isBeginning,
+            isEnd: swiper.isEnd,
+            slides: swiper.slides?.length ?? 0,
+            progress: swiper.progress
+          };
+        },
+        sync(id) {
+          const state = this.instances[id];
+          if (!state) return;
+          const { instance } = state;
+          state.activeIndex = instance.activeIndex;
+          state.realIndex = instance.realIndex;
+          state.isBeginning = instance.isBeginning;
+          state.isEnd = instance.isEnd;
+          state.slides = instance.slides?.length ?? 0;
+          state.progress = instance.progress;
+        },
+        unregister(id) {
+          delete this.instances[id];
+        },
+        getSwiper(id) {
+          return this.instances[id]?.instance;
+        },
+        getSwiperState(id) {
+          return this.instances[id] ?? {};
         }
-      },
-      getSwiper(id) {
-        var _a;
-        return (_a = this.instances[id]) == null ? void 0 : _a.instance;
-      },
-      getSwiperState(id) {
-        return this.instances[id] || {};
-      }
-    });
-    Alpine.directive("swiper", (el, { expression }, { evaluate, cleanup }) => {
-      let swiper;
-      let swiperOptions = {};
-      const swiperId = `swiper-${Date.now()}-${Math.floor(Math.random() * 1e3)}`;
-      el.dataset.swiperId = swiperId;
-      if (expression) {
-        swiperOptions = {
-          ...evaluate(expression) || {},
-          ...swiperOptions
-        };
-      }
-      swiper = new Swiper(el, swiperOptions);
-      Alpine.store("swipers").registerSwiper(swiperId, swiper);
-      swiper.on("slideChange", () => {
-        Alpine.store("swipers").updateState(swiperId, "activeIndex", swiper.activeIndex);
-        Alpine.store("swipers").updateState(swiperId, "isBeginning", swiper.isBeginning);
-        Alpine.store("swipers").updateState(swiperId, "isEnd", swiper.isEnd);
-        Alpine.store("swipers").updateState(swiperId, "progress", swiper.progress);
       });
-      el._swiper = swiper;
-      el._swiperId = swiperId;
-      cleanup(() => {
-        swiper == null ? void 0 : swiper.destroy();
-        delete Alpine.store("swipers").instances[swiperId];
-      });
-    });
-    Alpine.directive("swiper-event", (el, { value, expression }, { evaluateLater, effect }) => {
-      let camelCaseEvent = value.replace(/-([a-z])/g, (_, letter) => letter.toUpperCase());
-      let getHandler = evaluateLater(expression);
-      effect(() => {
-        let swiperEl = el._swiper ? el : el.closest("[data-swiper-id]");
-        let swiper = swiperEl == null ? void 0 : swiperEl._swiper;
-        if (!swiper) {
-          console.warn("swiper-event: No Swiper instance found.");
-          return;
+      Alpine.directive("swiper", (element, { expression }, { evaluate, cleanup }) => {
+        const store = Alpine.store("swipers");
+        const requestedId = element.dataset.swiperId;
+        let swiperId = requestedId;
+        if (requestedId && store.instances[requestedId]) {
+          console.warn(`x-swiper: The ID "${requestedId}" is already in use; a generated ID will be used.`);
+          swiperId = void 0;
         }
-        swiper.on(camelCaseEvent, () => {
-          getHandler((callback) => {
-            if (typeof callback === "function")
-              callback();
+        while (!swiperId || store.instances[swiperId]) {
+          swiperId = `swiper-${++generatedId}`;
+        }
+        const evaluatedOptions = expression ? evaluate(expression) : {};
+        const options = evaluatedOptions && typeof evaluatedOptions === "object" ? evaluatedOptions : {};
+        const shouldInitialize = options.init !== false;
+        let cleanedUp = false;
+        element.dataset.swiperId = swiperId;
+        const swiper = new SwiperClass(element, { ...options, init: false });
+        const syncState = () => store.sync(swiperId);
+        element._swiper = swiper;
+        element._swiperId = swiperId;
+        store.register(swiperId, swiper);
+        STATE_EVENTS.forEach((eventName) => swiper.on(eventName, syncState));
+        element.dispatchEvent(new Event(READY_EVENT));
+        if (shouldInitialize) {
+          queueMicrotask(() => {
+            if (!cleanedUp && !swiper.destroyed) swiper.init();
           });
+        }
+        cleanup(() => {
+          cleanedUp = true;
+          STATE_EVENTS.forEach((eventName) => swiper.off(eventName, syncState));
+          swiper.destroy(true, true);
+          store.unregister(swiperId);
+          delete element._swiper;
+          delete element._swiperId;
+          if (!requestedId) delete element.dataset.swiperId;
         });
       });
-    });
-    Alpine.magic("swiper", (el) => {
-      let swiperEl = el._swiper ? el : el.closest("[data-swiper-id]");
-      if (!swiperEl) {
-        console.warn("$swiper: No Swiper element found.");
-        return {};
-      }
-      const swiperId = swiperEl._swiperId || swiperEl.dataset.swiperId;
-      if (!swiperId) {
-        console.warn("$swiper: No Swiper ID found.");
-        return {};
-      }
-      return new Proxy({}, {
-        get(target, prop) {
-          const store = Alpine.store("swipers");
-          const state = store.getSwiperState(swiperId);
-          const instance = state.instance;
-          if (state.hasOwnProperty(prop)) {
-            return state[prop];
+      Alpine.directive(
+        "swiper-event",
+        (element, { value, expression }, { evaluate, cleanup }) => {
+          if (!value || !expression) {
+            console.warn("x-swiper-event requires an event name and an expression.");
+            return;
           }
-          if (instance && prop in instance) {
-            if (typeof instance[prop] === "function") {
-              return instance[prop].bind(instance);
-            }
-            return instance[prop];
+          const eventName = toCamelCase(value);
+          let swiper;
+          let eventHandler;
+          let readyElement;
+          const bind = () => {
+            const swiperElement = findSwiperElement(element);
+            if (!swiperElement?._swiper || swiper === swiperElement._swiper) return;
+            if (swiper && !swiper.destroyed && eventHandler) swiper.off(eventName, eventHandler);
+            swiper = swiperElement._swiper;
+            eventHandler = (...args) => {
+              evaluate(expression, {
+                scope: {
+                  $event: args[0],
+                  $swiperEvent: args
+                }
+              });
+            };
+            swiper.on(eventName, eventHandler);
+          };
+          readyElement = findSwiperElement(element);
+          bind();
+          if (!swiper && readyElement) {
+            readyElement.addEventListener(READY_EVENT, bind, { once: true });
           }
-          return void 0;
+          cleanup(() => {
+            readyElement?.removeEventListener(READY_EVENT, bind);
+            if (swiper && !swiper.destroyed && eventHandler) swiper.off(eventName, eventHandler);
+          });
         }
+      );
+      Alpine.magic("swiper", (element) => {
+        const swiperElement = findSwiperElement(element);
+        const swiperId = swiperElement?._swiperId ?? swiperElement?.dataset.swiperId;
+        if (!swiperId) return void 0;
+        return new Proxy(
+          {},
+          {
+            get(_target, property) {
+              const state = Alpine.store("swipers").getSwiperState(swiperId);
+              const instance = state.instance;
+              if (Object.prototype.hasOwnProperty.call(state, property)) return state[property];
+              if (!instance || !(property in instance)) return void 0;
+              const value = instance[property];
+              return typeof value === "function" ? value.bind(instance) : value;
+            }
+          }
+        );
       });
-    });
+    };
   }
+  var AlpineSwiper = createPlugin();
+  var index_default = AlpineSwiper;
 
   // src/cdn.js
-  function initializePlugin() {
-    if (typeof window !== "undefined") {
-      if (window.Alpine) {
-        window.Alpine.plugin(src_default);
-      }
-      document.addEventListener("alpine:init", () => {
-        window.Alpine.plugin(src_default);
-      });
+  var REGISTRATION_KEY = "__alpineJsSwiperRegistered";
+  function register() {
+    if (!window.Alpine || window[REGISTRATION_KEY]) return;
+    window[REGISTRATION_KEY] = true;
+    window.Alpine.plugin(index_default);
+  }
+  if (typeof window !== "undefined") {
+    window.AlpineSwiper = index_default;
+    if (window.Alpine) {
+      register();
+    } else {
+      document.addEventListener("alpine:init", register, { once: true });
     }
   }
-  initializePlugin();
-  return __toCommonJS(cdn_exports);
 })();

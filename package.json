@@ -1,15 +1,31 @@
 {
   "name": "alpine-js-swiper",
-  "version": "1.0.2",
+  "version": "1.1.0",
   "description": "A seamless integration of Swiper with Alpine.js, providing reactive slider functionality",
   "type": "module",
-  "main": "dist/alpine-js-swiper.cjs.js",
-  "module": "dist/alpine-js-swiper.esm.js",
-  "browser": "dist/alpine-js-swiper.min.js",
-  "unpkg": "dist/alpine-js-swiper.min.js",
+  "main": "./dist/index.cjs",
+  "module": "./dist/index.js",
+  "types": "./index.d.ts",
+  "style": "./dist/style.css",
+  "unpkg": "./dist/alpine-js-swiper.min.js",
+  "jsdelivr": "./dist/alpine-js-swiper.min.js",
+  "exports": {
+    ".": {
+      "types": "./index.d.ts",
+      "import": "./dist/index.js",
+      "require": "./dist/index.cjs"
+    },
+    "./style.css": "./dist/style.css",
+    "./cdn": "./dist/alpine-js-swiper.min.js"
+  },
   "files": [
-    "dist",
-    "LICENSE"
+    "dist/",
+    "index.d.ts",
+    "LICENSE",
+    "README.md"
+  ],
+  "sideEffects": [
+    "./dist/style.css"
   ],
   "keywords": [
     "alpine",
@@ -20,22 +36,34 @@
   ],
   "scripts": {
     "build": "node build.js",
-    "prepublishOnly": "npm run build"
+    "test": "node build.js && node --test tests/*.test.js && node scripts/test-package.mjs && playwright test",
+    "test:unit": "node --test tests/*.test.js",
+    "test:package": "node scripts/test-package.mjs",
+    "test:browser": "playwright test",
+    "prepublishOnly": "npm test"
   },
   "peerDependencies": {
     "alpinejs": "^3.0.0"
   },
-  "dependencies": {
-    "swiper": "^11.0.0"
-  },
   "devDependencies": {
-    "esbuild": "^0.20.0"
+    "@playwright/test": "^1.55.0",
+    "alpinejs": "^3.14.0",
+    "esbuild": "^0.25.0",
+    "semver": "^7.7.0",
+    "swiper": "^12.1.2"
+  },
+  "engines": {
+    "node": ">=20.0.0"
+  },
+  "publishConfig": {
+    "access": "public"
   },
   "author": "Billy Noyes",
   "license": "MIT",
+  "homepage": "https://github.com/BillyNoyes/alpine-js-swiper#readme",
   "repository": {
     "type": "git",
-    "url": "https://github.com/BillyNoyes/alpine-js-swiper.git"
+    "url": "git+https://github.com/BillyNoyes/alpine-js-swiper.git"
   },
   "bugs": {
     "url": "https://github.com/BillyNoyes/alpine-js-swiper/issues"
