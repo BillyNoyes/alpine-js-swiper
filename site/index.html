@@ -120,30 +120,63 @@
               <code class="font-mono text-[0.9em]">$swiper</code>, and keep slide state in sync—no setup or teardown code.
             </p>
 
-            <div
-              class="mt-6 overflow-hidden rounded-lg border border-black/8 bg-panel dark:border-white/14 dark:bg-panel-inverse"
-              data-code-block
-              x-data="copyCode($el)"
-            >
+            <div class="mt-6 flex flex-col gap-3">
               <div
-                class="flex items-center justify-between gap-3 border-b border-black/8 px-4 py-2 text-[13px]/5 text-muted dark:border-white/14 dark:text-muted-inverse"
+                class="overflow-hidden rounded-lg border border-black/8 bg-panel dark:border-white/14 dark:bg-panel-inverse"
+                data-code-block
+                x-data="copyCode($el)"
               >
-                <span class="font-mono" data-code-label>Install</span>
-                <div class="flex items-center gap-2 [&[x-cloak]]:hidden!" x-cloak>
-                  <button
-                    type="button"
-                    class="cursor-pointer rounded-md px-2 py-1 text-[12px]/4 font-medium text-ink hover:bg-black/5 focus-visible:outline-2 focus-visible:outline-offset-2 dark:text-ink-inverse dark:hover:bg-white/10"
-                    @click="copy"
-                    :disabled="pending"
-                    :aria-label="'Copy ' + label"
-                    x-text="pending ? 'Copying…' : 'Copy'"
-                  ></button>
+                <div
+                  class="flex items-center justify-between gap-3 border-b border-black/8 px-4 py-2 text-[13px]/5 text-muted dark:border-white/14 dark:text-muted-inverse"
+                >
+                  <span class="font-mono" data-code-label>Install</span>
+                  <div class="flex items-center gap-2 [&[x-cloak]]:hidden!" x-cloak>
+                    <button
+                      type="button"
+                      class="cursor-pointer rounded-md px-2 py-1 text-[12px]/4 font-medium text-ink hover:bg-black/5 focus-visible:outline-2 focus-visible:outline-offset-2 dark:text-ink-inverse dark:hover:bg-white/10"
+                      @click="copy"
+                      :disabled="pending"
+                      :aria-label="'Copy ' + label"
+                      x-text="pending ? 'Copying…' : 'Copy'"
+                    ></button>
+                  </div>
                 </div>
+                <pre
+                  class="overflow-x-auto p-4 font-mono text-sm/5 text-ink dark:text-ink-inverse"
+                  tabindex="0"
+                ><code>npm install alpine-js-swiper</code></pre>
               </div>
-              <pre
-                class="overflow-x-auto p-4 font-mono text-sm/5 text-ink dark:text-ink-inverse"
-                tabindex="0"
-              ><code>npm install alpine-js-swiper</code></pre>
+
+              <div
+                class="overflow-hidden rounded-lg border border-black/8 bg-panel dark:border-white/14 dark:bg-panel-inverse"
+                data-code-block
+                x-data="copyCode($el)"
+              >
+                <div
+                  class="flex items-center justify-between gap-3 border-b border-black/8 px-4 py-2 text-[13px]/5 text-muted dark:border-white/14 dark:text-muted-inverse"
+                >
+                  <span class="font-mono" data-code-label>Register</span>
+                  <div class="flex items-center gap-2 [&[x-cloak]]:hidden!" x-cloak>
+                    <button
+                      type="button"
+                      class="cursor-pointer rounded-md px-2 py-1 text-[12px]/4 font-medium text-ink hover:bg-black/5 focus-visible:outline-2 focus-visible:outline-offset-2 dark:text-ink-inverse dark:hover:bg-white/10"
+                      @click="copy"
+                      :disabled="pending"
+                      :aria-label="'Copy ' + label"
+                      x-text="pending ? 'Copying…' : 'Copy'"
+                    ></button>
+                  </div>
+                </div>
+                <pre
+                  class="overflow-x-auto p-4 font-mono text-sm/5 text-ink dark:text-ink-inverse [tab-size:2]"
+                  tabindex="0"
+                ><code>import Alpine from 'alpinejs'
+import AlpineSwiper from 'alpine-js-swiper'
+import 'alpine-js-swiper/style.css'
+
+Alpine.plugin(AlpineSwiper)
+Alpine.start()</code></pre>
+              </div>
             </div>
 
             <div class="mt-4 flex flex-wrap items-center gap-3">

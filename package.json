@@ -1,7 +1,7 @@
 {
   "name": "alpine-js-swiper",
   "version": "1.1.0",
-  "description": "A seamless integration of Swiper with Alpine.js, providing reactive slider functionality",
+  "description": "Alpine.js plugin for Swiper carousels via x-swiper, $swiper, and x-swiper-event",
   "type": "module",
   "main": "./dist/index.cjs",
   "module": "./dist/index.js",
@@ -21,6 +21,7 @@
   "files": [
     "dist/",
     "index.d.ts",
+    "AGENTS.md",
     "LICENSE",
     "README.md"
   ],
@@ -30,9 +31,14 @@
   "keywords": [
     "alpine",
     "alpinejs",
+    "alpine.js",
     "swiper",
+    "swiperjs",
     "slider",
-    "carousel"
+    "carousel",
+    "x-swiper",
+    "directive",
+    "plugin"
   ],
   "scripts": {
     "build": "node build.js",
@@ -60,7 +66,7 @@
   },
   "author": "Billy Noyes",
   "license": "MIT",
-  "homepage": "https://github.com/BillyNoyes/alpine-js-swiper#readme",
+  "homepage": "https://alpine-js-swiper.billynoyes.co.uk/",
   "repository": {
     "type": "git",
     "url": "git+https://github.com/BillyNoyes/alpine-js-swiper.git"
