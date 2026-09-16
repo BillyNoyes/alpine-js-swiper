@@ -50,6 +50,21 @@
   display: none !important;
 }
 
+@layer base {
+  a,
+  button,
+  summary,
+  label,
+  [role='button'] {
+    cursor: pointer;
+  }
+
+  button:disabled,
+  a[aria-disabled='true'] {
+    cursor: not-allowed;
+  }
+}
+
 .demo-swiper {
   width: 100%;
   height: 100%;
