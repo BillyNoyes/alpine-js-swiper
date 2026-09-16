@@ -10,6 +10,7 @@ type SwiperDemoOptions = {
 
 type AlpineComponent = {
   $nextTick: (callback: () => void) => void;
+  $watch: (property: string, callback: (value: unknown) => void) => void;
 };
 
 export function createSwiperDemo() {
@@ -23,9 +24,11 @@ export function createSwiperDemo() {
     speed: 450,
     mounted: true,
     applying: false,
+    ready: false,
     message: 'Waiting for init…',
     slideCount: 5,
     applyTimer: undefined as ReturnType<typeof setTimeout> | undefined,
+    debounceTimer: undefined as ReturnType<typeof setTimeout> | undefined,
 
     get options(): SwiperDemoOptions {
       const options: SwiperDemoOptions = {
@@ -53,17 +56,44 @@ export function createSwiperDemo() {
       return options;
     },
 
-    apply() {
-      if (this.applying) return;
+    init() {
+      const self = this as typeof this & AlpineComponent;
 
+      for (const key of ['loop', 'autoplay', 'pagination', 'navigation'] as const) {
+        self.$watch(key, () => {
+          if (!this.ready) return;
+          this.scheduleApply(0);
+        });
+      }
+
+      for (const key of ['slidesPerView', 'spaceBetween', 'speed'] as const) {
+        self.$watch(key, () => {
+          if (!this.ready) return;
+          this.scheduleApply(280);
+        });
+      }
+
+      self.$nextTick(() => {
+        this.ready = true;
+      });
+    },
+
+    scheduleApply(delayMs: number) {
+      window.clearTimeout(this.debounceTimer);
+      this.debounceTimer = window.setTimeout(() => {
+        this.apply();
+      }, delayMs);
+    },
+
+    apply() {
       const self = this as typeof this & AlpineComponent;
       const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
       const fadeMs = reduceMotion ? 0 : 140;
 
+      window.clearTimeout(this.applyTimer);
       this.applying = true;
       this.message = 'Updating…';
 
-      window.clearTimeout(this.applyTimer);
       this.applyTimer = window.setTimeout(() => {
         this.mounted = false;
         self.$nextTick(() => {
