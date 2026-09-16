@@ -197,13 +197,21 @@ export function createCopyCode(root: HTMLElement) {
     label: root.querySelector('[data-code-label]')?.textContent?.trim() ?? 'code',
     pending: false,
     status: '',
+    get buttonLabel() {
+      if (this.pending) return 'Copying…';
+      if (this.status) return 'Copied';
+      return 'Copy';
+    },
     async copy() {
       if (this.pending || destroyed) return;
       clearTimeout(resetTimer);
       this.status = '';
       const code = root.querySelector('pre code')?.textContent;
       if (!navigator.clipboard?.writeText || code === undefined || code === null) {
-        this.status = 'Copy unavailable. Select the code to copy it.';
+        this.status = 'Copy unavailable';
+        resetTimer = setTimeout(() => {
+          this.status = '';
+        }, 2500);
         return;
       }
 
@@ -214,9 +222,14 @@ export function createCopyCode(root: HTMLElement) {
         this.status = 'Copied to clipboard.';
         resetTimer = setTimeout(() => {
           this.status = '';
-        }, 3000);
+        }, 2500);
       } catch {
-        if (!destroyed) this.status = 'Could not copy. Select the code to copy it.';
+        if (!destroyed) {
+          this.status = 'Could not copy';
+          resetTimer = setTimeout(() => {
+            this.status = '';
+          }, 2500);
+        }
       } finally {
         if (!destroyed) this.pending = false;
       }
