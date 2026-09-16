@@ -263,7 +263,7 @@ Exposes the nearest Swiper instance's methods and properties, plus synchronized 
 | `isBeginning` | Whether the slider is at its first edge |
 | `isEnd` | Whether the slider is at its final edge |
 | `slides` | Current number of slide elements |
-| `progress` | Current progress from `0` to `1` |
+| `progress` | Swiper translate progress from `0` to `1` (can plateau in loop mode with fractional `slidesPerView`; prefer `realIndex` for slide position UI) |
 
 All other properties and methods are forwarded to the underlying [Swiper instance](https://swiperjs.com/swiper-api#methods--properties).
 

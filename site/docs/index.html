@@ -613,6 +613,23 @@ Alpine.start();</code></pre>
                   Keep script order as alpine-js-swiper first, Alpine.js second. Use matching branch, commit, or release tags for CSS and JS.
                 </p>
               </div>
+              <div class="flex flex-col gap-2">
+                <h3 class="font-heading text-base/6 font-bold tracking-normal"><code class="font-mono">progress</code> looks stuck in loop mode</h3>
+                <p class="max-w-[66ch] text-muted dark:text-muted-inverse">
+                  <code class="rounded border border-black/10 bg-code px-[0.3em] py-[0.1em] font-mono text-[0.875em] dark:border-white/13 dark:bg-code-inverse">$swiper.progress</code>
+                  mirrors Swiper’s translate progress. With
+                  <code class="rounded border border-black/10 bg-code px-[0.3em] py-[0.1em] font-mono text-[0.875em] dark:border-white/13 dark:bg-code-inverse">loop</code>
+                  and a fractional
+                  <code class="rounded border border-black/10 bg-code px-[0.3em] py-[0.1em] font-mono text-[0.875em] dark:border-white/13 dark:bg-code-inverse">slidesPerView</code>,
+                  that value may plateau below
+                  <code class="rounded border border-black/10 bg-code px-[0.3em] py-[0.1em] font-mono text-[0.875em] dark:border-white/13 dark:bg-code-inverse">1</code>
+                  while
+                  <code class="rounded border border-black/10 bg-code px-[0.3em] py-[0.1em] font-mono text-[0.875em] dark:border-white/13 dark:bg-code-inverse">realIndex</code>
+                  keeps cycling. Prefer
+                  <code class="rounded border border-black/10 bg-code px-[0.3em] py-[0.1em] font-mono text-[0.875em] dark:border-white/13 dark:bg-code-inverse">realIndex</code>
+                  for slide position UI.
+                </p>
+              </div>
             </div>
           </section>
         </div>

@@ -373,7 +373,9 @@ Alpine.start()</code></pre>
                     <span x-text="slideCount"></span>
                     · progress
                     <span
-                      x-text="(($store.swipers.getSwiperState('demo')?.progress ?? 0) * 100).toFixed(0)"
+                      x-text="slideCount > 1
+                        ? ((($store.swipers.getSwiperState('demo')?.realIndex ?? 0) / (slideCount - 1)) * 100).toFixed(0)
+                        : '0'"
                     ></span
                     >%
                   </span>
