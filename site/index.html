@@ -261,14 +261,13 @@
                 </div>
               </div>
 
-              <div class="relative h-56 shrink-0 md:h-auto md:min-h-0 md:flex-1">
-                <div
-                  class="absolute inset-4 transition-opacity duration-150 ease-out motion-reduce:transition-none"
-                  :class="applying ? 'opacity-0' : 'opacity-100'"
-                >
+              <div
+                class="relative min-h-56 flex-1 p-4 transition-opacity duration-150 ease-out motion-reduce:transition-none md:min-h-0"
+                :class="applying ? 'opacity-0' : 'opacity-100'"
+              >
                 <template x-if="mounted">
                   <div
-                    class="demo-swiper swiper h-full text-ink dark:text-ink-inverse"
+                    class="demo-swiper swiper h-full min-h-48 text-ink dark:text-ink-inverse"
                     x-swiper="options"
                     x-swiper-event:init="message = 'Ready'"
                     x-swiper-event:slide-change="message = `Showing slide ${$swiper.realIndex + 1}`"
@@ -276,31 +275,31 @@
                   >
                     <div class="swiper-wrapper">
                       <div
-                        class="swiper-slide flex flex-col justify-between rounded-md border border-black/10 bg-white p-5 dark:border-white/14 dark:bg-black"
+                        class="swiper-slide flex h-full flex-col justify-between rounded-md border border-black/10 bg-neutral-100 p-5 dark:border-white/20 dark:bg-neutral-900"
                       >
                         <span class="font-mono text-[11px]/4 text-muted dark:text-muted-inverse">01</span>
                         <span class="font-heading text-2xl/8 font-bold tracking-[-0.03em]">x-swiper</span>
                       </div>
                       <div
-                        class="swiper-slide flex flex-col justify-between rounded-md border border-black/10 bg-white p-5 dark:border-white/14 dark:bg-black"
+                        class="swiper-slide flex h-full flex-col justify-between rounded-md border border-black/10 bg-neutral-100 p-5 dark:border-white/20 dark:bg-neutral-900"
                       >
                         <span class="font-mono text-[11px]/4 text-muted dark:text-muted-inverse">02</span>
                         <span class="font-heading text-2xl/8 font-bold tracking-[-0.03em]">$swiper</span>
                       </div>
                       <div
-                        class="swiper-slide flex flex-col justify-between rounded-md border border-black/10 bg-white p-5 dark:border-white/14 dark:bg-black"
+                        class="swiper-slide flex h-full flex-col justify-between rounded-md border border-black/10 bg-neutral-100 p-5 dark:border-white/20 dark:bg-neutral-900"
                       >
                         <span class="font-mono text-[11px]/4 text-muted dark:text-muted-inverse">03</span>
                         <span class="font-heading text-2xl/8 font-bold tracking-[-0.03em]">Events</span>
                       </div>
                       <div
-                        class="swiper-slide flex flex-col justify-between rounded-md border border-black/10 bg-white p-5 dark:border-white/14 dark:bg-black"
+                        class="swiper-slide flex h-full flex-col justify-between rounded-md border border-black/10 bg-neutral-100 p-5 dark:border-white/20 dark:bg-neutral-900"
                       >
                         <span class="font-mono text-[11px]/4 text-muted dark:text-muted-inverse">04</span>
                         <span class="font-heading text-2xl/8 font-bold tracking-[-0.03em]">Store</span>
                       </div>
                       <div
-                        class="swiper-slide flex flex-col justify-between rounded-md border border-black/10 bg-white p-5 dark:border-white/14 dark:bg-black"
+                        class="swiper-slide flex h-full flex-col justify-between rounded-md border border-black/10 bg-neutral-100 p-5 dark:border-white/20 dark:bg-neutral-900"
                       >
                         <span class="font-mono text-[11px]/4 text-muted dark:text-muted-inverse">05</span>
                         <span class="font-heading text-2xl/8 font-bold tracking-[-0.03em]">Reactive</span>
@@ -311,7 +310,6 @@
                     <div class="swiper-button-next"></div>
                   </div>
                 </template>
-                </div>
               </div>
 
               <div
