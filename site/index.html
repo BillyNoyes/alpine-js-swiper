@@ -88,16 +88,11 @@
             <img src="/alpine-js-swiper.svg" alt="" width="28" height="28" class="size-7 shrink-0" />
             <span>alpine/swiper</span>
           </a>
-          <nav aria-label="Primary navigation" class="flex items-center gap-5 text-[13px]/[18px]">
+          <nav aria-label="Primary navigation" class="text-[13px]/[18px]">
             <a
-              href="https://www.npmjs.com/package/alpine-js-swiper"
-              class="hidden text-inherit underline underline-offset-[0.2em] hover:text-ink focus-visible:outline-2 focus-visible:outline-offset-4 dark:hover:text-ink-inverse sm:inline"
-              >npm</a
-            >
-            <a
-              href="https://github.com/BillyNoyes/alpine-js-swiper"
+              href="/docs/"
               class="text-inherit underline underline-offset-[0.2em] hover:text-ink focus-visible:outline-2 focus-visible:outline-offset-4 dark:hover:text-ink-inverse"
-              >GitHub</a
+              >Docs</a
             >
           </nav>
         </div>
@@ -127,18 +122,23 @@
 
             <div
               class="mt-6 overflow-hidden rounded-lg border border-black/8 bg-panel dark:border-white/14 dark:bg-panel-inverse"
-              x-data="copyCode"
+              data-code-block
+              x-data="copyCode($el)"
             >
               <div
                 class="flex items-center justify-between gap-3 border-b border-black/8 px-4 py-2 text-[13px]/5 text-muted dark:border-white/14 dark:text-muted-inverse"
               >
-                <span class="font-mono">Install</span>
-                <button
-                  type="button"
-                  class="cursor-pointer rounded-md px-2 py-1 text-[12px]/4 font-medium text-ink hover:bg-black/5 focus-visible:outline-2 focus-visible:outline-offset-2 dark:text-ink-inverse dark:hover:bg-white/10"
-                  @click="copy('npm install alpine-js-swiper')"
-                  x-text="copied ? 'Copied' : 'Copy'"
-                ></button>
+                <span class="font-mono" data-code-label>Install</span>
+                <div class="flex items-center gap-2 [&[x-cloak]]:hidden!" x-cloak>
+                  <button
+                    type="button"
+                    class="cursor-pointer rounded-md px-2 py-1 text-[12px]/4 font-medium text-ink hover:bg-black/5 focus-visible:outline-2 focus-visible:outline-offset-2 dark:text-ink-inverse dark:hover:bg-white/10"
+                    @click="copy"
+                    :disabled="pending"
+                    :aria-label="'Copy ' + label"
+                    x-text="pending ? 'Copying…' : 'Copy'"
+                  ></button>
+                </div>
               </div>
               <pre
                 class="overflow-x-auto p-4 font-mono text-sm/5 text-ink dark:text-ink-inverse"
@@ -148,16 +148,16 @@
 
             <div class="mt-4 flex flex-wrap items-center gap-3">
               <a
-                href="https://github.com/BillyNoyes/alpine-js-swiper#readme"
+                href="/docs/"
                 class="inline-flex min-h-9 cursor-pointer items-center justify-center rounded-md bg-ink px-4 text-sm/5 font-medium text-white no-underline hover:bg-neutral-700 active:translate-y-px focus-visible:outline-2 focus-visible:outline-offset-4 dark:bg-ink-inverse dark:text-black dark:hover:bg-neutral-200"
               >
                 Read the docs
               </a>
               <a
-                href="https://www.npmjs.com/package/alpine-js-swiper"
+                href="/docs/#install"
                 class="inline-flex min-h-9 cursor-pointer items-center justify-center rounded-md border border-black/8 px-4 text-sm/5 font-medium text-ink no-underline hover:bg-neutral-100 active:translate-y-px focus-visible:outline-2 focus-visible:outline-offset-4 dark:border-white/14 dark:text-ink-inverse dark:hover:bg-neutral-900"
               >
-                View on npm
+                Get started
               </a>
             </div>
           </section>

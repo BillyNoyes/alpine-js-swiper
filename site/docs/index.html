@@ -1,0 +1,636 @@
+<!doctype html>
+<html
+  lang="en"
+  class="scroll-smooth scheme-light motion-reduce:scroll-auto dark:scheme-dark"
+>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta
+      name="description"
+      content="Install alpine-js-swiper and set up Swiper carousels with Alpine.js directives, $swiper, events, and reactive state."
+    />
+    <meta name="color-scheme" content="light dark" />
+    <meta name="theme-color" content="#ffffff" media="(prefers-color-scheme: light)" />
+    <meta name="theme-color" content="#000000" media="(prefers-color-scheme: dark)" />
+    <meta property="og:title" content="alpine-js-swiper documentation" />
+    <meta
+      property="og:description"
+      content="Install alpine-js-swiper and set up Swiper carousels with Alpine.js directives, $swiper, events, and reactive state."
+    />
+    <meta property="og:type" content="website" />
+    <meta property="og:site_name" content="alpine-js-swiper" />
+    <meta property="og:url" content="https://alpine-js-swiper.billynoyes.co.uk/docs/" />
+    <meta name="twitter:card" content="summary" />
+    <meta name="twitter:title" content="alpine-js-swiper documentation" />
+    <meta
+      name="twitter:description"
+      content="Install alpine-js-swiper and set up Swiper carousels with Alpine.js directives, $swiper, events, and reactive state."
+    />
+    <link rel="canonical" href="https://alpine-js-swiper.billynoyes.co.uk/docs/" />
+    <link rel="alternate" type="text/plain" href="/llms.txt" title="alpine-js-swiper for AI assistants" />
+    <link rel="icon" href="/alpine-js-swiper.svg" type="image/svg+xml" />
+    <link
+      rel="preload"
+      href="/fonts/inter_n4.b2a3f24c19b4de56e8871f609e73ca7f6d2e2bb9.woff2"
+      as="font"
+      type="font/woff2"
+      crossorigin
+    />
+    <link
+      rel="preload"
+      href="/fonts/inter_n7.02711e6b374660cfc7915d1afc1c204e633421e4.woff2"
+      as="font"
+      type="font/woff2"
+      crossorigin
+    />
+    <link rel="stylesheet" href="/src/style.css" />
+    <title>alpine-js-swiper documentation</title>
+    <script type="application/ld+json">
+      {
+        "@context": "https://schema.org",
+        "@type": "TechArticle",
+        "name": "alpine-js-swiper documentation",
+        "url": "https://alpine-js-swiper.billynoyes.co.uk/docs/",
+        "description": "Install alpine-js-swiper and set up Swiper carousels with Alpine.js directives, $swiper, events, and reactive state.",
+        "inLanguage": "en",
+        "author": {
+          "@type": "Person",
+          "name": "Billy Noyes",
+          "url": "https://billynoyes.co.uk/"
+        }
+      }
+    </script>
+    <script type="module" src="/src/main.ts"></script>
+  </head>
+  <body
+    class="min-h-screen bg-white font-body text-base/6 font-normal text-ink antialiased dark:bg-black dark:text-ink-inverse"
+    x-data="docsNavigation($el)"
+  >
+    <div class="mx-auto w-full max-w-none px-3 md:px-5">
+      <a
+        class="fixed top-4 left-4 z-50 -translate-y-[200%] rounded-md bg-ink px-3 py-2 text-sm/5 font-medium text-white focus:translate-y-0 focus-visible:outline-2 focus-visible:outline-offset-4 dark:bg-ink-inverse dark:text-black"
+        href="#main"
+        >Skip to content</a
+      >
+
+      <header class="py-4">
+        <div class="flex items-center justify-between gap-6">
+          <a
+            href="/"
+            class="inline-flex items-center gap-2.5 font-display text-xl/6 font-normal text-ink no-underline dark:text-ink-inverse focus-visible:outline-2 focus-visible:outline-offset-4"
+            aria-label="alpine-js-swiper home"
+          >
+            <img src="/alpine-js-swiper.svg" alt="" width="28" height="28" class="size-7 shrink-0" />
+            <span>alpine/swiper</span>
+          </a>
+          <nav aria-label="Primary navigation" class="text-[13px]/[18px]">
+            <a
+              href="/docs/"
+              class="text-inherit underline underline-offset-[0.2em] hover:text-ink focus-visible:outline-2 focus-visible:outline-offset-4 dark:hover:text-ink-inverse"
+              aria-current="page"
+              >Docs</a
+            >
+          </nav>
+        </div>
+      </header>
+
+      <main
+        id="main"
+        class="flex items-start gap-12 pt-6 pb-12 focus-visible:outline-2 focus-visible:outline-offset-4"
+        tabindex="-1"
+      >
+        <aside class="hidden min-w-0 lg:sticky lg:top-8 lg:block lg:flex-[0_0_13rem]">
+          <div class="lg:max-h-[calc(100dvh-4rem)] lg:overflow-y-auto">
+            <p class="text-[13px]/4 font-normal text-muted dark:text-muted-inverse">Documentation</p>
+            <nav class="flex flex-col items-start py-2" aria-label="Documentation sections">
+              <a
+                href="#install"
+                class="block py-2 text-muted no-underline hover:text-ink focus-visible:outline-2 focus-visible:-outline-offset-2 aria-[current=location]:text-ink aria-[current=location]:underline aria-[current=location]:underline-offset-4 dark:text-muted-inverse dark:hover:text-ink-inverse dark:aria-[current=location]:text-ink-inverse"
+                :aria-current="activeSection === 'install' ? 'location' : null"
+                @click="navigate"
+                >Install</a
+              >
+              <a
+                href="#cdn"
+                class="block py-2 text-muted no-underline hover:text-ink focus-visible:outline-2 focus-visible:-outline-offset-2 aria-[current=location]:text-ink aria-[current=location]:underline aria-[current=location]:underline-offset-4 dark:text-muted-inverse dark:hover:text-ink-inverse dark:aria-[current=location]:text-ink-inverse"
+                :aria-current="activeSection === 'cdn' ? 'location' : null"
+                @click="navigate"
+                >CDN</a
+              >
+              <a
+                href="#configure"
+                class="block py-2 text-muted no-underline hover:text-ink focus-visible:outline-2 focus-visible:-outline-offset-2 aria-[current=location]:text-ink aria-[current=location]:underline aria-[current=location]:underline-offset-4 dark:text-muted-inverse dark:hover:text-ink-inverse dark:aria-[current=location]:text-ink-inverse"
+                :aria-current="activeSection === 'configure' ? 'location' : null"
+                @click="navigate"
+                >Configure</a
+              >
+              <a
+                href="#methods"
+                class="block py-2 text-muted no-underline hover:text-ink focus-visible:outline-2 focus-visible:-outline-offset-2 aria-[current=location]:text-ink aria-[current=location]:underline aria-[current=location]:underline-offset-4 dark:text-muted-inverse dark:hover:text-ink-inverse dark:aria-[current=location]:text-ink-inverse"
+                :aria-current="activeSection === 'methods' ? 'location' : null"
+                @click="navigate"
+                >Methods &amp; state</a
+              >
+              <a
+                href="#events"
+                class="block py-2 text-muted no-underline hover:text-ink focus-visible:outline-2 focus-visible:-outline-offset-2 aria-[current=location]:text-ink aria-[current=location]:underline aria-[current=location]:underline-offset-4 dark:text-muted-inverse dark:hover:text-ink-inverse dark:aria-[current=location]:text-ink-inverse"
+                :aria-current="activeSection === 'events' ? 'location' : null"
+                @click="navigate"
+                >Events</a
+              >
+              <a
+                href="#named"
+                class="block py-2 text-muted no-underline hover:text-ink focus-visible:outline-2 focus-visible:-outline-offset-2 aria-[current=location]:text-ink aria-[current=location]:underline aria-[current=location]:underline-offset-4 dark:text-muted-inverse dark:hover:text-ink-inverse dark:aria-[current=location]:text-ink-inverse"
+                :aria-current="activeSection === 'named' ? 'location' : null"
+                @click="navigate"
+                >Named instances</a
+              >
+              <a
+                href="#troubleshooting"
+                class="block py-2 text-muted no-underline hover:text-ink focus-visible:outline-2 focus-visible:-outline-offset-2 aria-[current=location]:text-ink aria-[current=location]:underline aria-[current=location]:underline-offset-4 dark:text-muted-inverse dark:hover:text-ink-inverse dark:aria-[current=location]:text-ink-inverse"
+                :aria-current="activeSection === 'troubleshooting' ? 'location' : null"
+                @click="navigate"
+                >Troubleshooting</a
+              >
+            </nav>
+          </div>
+        </aside>
+
+        <div class="min-w-0 flex-1">
+          <div class="flex flex-col gap-5 pb-10">
+            <h1 class="max-w-[28ch] font-heading text-[2rem]/10 font-bold tracking-normal md:text-[2.5rem]/12">
+              Documentation
+            </h1>
+            <p class="max-w-[66ch] text-muted dark:text-muted-inverse">
+              Get alpine-js-swiper installed, then drive Swiper with Alpine expressions,
+              <code class="rounded border border-black/10 bg-code px-[0.3em] py-[0.1em] font-mono text-[0.875em] dark:border-white/13 dark:bg-code-inverse">$swiper</code>,
+              and event directives.
+            </p>
+            <div class="flex flex-wrap gap-5">
+              <a
+                class="text-inherit underline underline-offset-[0.2em] hover:text-ink focus-visible:outline-2 focus-visible:outline-offset-4 dark:hover:text-ink-inverse"
+                href="#install"
+                @click="navigate"
+                >Get started</a
+              >
+              <a
+                class="text-inherit underline underline-offset-[0.2em] hover:text-ink focus-visible:outline-2 focus-visible:outline-offset-4 dark:hover:text-ink-inverse"
+                href="/#demo-title"
+                >Live demo</a
+              >
+            </div>
+
+            <details
+              class="border-y border-black/8 py-4 lg:hidden dark:border-white/14"
+              @keydown.escape.stop.prevent="closeMenu"
+            >
+              <summary class="cursor-pointer py-4 font-medium focus-visible:outline-2 focus-visible:outline-offset-4">
+                On this page
+              </summary>
+              <nav class="flex flex-col items-start py-2" aria-label="Mobile documentation sections">
+                <a href="#install" class="block py-2 text-muted no-underline hover:text-ink dark:text-muted-inverse dark:hover:text-ink-inverse" :aria-current="activeSection === 'install' ? 'location' : null" @click="navigate">Install</a>
+                <a href="#cdn" class="block py-2 text-muted no-underline hover:text-ink dark:text-muted-inverse dark:hover:text-ink-inverse" :aria-current="activeSection === 'cdn' ? 'location' : null" @click="navigate">CDN</a>
+                <a href="#configure" class="block py-2 text-muted no-underline hover:text-ink dark:text-muted-inverse dark:hover:text-ink-inverse" :aria-current="activeSection === 'configure' ? 'location' : null" @click="navigate">Configure</a>
+                <a href="#methods" class="block py-2 text-muted no-underline hover:text-ink dark:text-muted-inverse dark:hover:text-ink-inverse" :aria-current="activeSection === 'methods' ? 'location' : null" @click="navigate">Methods &amp; state</a>
+                <a href="#events" class="block py-2 text-muted no-underline hover:text-ink dark:text-muted-inverse dark:hover:text-ink-inverse" :aria-current="activeSection === 'events' ? 'location' : null" @click="navigate">Events</a>
+                <a href="#named" class="block py-2 text-muted no-underline hover:text-ink dark:text-muted-inverse dark:hover:text-ink-inverse" :aria-current="activeSection === 'named' ? 'location' : null" @click="navigate">Named instances</a>
+                <a href="#troubleshooting" class="block py-2 text-muted no-underline hover:text-ink dark:text-muted-inverse dark:hover:text-ink-inverse" :aria-current="activeSection === 'troubleshooting' ? 'location' : null" @click="navigate">Troubleshooting</a>
+              </nav>
+            </details>
+          </div>
+
+          <section
+            id="install"
+            class="flex scroll-mt-8 flex-col gap-5 focus-visible:outline-2 focus-visible:outline-offset-4 [&+section]:mt-16"
+            tabindex="-1"
+            aria-labelledby="install-title"
+          >
+            <h2 id="install-title" class="font-heading text-2xl/8 font-bold tracking-normal">
+              Install in two steps.
+            </h2>
+            <p class="max-w-[66ch] text-muted dark:text-muted-inverse">
+              Requires Alpine.js 3. Swiper is bundled with the plugin, so you do not install it separately.
+            </p>
+
+            <div class="flex flex-col gap-2">
+              <h3 class="font-heading text-base/6 font-bold tracking-normal">1. Add the package</h3>
+            </div>
+            <div
+              class="min-w-0 rounded-md border border-black/8 bg-panel dark:border-white/14 dark:bg-panel-inverse"
+              data-code-block
+              x-data="copyCode($el)"
+            >
+              <div class="flex flex-wrap items-center justify-between gap-3 px-5 pt-4 text-muted dark:text-muted-inverse">
+                <span id="code-install-npm" class="text-[13px]/4 font-normal" data-code-label>Install with npm</span>
+                <div class="flex flex-wrap items-center gap-3 [&[x-cloak]]:hidden!" x-cloak>
+                  <button
+                    type="button"
+                    class="inline-flex min-h-9 cursor-pointer items-center justify-center rounded-md border border-black/8 bg-white px-4 py-[7px] text-sm/5 font-medium text-ink hover:bg-neutral-100 focus-visible:outline-2 focus-visible:outline-offset-4 disabled:cursor-not-allowed disabled:opacity-50 dark:border-white/14 dark:bg-black dark:text-ink-inverse dark:hover:bg-neutral-900"
+                    @click="copy"
+                    :disabled="pending"
+                    :aria-label="'Copy ' + label"
+                    x-text="pending ? 'Copying…' : 'Copy'"
+                  ></button>
+                  <span class="max-w-[28ch] text-[13px]/[18px] text-muted dark:text-muted-inverse" role="status" x-text="status"></span>
+                </div>
+              </div>
+              <pre
+                class="min-w-0 max-w-full overflow-x-auto p-5 font-mono text-sm/6 text-ink focus-visible:outline-2 focus-visible:outline-offset-4 dark:text-ink-inverse"
+                tabindex="0"
+                role="region"
+                aria-labelledby="code-install-npm"
+              ><code>npm install alpine-js-swiper</code></pre>
+            </div>
+
+            <div class="flex flex-col gap-2">
+              <h3 class="font-heading text-base/6 font-bold tracking-normal">2. Register the plugin</h3>
+              <p class="max-w-[66ch] text-muted dark:text-muted-inverse">
+                Import the plugin and its stylesheet before calling
+                <code class="rounded border border-black/10 bg-code px-[0.3em] py-[0.1em] font-mono text-[0.875em] dark:border-white/13 dark:bg-code-inverse">Alpine.start()</code>.
+              </p>
+            </div>
+            <div
+              class="min-w-0 rounded-md border border-black/8 bg-panel dark:border-white/14 dark:bg-panel-inverse"
+              data-code-block
+              x-data="copyCode($el)"
+            >
+              <div class="flex flex-wrap items-center justify-between gap-3 px-5 pt-4 text-muted dark:text-muted-inverse">
+                <span id="code-install-register" class="font-mono text-[13px]/4" data-code-label>main.js</span>
+                <div class="flex flex-wrap items-center gap-3 [&[x-cloak]]:hidden!" x-cloak>
+                  <button
+                    type="button"
+                    class="inline-flex min-h-9 cursor-pointer items-center justify-center rounded-md border border-black/8 bg-white px-4 py-[7px] text-sm/5 font-medium text-ink hover:bg-neutral-100 focus-visible:outline-2 focus-visible:outline-offset-4 disabled:cursor-not-allowed disabled:opacity-50 dark:border-white/14 dark:bg-black dark:text-ink-inverse dark:hover:bg-neutral-900"
+                    @click="copy"
+                    :disabled="pending"
+                    :aria-label="'Copy ' + label"
+                    x-text="pending ? 'Copying…' : 'Copy'"
+                  ></button>
+                  <span class="max-w-[28ch] text-[13px]/[18px] text-muted dark:text-muted-inverse" role="status" x-text="status"></span>
+                </div>
+              </div>
+              <pre
+                class="min-w-0 max-w-full overflow-x-auto p-5 font-mono text-sm/6 text-ink focus-visible:outline-2 focus-visible:outline-offset-4 dark:text-ink-inverse [tab-size:2]"
+                tabindex="0"
+                role="region"
+                aria-labelledby="code-install-register"
+              ><code>import Alpine from 'alpinejs';
+import AlpineSwiper from 'alpine-js-swiper';
+import 'alpine-js-swiper/style.css';
+
+Alpine.plugin(AlpineSwiper);
+Alpine.start();</code></pre>
+            </div>
+          </section>
+
+          <section
+            id="cdn"
+            class="flex scroll-mt-8 flex-col gap-5 focus-visible:outline-2 focus-visible:outline-offset-4 [&+section]:mt-16"
+            tabindex="-1"
+            aria-labelledby="cdn-title"
+          >
+            <h2 id="cdn-title" class="font-heading text-2xl/8 font-bold tracking-normal">
+              Or drop it in with a CDN.
+            </h2>
+            <p class="max-w-[66ch] text-muted dark:text-muted-inverse">
+              Load the stylesheet and alpine-js-swiper before Alpine.js. Both scripts may use
+              <code class="rounded border border-black/10 bg-code px-[0.3em] py-[0.1em] font-mono text-[0.875em] dark:border-white/13 dark:bg-code-inverse">defer</code>.
+              Pin the same release tag in production.
+            </p>
+            <div
+              class="min-w-0 rounded-md border border-black/8 bg-panel dark:border-white/14 dark:bg-panel-inverse"
+              data-code-block
+              x-data="copyCode($el)"
+            >
+              <div class="flex flex-wrap items-center justify-between gap-3 px-5 pt-4 text-muted dark:text-muted-inverse">
+                <span id="code-cdn" class="font-mono text-[13px]/4" data-code-label>index.html</span>
+                <div class="flex flex-wrap items-center gap-3 [&[x-cloak]]:hidden!" x-cloak>
+                  <button
+                    type="button"
+                    class="inline-flex min-h-9 cursor-pointer items-center justify-center rounded-md border border-black/8 bg-white px-4 py-[7px] text-sm/5 font-medium text-ink hover:bg-neutral-100 focus-visible:outline-2 focus-visible:outline-offset-4 disabled:cursor-not-allowed disabled:opacity-50 dark:border-white/14 dark:bg-black dark:text-ink-inverse dark:hover:bg-neutral-900"
+                    @click="copy"
+                    :disabled="pending"
+                    :aria-label="'Copy ' + label"
+                    x-text="pending ? 'Copying…' : 'Copy'"
+                  ></button>
+                  <span class="max-w-[28ch] text-[13px]/[18px] text-muted dark:text-muted-inverse" role="status" x-text="status"></span>
+                </div>
+              </div>
+              <pre
+                class="min-w-0 max-w-full overflow-x-auto p-5 font-mono text-sm/6 text-ink focus-visible:outline-2 focus-visible:outline-offset-4 dark:text-ink-inverse [tab-size:2]"
+                tabindex="0"
+                role="region"
+                aria-labelledby="code-cdn"
+              ><code>&lt;link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/BillyNoyes/alpine-js-swiper@v1.1.0/dist/style.css"&gt;
+&lt;script defer src="https://cdn.jsdelivr.net/gh/BillyNoyes/alpine-js-swiper@v1.1.0/dist/alpine-js-swiper.min.js"&gt;&lt;/script&gt;
+&lt;script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"&gt;&lt;/script&gt;
+
+&lt;div x-data x-swiper="{ loop: true }" class="swiper"&gt;
+  &lt;div class="swiper-wrapper"&gt;
+    &lt;div class="swiper-slide"&gt;First&lt;/div&gt;
+    &lt;div class="swiper-slide"&gt;Second&lt;/div&gt;
+    &lt;div class="swiper-slide"&gt;Third&lt;/div&gt;
+  &lt;/div&gt;
+  &lt;button type="button" @click="$swiper.slidePrev()"&gt;Previous&lt;/button&gt;
+  &lt;button type="button" @click="$swiper.slideNext()"&gt;Next&lt;/button&gt;
+&lt;/div&gt;</code></pre>
+            </div>
+          </section>
+
+          <section
+            id="configure"
+            class="flex scroll-mt-8 flex-col gap-5 focus-visible:outline-2 focus-visible:outline-offset-4 [&+section]:mt-16"
+            tabindex="-1"
+            aria-labelledby="configure-title"
+          >
+            <h2 id="configure-title" class="font-heading text-2xl/8 font-bold tracking-normal">
+              Configure with Alpine expressions.
+            </h2>
+            <p class="max-w-[66ch] text-muted dark:text-muted-inverse">
+              Pass any Swiper parameters to
+              <code class="rounded border border-black/10 bg-code px-[0.3em] py-[0.1em] font-mono text-[0.875em] dark:border-white/13 dark:bg-code-inverse">x-swiper</code>.
+              Options are evaluated when the directive initializes. For manual init, pass
+              <code class="rounded border border-black/10 bg-code px-[0.3em] py-[0.1em] font-mono text-[0.875em] dark:border-white/13 dark:bg-code-inverse">init: false</code>
+              and call
+              <code class="rounded border border-black/10 bg-code px-[0.3em] py-[0.1em] font-mono text-[0.875em] dark:border-white/13 dark:bg-code-inverse">$swiper.init()</code>
+              when ready.
+            </p>
+            <div
+              class="min-w-0 rounded-md border border-black/8 bg-panel dark:border-white/14 dark:bg-panel-inverse"
+              data-code-block
+              x-data="copyCode($el)"
+            >
+              <div class="flex flex-wrap items-center justify-between gap-3 px-5 pt-4 text-muted dark:text-muted-inverse">
+                <span id="code-configure" class="font-mono text-[13px]/4" data-code-label>x-swiper options</span>
+                <div class="flex flex-wrap items-center gap-3 [&[x-cloak]]:hidden!" x-cloak>
+                  <button
+                    type="button"
+                    class="inline-flex min-h-9 cursor-pointer items-center justify-center rounded-md border border-black/8 bg-white px-4 py-[7px] text-sm/5 font-medium text-ink hover:bg-neutral-100 focus-visible:outline-2 focus-visible:outline-offset-4 disabled:cursor-not-allowed disabled:opacity-50 dark:border-white/14 dark:bg-black dark:text-ink-inverse dark:hover:bg-neutral-900"
+                    @click="copy"
+                    :disabled="pending"
+                    :aria-label="'Copy ' + label"
+                    x-text="pending ? 'Copying…' : 'Copy'"
+                  ></button>
+                  <span class="max-w-[28ch] text-[13px]/[18px] text-muted dark:text-muted-inverse" role="status" x-text="status"></span>
+                </div>
+              </div>
+              <pre
+                class="min-w-0 max-w-full overflow-x-auto p-5 font-mono text-sm/6 text-ink focus-visible:outline-2 focus-visible:outline-offset-4 dark:text-ink-inverse [tab-size:2]"
+                tabindex="0"
+                role="region"
+                aria-labelledby="code-configure"
+              ><code>&lt;div
+  x-data="{
+    options: {
+      slidesPerView: 1,
+      spaceBetween: 24,
+      breakpoints: {
+        768: { slidesPerView: 2 },
+        1024: { slidesPerView: 3 }
+      }
+    }
+  }"
+  x-swiper="options"
+  class="swiper"
+&gt;
+  &lt;div class="swiper-wrapper"&gt;
+    &lt;div class="swiper-slide"&gt;One&lt;/div&gt;
+    &lt;div class="swiper-slide"&gt;Two&lt;/div&gt;
+    &lt;div class="swiper-slide"&gt;Three&lt;/div&gt;
+  &lt;/div&gt;
+&lt;/div&gt;</code></pre>
+            </div>
+          </section>
+
+          <section
+            id="methods"
+            class="flex scroll-mt-8 flex-col gap-5 focus-visible:outline-2 focus-visible:outline-offset-4 [&+section]:mt-16"
+            tabindex="-1"
+            aria-labelledby="methods-title"
+          >
+            <h2 id="methods-title" class="font-heading text-2xl/8 font-bold tracking-normal">
+              Call methods. Read reactive state.
+            </h2>
+            <p class="max-w-[66ch] text-muted dark:text-muted-inverse">
+              <code class="rounded border border-black/10 bg-code px-[0.3em] py-[0.1em] font-mono text-[0.875em] dark:border-white/13 dark:bg-code-inverse">$swiper</code>
+              is available on the slider element and its descendants. Use
+              <code class="rounded border border-black/10 bg-code px-[0.3em] py-[0.1em] font-mono text-[0.875em] dark:border-white/13 dark:bg-code-inverse">realIndex</code>
+              for the visible slide when loop mode is on.
+            </p>
+            <div
+              class="min-w-0 rounded-md border border-black/8 bg-panel dark:border-white/14 dark:bg-panel-inverse"
+              data-code-block
+              x-data="copyCode($el)"
+            >
+              <div class="flex flex-wrap items-center justify-between gap-3 px-5 pt-4 text-muted dark:text-muted-inverse">
+                <span id="code-methods" class="font-mono text-[13px]/4" data-code-label>$swiper</span>
+                <div class="flex flex-wrap items-center gap-3 [&[x-cloak]]:hidden!" x-cloak>
+                  <button
+                    type="button"
+                    class="inline-flex min-h-9 cursor-pointer items-center justify-center rounded-md border border-black/8 bg-white px-4 py-[7px] text-sm/5 font-medium text-ink hover:bg-neutral-100 focus-visible:outline-2 focus-visible:outline-offset-4 disabled:cursor-not-allowed disabled:opacity-50 dark:border-white/14 dark:bg-black dark:text-ink-inverse dark:hover:bg-neutral-900"
+                    @click="copy"
+                    :disabled="pending"
+                    :aria-label="'Copy ' + label"
+                    x-text="pending ? 'Copying…' : 'Copy'"
+                  ></button>
+                  <span class="max-w-[28ch] text-[13px]/[18px] text-muted dark:text-muted-inverse" role="status" x-text="status"></span>
+                </div>
+              </div>
+              <pre
+                class="min-w-0 max-w-full overflow-x-auto p-5 font-mono text-sm/6 text-ink focus-visible:outline-2 focus-visible:outline-offset-4 dark:text-ink-inverse [tab-size:2]"
+                tabindex="0"
+                role="region"
+                aria-labelledby="code-methods"
+              ><code>&lt;div x-data x-swiper class="swiper"&gt;
+  &lt;div class="swiper-wrapper"&gt;
+    &lt;div class="swiper-slide"&gt;One&lt;/div&gt;
+    &lt;div class="swiper-slide"&gt;Two&lt;/div&gt;
+    &lt;div class="swiper-slide"&gt;Three&lt;/div&gt;
+  &lt;/div&gt;
+
+  &lt;button type="button" @click="$swiper.slidePrev()" :disabled="$swiper.isBeginning"&gt;
+    Previous
+  &lt;/button&gt;
+  &lt;button type="button" @click="$swiper.slideNext()" :disabled="$swiper.isEnd"&gt;
+    Next
+  &lt;/button&gt;
+  &lt;span&gt;
+    Slide &lt;span x-text="$swiper.realIndex + 1"&gt;&lt;/span&gt;
+    of &lt;span x-text="$swiper.slides"&gt;&lt;/span&gt;
+  &lt;/span&gt;
+&lt;/div&gt;</code></pre>
+            </div>
+            <ul class="grid max-w-4xl grid-cols-1 gap-x-8 gap-y-2 text-muted sm:grid-cols-2 dark:text-muted-inverse">
+              <li><strong class="text-ink dark:text-ink-inverse">activeIndex</strong> — Swiper’s internal index</li>
+              <li><strong class="text-ink dark:text-ink-inverse">realIndex</strong> — content index without loop duplicates</li>
+              <li><strong class="text-ink dark:text-ink-inverse">isBeginning / isEnd</strong> — edge state</li>
+              <li><strong class="text-ink dark:text-ink-inverse">slides / progress</strong> — count and 0–1 progress</li>
+            </ul>
+          </section>
+
+          <section
+            id="events"
+            class="flex scroll-mt-8 flex-col gap-5 focus-visible:outline-2 focus-visible:outline-offset-4 [&+section]:mt-16"
+            tabindex="-1"
+            aria-labelledby="events-title"
+          >
+            <h2 id="events-title" class="font-heading text-2xl/8 font-bold tracking-normal">
+              Bind Swiper events.
+            </h2>
+            <p class="max-w-[66ch] text-muted dark:text-muted-inverse">
+              Prefix a kebab-case Swiper event with
+              <code class="rounded border border-black/10 bg-code px-[0.3em] py-[0.1em] font-mono text-[0.875em] dark:border-white/13 dark:bg-code-inverse">x-swiper-event:</code>.
+              Listeners are removed automatically when Alpine cleans up the element.
+            </p>
+            <div
+              class="min-w-0 rounded-md border border-black/8 bg-panel dark:border-white/14 dark:bg-panel-inverse"
+              data-code-block
+              x-data="copyCode($el)"
+            >
+              <div class="flex flex-wrap items-center justify-between gap-3 px-5 pt-4 text-muted dark:text-muted-inverse">
+                <span id="code-events" class="font-mono text-[13px]/4" data-code-label>x-swiper-event</span>
+                <div class="flex flex-wrap items-center gap-3 [&[x-cloak]]:hidden!" x-cloak>
+                  <button
+                    type="button"
+                    class="inline-flex min-h-9 cursor-pointer items-center justify-center rounded-md border border-black/8 bg-white px-4 py-[7px] text-sm/5 font-medium text-ink hover:bg-neutral-100 focus-visible:outline-2 focus-visible:outline-offset-4 disabled:cursor-not-allowed disabled:opacity-50 dark:border-white/14 dark:bg-black dark:text-ink-inverse dark:hover:bg-neutral-900"
+                    @click="copy"
+                    :disabled="pending"
+                    :aria-label="'Copy ' + label"
+                    x-text="pending ? 'Copying…' : 'Copy'"
+                  ></button>
+                  <span class="max-w-[28ch] text-[13px]/[18px] text-muted dark:text-muted-inverse" role="status" x-text="status"></span>
+                </div>
+              </div>
+              <pre
+                class="min-w-0 max-w-full overflow-x-auto p-5 font-mono text-sm/6 text-ink focus-visible:outline-2 focus-visible:outline-offset-4 dark:text-ink-inverse [tab-size:2]"
+                tabindex="0"
+                role="region"
+                aria-labelledby="code-events"
+              ><code>&lt;div
+  x-data="{ message: 'Waiting…' }"
+  x-swiper
+  x-swiper-event:init="message = 'Ready'"
+  x-swiper-event:slide-change="message = `Showing slide ${$swiper.realIndex + 1}`"
+  class="swiper"
+&gt;
+  &lt;div class="swiper-wrapper"&gt;
+    &lt;div class="swiper-slide"&gt;One&lt;/div&gt;
+    &lt;div class="swiper-slide"&gt;Two&lt;/div&gt;
+  &lt;/div&gt;
+  &lt;p x-text="message"&gt;&lt;/p&gt;
+&lt;/div&gt;</code></pre>
+            </div>
+          </section>
+
+          <section
+            id="named"
+            class="flex scroll-mt-8 flex-col gap-5 focus-visible:outline-2 focus-visible:outline-offset-4 [&+section]:mt-16"
+            tabindex="-1"
+            aria-labelledby="named-title"
+          >
+            <h2 id="named-title" class="font-heading text-2xl/8 font-bold tracking-normal">
+              Control sliders from outside.
+            </h2>
+            <p class="max-w-[66ch] text-muted dark:text-muted-inverse">
+              Give a slider
+              <code class="rounded border border-black/10 bg-code px-[0.3em] py-[0.1em] font-mono text-[0.875em] dark:border-white/13 dark:bg-code-inverse">data-swiper-id</code>
+              when controls live outside its DOM subtree, then use
+              <code class="rounded border border-black/10 bg-code px-[0.3em] py-[0.1em] font-mono text-[0.875em] dark:border-white/13 dark:bg-code-inverse">$store.swipers</code>.
+            </p>
+            <div
+              class="min-w-0 rounded-md border border-black/8 bg-panel dark:border-white/14 dark:bg-panel-inverse"
+              data-code-block
+              x-data="copyCode($el)"
+            >
+              <div class="flex flex-wrap items-center justify-between gap-3 px-5 pt-4 text-muted dark:text-muted-inverse">
+                <span id="code-named" class="font-mono text-[13px]/4" data-code-label>$store.swipers</span>
+                <div class="flex flex-wrap items-center gap-3 [&[x-cloak]]:hidden!" x-cloak>
+                  <button
+                    type="button"
+                    class="inline-flex min-h-9 cursor-pointer items-center justify-center rounded-md border border-black/8 bg-white px-4 py-[7px] text-sm/5 font-medium text-ink hover:bg-neutral-100 focus-visible:outline-2 focus-visible:outline-offset-4 disabled:cursor-not-allowed disabled:opacity-50 dark:border-white/14 dark:bg-black dark:text-ink-inverse dark:hover:bg-neutral-900"
+                    @click="copy"
+                    :disabled="pending"
+                    :aria-label="'Copy ' + label"
+                    x-text="pending ? 'Copying…' : 'Copy'"
+                  ></button>
+                  <span class="max-w-[28ch] text-[13px]/[18px] text-muted dark:text-muted-inverse" role="status" x-text="status"></span>
+                </div>
+              </div>
+              <pre
+                class="min-w-0 max-w-full overflow-x-auto p-5 font-mono text-sm/6 text-ink focus-visible:outline-2 focus-visible:outline-offset-4 dark:text-ink-inverse [tab-size:2]"
+                tabindex="0"
+                role="region"
+                aria-labelledby="code-named"
+              ><code>&lt;div x-data&gt;
+  &lt;div data-swiper-id="gallery" x-swiper class="swiper"&gt;
+    &lt;div class="swiper-wrapper"&gt;
+      &lt;div class="swiper-slide"&gt;Front&lt;/div&gt;
+      &lt;div class="swiper-slide"&gt;Back&lt;/div&gt;
+    &lt;/div&gt;
+  &lt;/div&gt;
+
+  &lt;button type="button" @click="$store.swipers.getSwiper('gallery')?.slideTo(0)"&gt;
+    Show front image
+  &lt;/button&gt;
+&lt;/div&gt;</code></pre>
+            </div>
+          </section>
+
+          <section
+            id="troubleshooting"
+            class="flex scroll-mt-8 flex-col gap-5 focus-visible:outline-2 focus-visible:outline-offset-4 [&+section]:mt-16"
+            tabindex="-1"
+            aria-labelledby="troubleshooting-title"
+          >
+            <h2 id="troubleshooting-title" class="font-heading text-2xl/8 font-bold tracking-normal">
+              Troubleshooting
+            </h2>
+            <div class="flex flex-col gap-6">
+              <div class="flex flex-col gap-2">
+                <h3 class="font-heading text-base/6 font-bold tracking-normal">Slides are stacked or unstyled</h3>
+                <p class="max-w-[66ch] text-muted dark:text-muted-inverse">
+                  Import
+                  <code class="rounded border border-black/10 bg-code px-[0.3em] py-[0.1em] font-mono text-[0.875em] dark:border-white/13 dark:bg-code-inverse">alpine-js-swiper/style.css</code>
+                  or load
+                  <code class="rounded border border-black/10 bg-code px-[0.3em] py-[0.1em] font-mono text-[0.875em] dark:border-white/13 dark:bg-code-inverse">dist/style.css</code>
+                  from the CDN. The JavaScript bundle cannot apply Swiper’s stylesheet for you.
+                </p>
+              </div>
+              <div class="flex flex-col gap-2">
+                <h3 class="font-heading text-base/6 font-bold tracking-normal"><code class="font-mono">$swiper</code> is undefined</h3>
+                <p class="max-w-[66ch] text-muted dark:text-muted-inverse">
+                  Use it on the
+                  <code class="rounded border border-black/10 bg-code px-[0.3em] py-[0.1em] font-mono text-[0.875em] dark:border-white/13 dark:bg-code-inverse">x-swiper</code>
+                  element or a descendant. For sibling controls, set
+                  <code class="rounded border border-black/10 bg-code px-[0.3em] py-[0.1em] font-mono text-[0.875em] dark:border-white/13 dark:bg-code-inverse">data-swiper-id</code>
+                  and use
+                  <code class="rounded border border-black/10 bg-code px-[0.3em] py-[0.1em] font-mono text-[0.875em] dark:border-white/13 dark:bg-code-inverse">$store.swipers</code>.
+                </p>
+              </div>
+              <div class="flex flex-col gap-2">
+                <h3 class="font-heading text-base/6 font-bold tracking-normal">CDN build does not initialize</h3>
+                <p class="max-w-[66ch] text-muted dark:text-muted-inverse">
+                  Keep script order as alpine-js-swiper first, Alpine.js second. Use matching branch, commit, or release tags for CSS and JS.
+                </p>
+              </div>
+            </div>
+          </section>
+        </div>
+      </main>
+
+      <footer
+        class="flex flex-col gap-5 py-6 text-[13px]/[18px] text-muted dark:text-muted-inverse md:flex-row md:items-center md:justify-between"
+      >
+        <span>alpine-js-swiper</span>
+        <span>
+          Built by
+          <a
+            href="https://billynoyes.co.uk/"
+            class="text-inherit underline underline-offset-[0.2em] hover:text-ink focus-visible:outline-2 focus-visible:outline-offset-4 dark:hover:text-ink-inverse"
+            >Billy Noyes</a
+          >.
+        </span>
+      </footer>
+    </div>
+  </body>
+</html>
