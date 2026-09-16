@@ -2,8 +2,8 @@ import tailwindcss from '@tailwindcss/vite';
 import {defineConfig} from 'vite';
 
 export default defineConfig({
-  // GitHub project pages serve from /alpine-js-swiper/
-  base: '/alpine-js-swiper/',
+  // Custom domain serves from the site root.
+  base: '/',
   plugins: [tailwindcss()],
   build: {
     cssCodeSplit: false,

@@ -1,4 +1,4 @@
 User-agent: *
 Allow: /
 
-Sitemap: https://billynoyes.github.io/alpine-js-swiper/sitemap.xml
+Sitemap: https://alpine-js-swiper.billynoyes.co.uk/sitemap.xml
