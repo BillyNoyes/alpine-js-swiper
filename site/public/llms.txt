@@ -1,0 +1,9 @@
+# alpine-js-swiper
+
+Alpine.js Swiper is a plugin that drives Swiper carousels through Alpine directives, expressions, magic properties, and reactive state.
+
+Repository: https://github.com/BillyNoyes/alpine-js-swiper
+npm: https://www.npmjs.com/package/alpine-js-swiper
+Install: npm install alpine-js-swiper
+
+Use `x-swiper` for configuration, `$swiper` for methods and synchronized state, `x-swiper-event:` for Swiper events, and `$store.swipers` for named instances.
