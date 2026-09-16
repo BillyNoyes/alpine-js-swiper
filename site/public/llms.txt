@@ -53,7 +53,7 @@ Always load `alpine-js-swiper/style.css` (or CDN `dist/style.css`). Without it, 
 2. `alpine-js-swiper.min.js`  
 3. Alpine.js  
 
-Pin matching release tags in production (for example `@v1.1.0`).
+Pin matching release tags in production (for example `@v1.1.1`).
 
 ## Links
 
